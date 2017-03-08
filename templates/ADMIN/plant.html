@@ -30,7 +30,7 @@
                                   <div ng-message="required">This is required.</div>
                                 </div>
                              </md-input-container> -->
-                             <md-select ng-model="plant.plannerID" placeholder="Planner">
+                             <md-select ng-model="plant.plannerID" placeholder="Planner" multiple="true">
                               <md-option ng-value="planner.id" ng-repeat="planner in planners">{{planner.name}}</md-option>
                              </md-select>
 
@@ -68,7 +68,7 @@
                                 </div>
                              </md-input-container>
 							
-							<md-select ng-model="plantEdit.plannerID" placeholder="Planner">
+							<md-select ng-model="plantEdit.plannerID" placeholder="Planner" multiple="true">
                               <md-option ng-value="planner.id" ng-repeat="planner in planners">{{planner.name}}</md-option>
                              </md-select>
 

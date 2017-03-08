@@ -232,7 +232,7 @@
 <div ng-if="workcentervendorEdit.type=='Internal'">
 
                               <!-- <md-input-container ng-if="(workcentervendorEdit.workcenterID.name.toLowerCase()!='qc') && (workcentervendorEdit.workcenterID.name.toLowerCase()!='finalqc')"> -->
-                              <md-input-container ng-if="(getWCName()!='qc') && (getWCName()!='finalqc')">
+                              <md-input-container ng-if="(editWCName.toLowerCase()!='qc') && (editWCName.toLowerCase()!='finalqc')">
                                 <label>Scheduler</label>
                                 <md-select ng-model="workcentervendorEdit.schedulerID" multiple="true">
                                 <md-option ng-repeat="user in users |filter : {role:'scheduler'}" ng-value="user.id">{{user.name}}</md-option>
@@ -240,7 +240,7 @@
                               </md-input-container><br>
 
                               <!-- <md-input-container ng-if="(workcentervendorEdit.workcenterID.name.toLowerCase()=='qc') || (workcentervendorEdit.workcenterID.name.toLowerCase()=='finalqc')"> -->
-                              <md-input-container ng-if="(getWCName()=='qc') || (getWCName=='finalqc')">
+                              <md-input-container ng-if="(editWCName.toLowerCase()=='qc') || (editWCName.toLowerCase()=='finalqc')">
                                 <label>QC Scheduler</label>
                                 <md-select ng-model="workcentervendorEdit.QCSchedulerID" multiple="true">
                                 <md-option ng-repeat="user in users |filter : {role:'qcscheduler'}" ng-value="user.id">{{user.name}}</md-option>

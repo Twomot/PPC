@@ -6,7 +6,10 @@ angular.module('app')
      $scope.original = {};
      var massDelete;
 
-
+     JWTTOKEN.requestFunction('GET','appusers?filter[where][roleID][regexp]=/^planner/i').then(function(userResult){
+	      console.log(userResult);
+	    	$scope.planners=userResult.data;
+	    });
 
       ////////////////////headingList/////////////////////////
     $scope.headingArray=[
@@ -25,10 +28,7 @@ angular.module('app')
     /*pop dialog on click*/
       $scope.addPopup=function()
       {
-      		JWTTOKEN.requestFunction('GET','appusers?filter[where][roleID][regexp]=/^planner/i').then(function(userResult){
-		      console.log(userResult);
-		    	$scope.planners=userResult.data;
-		    });
+      		
 
         console.log('addPopup click');
         $mdDialog.show({
@@ -43,8 +43,21 @@ angular.module('app')
         console.log(plantdata);
          var ListArray=$scope.plantData;
          plantdata.id=plantdata.name;
+         
+         
+         
         if(invalid==false)
         {
+        	//>>>>>> Added by Ramesh
+        	if (plantdata.plannerID) {
+	        	var plannerArray = []
+	            plantdata.plannerID.forEach(function(plannerID) {
+	           	 plannerArray.push({plannerID: plannerID});
+	            });
+	            plantdata.plannerID = plannerArray;
+        	}
+        	//<<<<<<
+        	
           // plantFactory
           //   .addplant(plantdata)
           //   .then(function(res){
@@ -99,6 +112,16 @@ angular.module('app')
         $scope.buttonText='Edit';
         $scope.selecteddata=[];
 
+        //>>>>>> Added by Ramesh
+        if ($scope.plantEdit.plannerID) {
+        	var plannerArray = []
+        	$scope.plantEdit.plannerID.forEach(function(plannerID) {
+           	 plannerArray.push(plannerID.plannerID);
+            });
+        	$scope.plantEdit.plannerID = plannerArray;
+    	}
+        //<<<<<<
+        
         $mdDialog.show({
                 parent: angular.element(document.body),
                 targetEvent: event,
@@ -122,6 +145,16 @@ angular.module('app')
           console.log('update');
           if(invalid==false)
           {
+        	  //>>>>>> Added by Ramesh
+        	  if (data.plannerID) {
+	        	  var plannerArray = []
+	              data.plannerID.forEach(function(plannerID) {
+	             	 plannerArray.push({plannerID: plannerID});
+	              });
+	              data.plannerID = plannerArray;
+        	  }
+        	  //<<<<<<
+              
             // plantFactory
             // .updateplant(data)
             // .then(function(response){

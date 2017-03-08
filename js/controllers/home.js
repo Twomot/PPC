@@ -1,6 +1,9 @@
 angular.module('app')
-  .controller('homeController', ['$rootScope','$location','$filter','$scope', '$state','$stateParams','$mdDialog','$window','JWTTOKEN','commonFactory','dialogFactory','Workcenter','Masterticket','sharedProperties','Processticket','Machinecalendar', function($rootScope,$location,$filter,$scope,
-      $state,$stateParams,$mdDialog,$window,JWTTOKEN,commonFactory,dialogFactory,Workcenter,Masterticket,sharedProperties,Processticket,Machinecalendar) {
+  .controller('homeController', ['$rootScope','$location','$filter','$scope', '$state','$stateParams','$mdDialog','$window',
+  				'JWTTOKEN','commonFactory','dialogFactory','Workcenter','Masterticket','sharedProperties','Processticket',
+  				'Machinecalendar', 'Plant', 'Appuser', function($rootScope,$location,$filter,$scope,$state,$stateParams,
+  					$mdDialog,$window,JWTTOKEN,commonFactory,dialogFactory,Workcenter,Masterticket,sharedProperties,
+  					Processticket,Machinecalendar, Plant, Appuser) {
 
   localStorage.removeItem('jobTreeDraft');
         localStorage.removeItem('jobTreeOriginal');
@@ -198,11 +201,22 @@ angular.module('app')
        
              // console.log( $scope.salesOrderCreationDate);
              $scope.master={salesOrderCreationDate: new Date()};
-              $scope.plant = [
+              /*$scope.plant = [
                 { id: 1, value: 'AX01',name:'AX01' ,color: "yellow" },
                 { id: 2, value: 'AX03',name:'AX03', color: "blue"},
                 { id: 3, value: 'AX04',name:'AX04', color: "purple"}
-              ];
+              ];*/ //<<<<<< Commented by Ramessh
+
+             // >>>>>> Added By Ramesh
+             Plant
+             .find({filter:{where: {'plannerID.plannerID': sessionStorage.userId}}})
+             .$promise
+             .then(function(results) {
+            	 $scope.plant = results
+//               $scope.plant = $filter('filter')(results, { plannerID: sessionStorage.userId });
+               $scope.master.plant = $scope.plant.length > 0? $scope.plant[0]:undefined;
+             });
+             //<<<<<<
          
             /*  $scope.master = dataToPass;
               console.log(dataToPass);*/
@@ -298,6 +312,15 @@ angular.module('app')
                     }
                      
                   }
+                  
+                  Appuser
+		          .find({filter:{where: {id:sessionStorage.userId}}})
+		          .$promise
+		          .then(function(results) {
+			          	$rootScope.currentUsername = results?results[0].name:'';
+			          	sessionStorage.setItem("currentUsername",$rootScope.currentUsername);
+			          	
+		          });
 
               });
             })

@@ -189,7 +189,22 @@ angular.module('app', [
          data: {
         requireLogin: true
       }
-      });
+      }).state('audithistories', {
+        url: '/audithistories',
+        templateUrl: 'templates/auditHistory.html',
+        controller: 'auditHistoryController',
+         data: {
+        requireLogin: true
+      }
+      })
+      .state('gantt', {
+          url: '/gantt',
+          templateUrl: 'templates/ganttSample.html',
+          controller: 'ganttSampleController',
+           data: {
+          requireLogin: true
+        }
+        });
       
       
     $urlRouterProvider.otherwise('landingPage');
@@ -208,7 +223,7 @@ $rootScope.currentRole =sessionStorage.getItem("role");
     var requireLogin = toState.data.requireLogin;
     var userID=sessionStorage.getItem("userId");
     console.log(userID);
-                     
+    $rootScope.currentUsername = sessionStorage.getItem("currentUsername");
     if (requireLogin && typeof userID === 'undefined') {
       event.preventDefault();
        //$window.location.href = '#/landingPage';

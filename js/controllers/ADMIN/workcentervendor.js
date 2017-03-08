@@ -1,6 +1,6 @@
 angular.module('app')
-  .controller('workcentervendorController', ['$location','$filter','$scope', '$state','$stateParams','$mdDialog','dialogFactory','JWTTOKEN','myService', function($location,$filter,$scope,
-      $state,$stateParams,$mdDialog,dialogFactory,JWTTOKEN,myService) {
+  .controller('workcentervendorController', ['$location','$filter','$scope', '$state','$stateParams','$mdDialog','dialogFactory','JWTTOKEN','myService','Workcentervendor', function($location,$filter,$scope,
+      $state,$stateParams,$mdDialog,dialogFactory,JWTTOKEN,myService, Workcentervendor) {
     console.log('userList');
     $scope.selecteddata=[];
      $scope.original = {};
@@ -57,8 +57,9 @@ JWTTOKEN.requestFunction('GET','appusers').then(function(userResult){
 
 	//>>>>>> Added by Ramesh
 	$scope.addMore = function(userType) {
+		$scope.workcentervendorEdit = undefined;
 		if (userType === "fieldofficer") {
-			if ($scope.editRead) {
+			if ($scope.workcentervendorEdit) {
 				$scope.workcentervendorEdit.fieldofficerID.push({
 		            "plant": "" ,
 		            "fieldofficerID": ""
@@ -70,7 +71,7 @@ JWTTOKEN.requestFunction('GET','appusers').then(function(userResult){
 		        });
 			}
 		}	else if (userType === "scheduler") {
-			if ($scope.editRead) {
+			if ($scope.workcentervendorEdit) {
 				$scope.workcentervendorEdit.schedulerID.push({
 		            "plant": "" ,
 		            "schedulerID": ""
@@ -107,6 +108,7 @@ JWTTOKEN.requestFunction('GET','appusers').then(function(userResult){
     // /*pop dialog on click*/
       $scope.addPopup=function()
       {
+    	  $scope.editRead=true;
         console.log('addPopup click');
         //>>>>>> Added by Ramesh
         $scope.workcentervendor = {};
@@ -130,71 +132,17 @@ JWTTOKEN.requestFunction('GET','appusers').then(function(userResult){
       /*dialog add click*/
       $scope.addworkcentervendor=function(workcentervendor,invalid)
       {
-        console.log(workcentervendor);
-         var ListArray=$scope.workcentervendorData;
-         //workcentervendor.vendorID=workcentervendor.vendorID.id;
-        var vendorName =workcentervendor.vendorID.name;
-          var locationName =workcentervendor.locationID.name;
-          var workcenterName =workcentervendor.workcenterID.name;
+    	  var compositeUniqueKey = {workcenterID: workcentervendor.workcenterID.id, 
+					locationID: workcentervendor.locationID.id,
+					vendorID: workcentervendor.vendorID.id};
+    	  hasDuplicate(compositeUniqueKey).then(function(isDuplicate){
+    		  if (isDuplicate) {
+				alert("Already record exists!");
+    		  }	else {
+				saveWorkcenterVendor(workcentervendor,invalid);
+    		  }	
+    	  });
 
-         workcentervendor.vendorID=workcentervendor.vendorID.id;
-         workcentervendor.locationID=workcentervendor.locationID.id;
-         workcentervendor.workcenterID=workcentervendor.workcenterID.id;
-
-         var displayName=vendorName+"_"+locationName+"_"+workcenterName;
-         workcentervendor.displayName=displayName;
-
-         //>>>>>> Added by Ramesh
-         if (workcentervendor.type === 'Internal') {
-	         var fieldOfficerArray = [];
-	         workcentervendor.fieldofficerID.forEach(function(fieldOfficer) {
-	        	 var fieldOfficerObj = {fieldofficerID: fieldOfficer};
-	        	 fieldOfficerArray.push(fieldOfficerObj);
-	         });
-	         workcentervendor.fieldofficerID = fieldOfficerArray;
-	         
-	         if (workcentervendor.schedulerID !== undefined) {
-		         var schedulerArray = [];
-		         workcentervendor.schedulerID.forEach(function(scheduler) {
-		        	 var schedulerObj = {schedulerID: scheduler};
-		        	 schedulerArray.push(schedulerObj);
-		         });
-		         workcentervendor.schedulerID = schedulerArray.length>0?schedulerArray:undefined;
-	         }
-	         
-	         if (workcentervendor.QCSchedulerID !== undefined) {
-		         var QCschedulerArray = [];
-		         workcentervendor.QCSchedulerID.forEach(function(QCscheduler) {
-		        	 var schedulerObj = {QCSchedulerID: QCscheduler};
-		        	 QCschedulerArray.push(schedulerObj);
-		         });
-		         workcentervendor.QCSchedulerID = QCschedulerArray.length>0?QCschedulerArray:undefined;
-	         }
-      	}
-         //<<<<<<
-
-        if(invalid==false)
-        {
-           JWTTOKEN.requestFunction('POST','workcentervendors',workcentervendor).then(function(res){
-            /*console.log(res);
-             console.log(res);
-            */
- var newItemID=res.data.id;
-           JWTTOKEN.requestFunction('GET','workcentervendors?filter[where][id]='+newItemID+'&filter[include]=locationRelation&filter[include]=workCenterRelation&filter[include]=vendorRelation').then(function(workcentervendorResult){
-               
-               console.log(workcentervendorResult) 
-                 ListArray.push(workcentervendorResult.data[0]);
-                $scope.workcentervendor={};
-                $mdDialog.hide();
-             }
-             );
-                //ListArray.push(res.data);
-
-               //$mdDialog.hide();
-            },function(err){
-             
-          })
-        }
       }
 
       /*cancel function*/
@@ -246,9 +194,9 @@ JWTTOKEN.requestFunction('GET','appusers').then(function(userResult){
         }*/
 
 
-        $scope.getWCName = function() {
+        function getWCName() {
         	var filteredWC = $filter('filter')($scope.workcenters, { id: $scope.workcentervendorEdit.workcenterID })[0];
-        	return filteredWC.name;
+        	$scope.editWCName = filteredWC.name;
         }
         
     //   /*update pop up*/
@@ -266,7 +214,7 @@ JWTTOKEN.requestFunction('GET','appusers').then(function(userResult){
         $scope.selectdisabled=true;
         $scope.buttonText='Edit';
         $scope.selecteddata=[];
-
+        getWCName();
         //>>>>>> Added by Ramesh
         if ($scope.workcentervendorEdit.type === 'Internal') {
         var fieldOfficerArray = [];
@@ -307,7 +255,11 @@ JWTTOKEN.requestFunction('GET','appusers').then(function(userResult){
     //   //////edit button//////////////////
       $scope.updateworkcentervendorclick=function(data,invalid,button)
       {
-        console.log('updateworkcentervendorclick');
+    	  console.log('updateworkcentervendorclick');
+          
+    	 
+	  	  
+	  	  
         if(button=="Edit")
         {
           $scope.buttonText='Save';
@@ -320,44 +272,17 @@ JWTTOKEN.requestFunction('GET','appusers').then(function(userResult){
           console.log('update');
           if(invalid==false)
           {
-        	//>>>>>> Added by Ramesh
-              if (data.type === 'Internal') {
-     	         var fieldOfficerArray = [];
-     	        data.fieldofficerID.forEach(function(fieldOfficer) {
-     	        	 var fieldOfficerObj = {fieldofficerID: fieldOfficer};
-     	        	 fieldOfficerArray.push(fieldOfficerObj);
-     	         });
-     	       data.fieldofficerID = fieldOfficerArray;
-     	         
-     	         if (data.schedulerID !== undefined) {
-     		         var schedulerArray = [];
-     		        data.schedulerID.forEach(function(scheduler) {
-     		        	 var schedulerObj = {schedulerID: scheduler};
-     		        	 schedulerArray.push(schedulerObj);
-     		         });
-     		       data.schedulerID = schedulerArray.length>0?schedulerArray:undefined;
-     	         }
-     	         
-     	         if (data.QCSchedulerID !== undefined) {
-     		         var QCschedulerArray = [];
-     		        data.QCSchedulerID.forEach(function(QCscheduler) {
-     		        	 var schedulerObj = {QCSchedulerID: QCscheduler};
-     		        	 QCschedulerArray.push(schedulerObj);
-     		         });
-     		       data.QCSchedulerID = QCschedulerArray.length>0?QCschedulerArray:undefined;
-     	         }
-           	}
-              //<<<<<<
-              
-            // workcentervendorFactory
-            // .updateworkcentervendor(data)
-            // .then(function(response){
-              JWTTOKEN.requestFunction('PUT','workcentervendors/'+data.id,data).then(function(res){
-                //$(".projectEditForm")[0].reset();
-                $mdDialog.hide();
-              },function(err){
-                console.log(err);  
-              });
+        	  var compositeUniqueKey = {workcenterID: data.workcenterID, 
+					  					locationID: data.locationID,
+					  					vendorID: data.vendorID};
+	  	  	  hasDuplicate(compositeUniqueKey).then(function(isDuplicate){
+	  	  		  if (isDuplicate === data.id) {
+	  	  			updateWorkCenterVendor(data,invalid,button);
+	  	  		  }	else {
+	  	  			  alert("Already record exists");
+	  	  		  }
+	  	  	  });
+        	
           }
         }       
       }
@@ -450,10 +375,124 @@ JWTTOKEN.requestFunction('GET','appusers').then(function(userResult){
       }
 
       
+     function hasDuplicate(filterObject) {
+    	 
+    	return Workcentervendor.find()
+    	 .$promise
+         .then(function(results) {
+        	 var filteredValue = $filter('filter')(results, filterObject);
+        	 return filteredValue.length>0?filteredValue[0].id:undefined;
+         });
+    	 
+     };
      
-     
-      
+      function saveWorkcenterVendor(workcentervendor,invalid){
+    	  console.log(workcentervendor);
+          var ListArray=$scope.workcentervendorData;
+          //workcentervendor.vendorID=workcentervendor.vendorID.id;
+         var vendorName =workcentervendor.vendorID.name;
+           var locationName =workcentervendor.locationID.name;
+           var workcenterName =workcentervendor.workcenterID.name;
 
-      
+          workcentervendor.vendorID=workcentervendor.vendorID.id;
+          workcentervendor.locationID=workcentervendor.locationID.id;
+          workcentervendor.workcenterID=workcentervendor.workcenterID.id;
+
+         var displayName=vendorName+"_"+locationName+"_"+workcenterName;
+          workcentervendor.displayName=displayName;
+
+          //>>>>>> Added by Ramesh
+          if (workcentervendor.type === 'Internal') {
+ 	         var fieldOfficerArray = [];
+ 	         workcentervendor.fieldofficerID.forEach(function(fieldOfficer) {
+ 	        	 var fieldOfficerObj = {fieldofficerID: fieldOfficer};
+ 	        	 fieldOfficerArray.push(fieldOfficerObj);
+ 	         });
+ 	         workcentervendor.fieldofficerID = fieldOfficerArray;
+ 	         
+ 	         if (workcentervendor.schedulerID !== undefined) {
+ 		         var schedulerArray = [];
+ 		         workcentervendor.schedulerID.forEach(function(scheduler) {
+ 		        	 var schedulerObj = {schedulerID: scheduler};
+ 		        	 schedulerArray.push(schedulerObj);
+ 		         });
+ 		         workcentervendor.schedulerID = schedulerArray.length>0?schedulerArray:undefined;
+ 	         }
+ 	         
+ 	         if (workcentervendor.QCSchedulerID !== undefined) {
+ 		         var QCschedulerArray = [];
+ 		         workcentervendor.QCSchedulerID.forEach(function(QCscheduler) {
+ 		        	 var schedulerObj = {QCSchedulerID: QCscheduler};
+ 		        	 QCschedulerArray.push(schedulerObj);
+ 		         });
+ 		         workcentervendor.QCSchedulerID = QCschedulerArray.length>0?QCschedulerArray:undefined;
+ 	         }
+       	}
+          //<<<<<<
+
+         if(invalid==false)
+         {
+            JWTTOKEN.requestFunction('POST','workcentervendors',workcentervendor).then(function(res){
+             /*console.log(res);
+              console.log(res);
+             */
+  var newItemID=res.data.id;
+            JWTTOKEN.requestFunction('GET','workcentervendors?filter[where][id]='+newItemID+'&filter[include]=locationRelation&filter[include]=workCenterRelation&filter[include]=vendorRelation').then(function(workcentervendorResult){
+                
+                console.log(workcentervendorResult) 
+                  ListArray.push(workcentervendorResult.data[0]);
+                 $scope.workcentervendor={};
+                 $mdDialog.hide();
+              }
+              );
+                 //ListArray.push(res.data);
+
+                //$mdDialog.hide();
+             },function(err){
+              
+           })
+         }
+      }
+
+      function updateWorkCenterVendor(data,invalid,button) {
+    	//>>>>>> Added by Ramesh
+          if (data.type === 'Internal') {
+ 	         var fieldOfficerArray = [];
+ 	        data.fieldofficerID.forEach(function(fieldOfficer) {
+ 	        	 var fieldOfficerObj = {fieldofficerID: fieldOfficer};
+ 	        	 fieldOfficerArray.push(fieldOfficerObj);
+ 	         });
+ 	       data.fieldofficerID = fieldOfficerArray;
+ 	         
+ 	         if (data.schedulerID !== undefined) {
+ 		         var schedulerArray = [];
+ 		        data.schedulerID.forEach(function(scheduler) {
+ 		        	 var schedulerObj = {schedulerID: scheduler};
+ 		        	 schedulerArray.push(schedulerObj);
+ 		         });
+ 		       data.schedulerID = schedulerArray.length>0?schedulerArray:undefined;
+ 	         }
+ 	         
+ 	         if (data.QCSchedulerID !== undefined) {
+ 		         var QCschedulerArray = [];
+ 		        data.QCSchedulerID.forEach(function(QCscheduler) {
+ 		        	 var schedulerObj = {QCSchedulerID: QCscheduler};
+ 		        	 QCschedulerArray.push(schedulerObj);
+ 		         });
+ 		       data.QCSchedulerID = QCschedulerArray.length>0?QCschedulerArray:undefined;
+ 	         }
+       	}
+          //<<<<<<
+          
+        // workcentervendorFactory
+        // .updateworkcentervendor(data)
+        // .then(function(response){
+          JWTTOKEN.requestFunction('PUT','workcentervendors/'+data.id,data).then(function(res){
+            //$(".projectEditForm")[0].reset();
+            $mdDialog.hide();
+          },function(err){
+            console.log(err);  
+          });
+      }
 
 }]);
