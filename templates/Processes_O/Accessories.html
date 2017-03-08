@@ -1,0 +1,253 @@
+<div ng-controller="accessoriesController">
+    <div layout="row" layout-padding style="height:50px;" >
+        <div flex>
+            <md-input-container>
+                <label>Job Order for Full Qty</label>
+                <md-select name="type" ng-model="accesories.joborder" required>
+                    <md-option value="Full">Full</md-option>
+                    <md-option value="Part">Part</md-option>
+                </md-select>
+                
+            </md-input-container>
+        </div>
+        <div flex>
+            <md-input-container>
+                <label>Process Start date </label>
+                <input ng-model="processtartDate" md-placeholder="Enter Date" name="processStartDate" ng-focus="DyeingChange(processticket.mtrs)">
+                <div ng-messages="processcabinetform.processStartDate.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+        </div>
+        <div flex>
+            <md-input-container>
+                <label>Duration</label>
+                <input ng-model="accesories.duration" required>
+                <div ng-messages="processaccessoriesform.vendorname.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+        </div>
+        <div flex>
+            <md-input-container>
+                <label>Process End Date </label>
+                <input ng-model="processEndDate" md-placeholder="Enter Date" name="processStartDate" ng-focus="DyeingChange()">
+                <div ng-messages="processcabinetform.processStartDate.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+        </div>
+    </div>
+   
+   <div layout="row" layout-padding style="height:30px;">
+   	<div flex="20"><label> Beads</label></div>
+   	 <div flex="20">
+            <md-icon style="cursor:pointer" ng-click="AddMoreBead()"><i class="material-icons">note_add</i></md-icon>
+        </div>
+   </div>
+    <div layout="row" layout-padding ng-repeat="bead in processticket.beads" style="height:50px;">
+        
+        <div flex>
+            <md-input-container>
+                <label>Type</label>
+                <input ng-model="bead.type" required>
+            </md-input-container>
+        </div>
+        <div flex>
+            <md-input-container>
+                <label>Colour</label>
+                <input ng-model="bead.color" required>
+            </md-input-container>
+        </div>
+        <div flex>
+            <md-input-container>
+                <label>Size</label>
+                <input ng-model="bead.size" required>
+            </md-input-container>
+        </div>
+        <div flex>
+            <md-input-container>
+                <label>Quantity</label>
+                <input ng-model="bead.quantity" required>
+            </md-input-container>
+        </div>
+        <div flex>
+            <md-input-container>
+                <label>PO Number</label>
+                <input ng-model="bead.ponumber" required>
+            </md-input-container>
+        </div>
+    </div>
+
+ <div layout="row" layout-padding style="height:30px;">
+   	<div flex="20"><label>Embroidery Threads</label></div>
+   	 <div flex="20">
+            <md-icon style="cursor:pointer" ng-click="AddMoreThread()"><i class="material-icons">note_add</i></md-icon>
+        </div>
+   </div>
+ 
+
+    <div layout="row" layout-padding ng-repeat="thread in processticket.threads" style="height:50px;">
+      
+        <div flex>
+            <md-input-container>
+                <label>Type</label>
+                <input ng-model="thread.type" required>
+            </md-input-container>
+        </div>
+        <div flex>
+            <md-input-container>
+                <label>Colour</label>
+                <input ng-model="thread.color" required>
+            </md-input-container>
+        </div>
+        <div flex>
+            <md-input-container>
+                <label>Size</label>
+                <input ng-model="thread.size" required>
+            </md-input-container>
+        </div>
+        <div flex>
+            <md-input-container>
+                <label>Quantity</label>
+                <input ng-model="thread.quantity" required>
+            </md-input-container>
+        </div>
+        <div flex>
+            <md-input-container>
+                <label>PO Number</label>
+                <input ng-model="thread.ponumber" required>
+            </md-input-container>
+        </div>
+    </div>
+<div layout="row" layout-padding style="height:30px;">
+   	<div flex="20"><label>Zipper</label></div>
+   	 <div flex="20">
+            <md-icon style="cursor:pointer" ng-click="AddMoreZipper()"><i class="material-icons">note_add</i></md-icon>
+        </div>
+   </div>
+ 
+
+    <div layout="row" layout-padding ng-repeat="zipper in processticket.zippers" style="height:50px;">
+        <div flex>
+            <md-input-container>
+                <label>Type</label>
+                <input ng-model="zipper.type" required>
+            </md-input-container>
+        </div>
+        <div flex>
+            <md-input-container>
+                <label>Colour</label>
+                <input ng-model="zipper.color" required>
+            </md-input-container>
+        </div>
+        <div flex>
+            <md-input-container>
+                <label>Size</label>
+                <input ng-model="zipper.size" required>
+            </md-input-container>
+        </div>
+        <div flex>
+            <md-input-container>
+                <label>Quantity</label>
+                <input ng-model="zipper.quantity" required>
+            </md-input-container>
+        </div>
+        <div flex>
+            <md-input-container>
+                <label>PO Number</label>
+                <input ng-model="zipper.ponumber" required>
+            </md-input-container>
+        </div>
+    </div>
+
+    <div layout="row" layout-padding style="height:30px;">
+   	<div flex="20"><label>Button</label></div>
+   	 <div flex="20">
+            <md-icon style="cursor:pointer" ng-click="AddMoreButton()"><i class="material-icons">note_add</i></md-icon>
+        </div>
+   </div>
+ 
+    <div layout="row" layout-padding ng-repeat="button in processticket.buttons" style="height:50px;">
+        <div flex>
+            <md-input-container>
+                <label>Type</label>
+                <input ng-model="button.type" required>
+            </md-input-container>
+        </div>
+        <div flex>
+            <md-input-container>
+                <label>Colour</label>
+                <input ng-model="button.color" required>
+            </md-input-container>
+        </div>
+        <div flex>
+            <md-input-container>
+                <label>Size</label>
+                <input ng-model="button.size" required>
+            </md-input-container>
+        </div>
+        <div flex>
+            <md-input-container>
+                <label>Quantity</label>
+                <input ng-model="button.quantity" required>
+            </md-input-container>
+        </div>
+        <div flex>
+            <md-input-container>
+                <label>PO Number</label>
+                <input ng-model="button.ponumber" required>
+            </md-input-container>
+        </div>
+    </div>
+    <div layout="row" layout-padding style="height:30px;">
+   	<div flex="20"><label>Other Accessories</label></div>
+   	 <div flex="20">
+            <md-icon style="cursor:pointer" ng-click="AddMoreother()"><i class="material-icons">note_add</i></md-icon>
+        </div>
+   </div>
+ 
+    <div layout="row" layout-padding ng-repeat="other in processticket.others" style="height:50px;">
+        <div flex>
+            <md-input-container>
+                <label>Type</label>
+                <input ng-model="other.type" required>
+            </md-input-container>
+        </div>
+        <div flex>
+            <md-input-container>
+                <label>Colour</label>
+                <input ng-model="other.color" required>
+            </md-input-container>
+        </div>
+        <div flex>
+            <md-input-container>
+                <label>Size</label>
+                <input ng-model="other.size" required>
+            </md-input-container>
+        </div>
+        <div flex>
+            <md-input-container>
+                <label>Quantity</label>
+                <input ng-model="other.quantity" required>
+            </md-input-container>
+        </div>
+        <div flex>
+            <md-input-container>
+                <label>PO Number</label>
+                <input ng-model="other.ponumber" required>
+            </md-input-container>
+        </div>
+    </div>
+   
+   <div layout="row" layout-padding style="height:50px;">
+        <div flex="0.5"></div>
+        <div flex="0.5"></div>
+        <div flex ng-show="processticket.id == undefined">
+            <md-button class="md-raised md-primary" ng-click="$parent.addProcessTicket(processticket)">Save</md-button>
+        </div>
+        <div ng-show="processticket.id !== undefined">
+            <md-button class="md-raised md-primary" ng-click="$parent.saveProcessTicket(processticket)">Save</md-button>
+        </div>
+    </div>
+</div>

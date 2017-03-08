@@ -1,0 +1,18 @@
+<div ng-controller="adminlistController">
+	<md-button class="md-fab" ng-click="$ctrl.addevent();">Add</md-button>
+	<list-component lists="$ctrl.lists" updateevent2="$ctrl.updateevent();" deleteclick2="$ctrl.deletefun()" toggle2="$ctrl.toggleadmin()" selectedlist="$ctrl.datalist"></list-component>
+
+	 <md-button class="md-primary md-raised" ng-click="$ctrl.deleteevent()">Delete</md-button>
+
+
+ 	<!-- <div style="visibility: hidden">
+		<div class="md-dialog-container" id="myStaticDialog">
+			<mydialog-component header="Add" button1="Add" button1click="$ctrl.add()" button-list=buttonList button2="Cancel" button2click="cancel()" input="$ctrl.inputdata" modelname="$ctrl.mymodel" ></mydialog-component>
+		</div>
+	</div>
+	<div style="visibility: hidden">
+		<div class="md-dialog-container" id="updateDialog">
+			<mydialog-component header="Update" button1="Update" button1click="$ctrl.update()" button2="Cancel" button2click="cancel()" input="$ctrl.inputdata" modelname="$ctrl.mymodel" updatedata="$ctrl.updatedatalist"></mydialog-component>
+		</div>
+	</div> -->
+</div>

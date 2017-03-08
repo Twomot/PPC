@@ -1,0 +1,481 @@
+<style type="text/css" >
+    /*html, body {
+      margin: 0px;
+      padding: 0px;
+      height: 100%;
+      overflow: hidden;
+    }*/
+
+    #my_form {
+      position: absolute;
+      top: 100px;
+      left: 200px;
+      z-index: 20001;
+      display: none;
+      background-color: white;
+      border: 2px outset gray;
+      padding: 20px;
+      font-family: Tahoma;
+      font-size: 10pt;
+    }
+
+    #my_form label {
+      width: 200px;
+    }
+    .dhx_cal_cover{
+      width:0px;
+    }
+  </style>
+
+<md-dialog id="mdDialogprocess" flex>
+    <md-dialog-content flex>
+        <md-tabs md-dynamic-height md-border-bottom md-selected="1">
+            <md-tab label="Master Details">
+                <div layout="row" style="padding:0px 10px 0px 10px;">
+                    <div layout="column" style="padding:0px 80px 20px 0px;width:20%;">
+                        <label>Plant:</label>
+                    </div>
+                    <div layout="column" style="padding:0px 10px 20px 0px;">
+                        <label>{{masterData.plant}}</label>
+                    </div>
+                </div>
+                <div layout="row" style="padding:0px 10px 0px 10px;">
+                    <div layout="column" style="padding:0px 80px 20px 0px;width:20%;">
+                        <label>Sales Order No:</label>
+                    </div>
+                    <div layout="column" style="padding:0px 10px 20px 0px;">
+                        <label>{{masterData.salesorderNo}}</label>
+                    </div>
+                </div>
+                <div layout="row" style="padding:0px 10px 0px 10px;">
+                    <div layout="column" style="padding:0px 80px 20px 0px;width:20%;">
+                        <label>Line Item No:</label>
+                    </div>
+                    <div layout="column" style="padding:0px 10px 20px 0px;">
+                        <label>{{masterData.LineItemNo}}</label>
+                    </div>
+                </div>
+                <div layout="row" style="padding:0px 10px 0px 10px;">
+                    <div layout="column" style="padding:0px 80px 20px 0px;width:20%;">
+                        <label>Customer PO or COD:</label>
+                    </div>
+                    <div layout="column" style="padding:0px 10px 20px 0px;">
+                        <label>{{masterData.customerPOorCOD}}</label>
+                    </div>
+                </div>
+                <div layout="row" style="padding:0px 10px 0px 10px;">
+                    <div layout="column" style="padding:0px 80px 20px 0px;width:20%;">
+                        <label>Design Name:</label>
+                    </div>
+                    <div layout="column" style="padding:0px 10px 20px 0px;">
+                        <label>{{masterData.designName}}</label>
+                    </div>
+                </div>
+                <div layout="row" style="padding:0px 10px 0px 10px;">
+                    <div layout="column" style="padding:0px 80px 20px 0px;width:20%;">
+                        <label>Colour code:</label>
+                    </div>
+                    <div layout="column" style="padding:0px 10px 20px 0px;">
+                        <label>{{masterData.colourcode}}</label>
+                    </div>
+                </div>
+                <div layout="row" style="padding:0px 10px 0px 10px;">
+                    <div layout="column" style="padding:0px 80px 20px 0px;width:20%;">
+                        <label>Material Group1:</label>
+                    </div>
+                    <div layout="column" style="padding:0px 10px 20px 0px;">
+                        <label>{{masterData.materialGroup1}}</label>
+                    </div>
+                </div>
+                <div layout="row" style="padding:0px 10px 0px 10px;">
+                    <div layout="column" style="padding:0px 80px 20px 0px;width:20%;">
+                        <label>Material Group2:</label>
+                    </div>
+                    <div layout="column" style="padding:0px 10px 20px 0px;">
+                        <label>{{masterData.materialGroup2}} </label>
+                    </div>
+                </div>
+                <div layout="row" style="padding:0px 10px 0px 10px;">
+                    <div layout="column" style="padding:0px 80px 20px 0px;width:20%;">
+                        <label>Quantity:</label>
+                    </div>
+                    <div layout="column" style="padding:0px 10px 20px 0px;">
+                        <label>{{masterData.quantity}}</label>
+                    </div>
+                </div>
+                <div layout="row" style="padding:0px 10px 0px 10px;">
+                    <div layout="column" style="padding:0px 80px 20px 0px;width:20%;">
+                        <label>Planed Start Date:</label>
+                    </div>
+                    <div layout="column" style="padding:0px 10px 20px 0px;">
+                        <label>{{masterData.planstartdate}}</label>
+                    </div>
+                </div>
+                <div layout="row" style="padding:0px 10px 0px 10px;">
+                    <div layout="column" style="padding:0px 80px 20px 0px;width:20%;">
+                        <label>Planed End Date:</label>
+                    </div>
+                    <div layout="column" style="padding:0px 10px 20px 0px;">
+                        <label>{{masterData.planenddate}}</label>
+                    </div>
+                </div>
+            </md-tab>
+            <md-tab label="Process Details">
+                <div layout="row" layout-padding style="height:50px;">
+                    <!-- <md-input-container> -->
+                    <label>Process</label>
+                    <select ng-options="item as item.name for item in workcenters track by item.id" ng-model="ProcessQR" ng-disabled="ReadModeOnly">
+                    </select>
+                    <!-- </md-input-container> -->
+                    <label>{{ProcessQR}}</label>
+                </div>
+                <div ng-show="ProcessQR.name == 'Dyeing'" layout="row" layout-padding style="height:50px;">
+                    <div >
+                        <label>Select Dyeing</label>
+                        <select ng-options="item as item.name for item in dyeingProcess track by item.name" ng-model="DyeingsubType" ng-disabled="ReadModeOnly">
+                        </select>
+                    </div>
+                </div>
+                <!-- Master Ticket Details --------------------------- -->
+                <!-- ------------------------------------------------- -->
+                <div ng-show="ProcessQR.name=='stores'">
+                    <div ng-include="'templates/Processes/Stores.html'" onload="processticket = selectedProcessTicket"></div>
+                </div>
+                <div ng-show="ProcessQR.name=='finishing'">
+                    <div ng-include="'templates/Processes/Finishing.html'"></div>
+                </div>
+                <div ng-show="ProcessQR.name=='embroidery'">
+                    <div ng-include="'templates/Processes/Embroidery.html'"></div>
+                </div>
+                <div ng-show="ProcessQR.name=='printing'">
+                    <div ng-include="'templates/Processes/Printing.html'"></div>
+                </div>
+                <div ng-show="ProcessQR.name=='weaving'">
+                    <div ng-include="'templates/Processes/Weaving.html'"></div>
+                </div>
+                <div ng-show="ProcessQR.name =='stiching'">
+                    <div ng-include="'templates/Processes/Stitching.html'"></div>
+                </div>
+                <div ng-show="DyeingsubType.name=='Jigger_Dyeing' && ProcessQR.name=='Dyeing'" >
+                    <div ng-include="'templates/Processes/Jigger.html'"></div>
+                </div>
+                <div ng-show="DyeingsubType.name=='Vat_Dyeing' && ProcessQR.name=='Dyeing'">
+                    <div ng-include="'templates/Processes/Vat.html'"></div>
+                </div>
+                <div ng-show="ProcessQR.name =='outright'">
+                    <div ng-include="'templates/Processes/Outright.html'"></div>
+                </div>
+                <div ng-show="ProcessQR.name == 'accessories'">
+                    <div ng-include="'templates/Processes/Accessories.html'"></div>
+                </div>
+            </md-tab>
+            <md-tab label="Action">
+                <label>Action</label>
+                <md-radio-group ng-model="type" ng-change="radiotypeChange(type,$event)" ng-show="(taskClick=='task') && (role=='scheduler')">
+                    <md-radio-button value="create" class="md-primary">Create</md-radio-button>
+                    <md-radio-button value="split"> Split </md-radio-button>
+                    <md-radio-button value="delete"> Delete </md-radio-button>
+                    <md-radio-button value="splitSchedule"> Schedule of Splited Task </md-radio-button>
+                    <!-- <md-radio-button value="QR" class="md-primary"> Quality Rejection </md-radio-button> -->
+                </md-radio-group>
+                <!-- //////////////split/////////////////// -->
+                <!--  <div ng-if="(type=='QR') && (taskClick=='task')"> -->
+
+                <div ng-if="(role=='qcscheduler') && (taskClick=='task') && (processType=='inlineQC')">
+
+                      <md-radio-group ng-model="type1" ng-change="radiotypeChange(type1,$event)">
+                        <md-radio-button value="qcreject" class="md-primary">QC Reject</md-radio-button>
+                        <md-radio-button value="splitSchedule"> Schedule of Splited Task </md-radio-button>
+                        <!-- <md-radio-button value="QR" class="md-primary"> Quality Rejection </md-radio-button> -->
+
+                      </md-radio-group>
+
+                      <div ng-if="type1=='qcreject'">
+                         <md-input-container >
+                            <label>Process</label>
+                            <md-select ng-model="ProcessQR" required>
+                               <md-option ng-repeat="item in processes" ng-value="item.id" ng-selected="rightClickTask == item.id">{{item.processName}}</md-option>
+                            </md-select>
+                          </md-input-container>
+                            <md-radio-group ng-model="reworkStart">
+                              <md-radio-button value="starting" class="md-primary">From Starting</md-radio-button>
+                              <md-radio-button value="pick"> Pick Process </md-radio-button>
+                            </md-radio-group>
+                                <md-input-container>
+                                <label>Process</label>
+                                <md-select ng-model="reworkProcessID" required>
+                                   <md-option ng-repeat="data in processes" ng-value="data.id">{{data.processName}}</md-option>
+                                </md-select>
+                              </md-input-container>
+                      <br>  
+                      <md-button type="submit" ng-click="QRReject(ProcessQR,reworkProcessID)" class="md-raised md-primary">REJECT</md-button>
+                    </div>
+
+                </div>
+
+                <!-- <div ng-if="(role=='qcscheduler') && (taskClick=='task') && (processType=='inlineQC')">
+                    <md-input-container>
+                        <label>Process</label>
+                        <md-select ng-model="ProcessQR" required>
+                            <md-option ng-repeat="item in processes" ng-value="item.id" ng-selected="rightClickTask == item.id">{{item.processName}}</md-option>
+                        </md-select>
+                    </md-input-container>
+                    <md-radio-group ng-model="reworkStart">
+                        <md-radio-button value="starting" class="md-primary">From Starting</md-radio-button>
+                        <md-radio-button value="pick"> Pick Process </md-radio-button>
+                    </md-radio-group>
+                    <md-input-container>
+                        <label>Process</label>
+                        <md-select ng-model="reworkProcessID" required>
+                            <md-option ng-repeat="data in processes" ng-value="data.id">{{data.processName}}</md-option>
+                        </md-select>
+                    </md-input-container>
+                    <br>
+                    <md-button type="submit" ng-click="QRReject(ProcessQR,reworkProcessID)" class="md-raised md-primary">REJECT</md-button>
+                </div> -->
+                <div ng-if="(role=='qcscheduler') && (taskClick=='task') && (processType!='inlineQC')">
+                    <h6>Click Inline Qc</h6>
+                </div>
+                <!-- ////////////////////////////////////// -->
+                <!-- //////////////split/////////////////// -->
+                <div ng-if="(type=='split') && (splitDate==false)">
+                    <md-input-container>
+                        <label>Split</label>
+                        <input ng-model="split.no" ng-change="splitChange(split.no)">
+                    </md-input-container>
+                    <div id="myDiv" flex>
+                    </div>
+                    <!-- <div id="textDiv" layout="row">
+              </div> -->
+                    <md-button type="submit" ng-click="splitFun(split)" class="md-raised md-primary">Split</md-button>
+                </div>
+                <!-- ////////////////////////////////////// -->
+                <!-- //////////////split/////////////////// -->
+
+                <div ng-if="type=='create'" layout="row" flex>
+                  <md-input-container >
+                        <label>Type</label>
+                        <md-select ng-model="createType" required ng-change="createTypeChange(createType)">
+                           <!-- <md-option value="start">Create in the starting</md-option> -->
+                           <!-- <md-option value="end">Create at the End</md-option> -->
+                           <md-option value="0" ng-selected="true">Select</md-option>
+                           <md-option value="inbetween">Inbetween</md-option>
+                        </md-select>
+                    </md-input-container>
+                    <div ng-if="createType=='inbetween'" flex>
+                        <label>After</label>
+                       <md-input-container >
+                            <label>Type</label>
+                            <md-select ng-model="createAfterType" ng-readonly="true">
+                               <md-option ng-repeat="item in processes | filter: { processType: 'process' }" ng-value="item.id" ng-selected="rightClickTask == item.id">{{item.processName}}</md-option>
+                               
+                            </md-select>
+                            <!-- <input ng-model="processticket.processahead" readonly> -->
+                        </md-input-container>
+                        <label>Before</label>
+                       <md-input-container >
+                            <label>Type</label>
+                            <md-select ng-model="createBeforeType" required ng-change="createBeforeTypeChange(createBeforeType)">
+                               <md-option ng-repeat="item in sucessProcess" ng-value="item">{{item.processName}}</md-option>
+                               
+                            </md-select>
+                        </md-input-container>&nbsp; &nbsp; &nbsp;
+
+                        <md-input-container>
+                                  <label>Machine</label>
+                                   <input ng-model="createBeforeType.machine.name">
+                                   
+                        </md-input-container>
+
+                         <md-input-container>
+                                  <label>Vendor Name</label>
+                                    <input ng-model="createBeforeType.machine.vendor">
+                                   
+                        </md-input-container>
+
+                    </div>
+                </div>
+                <!-- ////////////////////////////////////// -->
+                <!-- rinsha -->
+                <div ng-if="(splitDate==true) && (taskClick=='double')">
+                    <md-input-container>
+                        <label> Mtrs</label>
+                        <input ng-model="processticket.mtrs" required="">
+                        <div ng-messages="processemjiggerdyeingform.currentDelay.$error">
+                            <div ng-message="required">This is required.</div>
+                        </div>
+                    </md-input-container>
+                    <md-input-container>
+                        <label>Process Start date </label>
+                        <input ng-model="processtartDate" md-placeholder="Enter Date" name="processStartDate" ng-focus="DyeingChange(processticket.mtrs)">
+                        <div ng-messages="processcabinetform.processStartDate.$error">
+                            <div ng-message="required">This is required.</div>
+                        </div>
+                    </md-input-container>
+                    <md-input-container>
+                        <label>Process End Date </label>
+                        <input ng-model="processEndDate" md-placeholder="Enter Date" name="processStartDate" ng-focus="DyeingChange()">
+                        <div ng-messages="processcabinetform.processStartDate.$error">
+                            <div ng-message="required">This is required.</div>
+                        </div>
+                    </md-input-container>
+                    <br>
+                    <md-button class="md-raised md-primary" ng-click="SaveAfterSplit(processticket)">Save</md-button>
+                    <md-button class="md-raised md-primary" ng-click="cancelAfterSplit()">Cancel</md-button>
+                </div>
+                <!-- ///////////////////////////////////////////////////////////////////////// -->
+                <div ng-show="(taskClick=='button') || (type=='create')">
+                    <md-input-container>
+                        <label>Work Center</label>
+                        <md-select ng-model="workCenter" ng-change="selectChange(workCenter)" required>
+                            <md-option ng-repeat="workcenter in workcenters" ng-value="workcenter" ng-selected="workcenter.name.toLowerCase() == 'stores'">{{workcenter.name}}</md-option>
+                            <!--  <md-option value="final" ng-show="finalShow">Final QC</md-option> -->
+                        </md-select>
+                    </md-input-container>
+                <div ng-show="workCenter.name.toLowerCase() == 'dyeing'" layout="row" layout-padding style="height:50px;">
+                        <div >
+                            <label>Select Dyeing</label>
+                            <select ng-options="item as item.name for item in dyeingProcess track by item.name" ng-model="DyeingsubTypeCreate">
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div ng-show="workCenter.name.toLowerCase()=='weaving'">
+                    <div ng-include="'templates/Processes/Weaving.html'"></div>
+                </div>
+<!-- 
+                <div ng-show="workCenter.name.toLowerCase()=='stores'">
+                    <div ng-include="'templates/Processes/Stores.html'"></div>
+                </div> -->
+                <div ng-show="workCenter.name.toLowerCase()=='finishing'">
+                    <div ng-include="'templates/Processes/Finishing.html'"></div>
+                </div>
+                <div ng-show="workCenter.name.toLowerCase()=='embroidery'">
+                    <div ng-include="'templates/Processes/Embroidery.html'"></div>
+                </div>
+                <div ng-show="workCenter.name.toLowerCase()=='printing'">
+                    <div ng-include="'templates/Processes/Printing.html'"></div>
+                </div>
+
+                <div ng-show="workCenter.name.toLowerCase() =='stiching'">
+                    <div ng-include="'templates/Processes/Stitching.html'"></div>
+                </div>
+                <div ng-show="DyeingsubTypeCreate.name=='Jigger_Dyeing' && workCenter.name.toLowerCase()=='dyeing'" >
+                    <div ng-include="'templates/Processes/Jigger.html'"></div>
+                </div>
+                <div ng-show="DyeingsubTypeCreate.name=='Vat_Dyeing' && workCenter.name.toLowerCase()=='dyeing'">
+                    <div ng-include="'templates/Processes/Vat.html'"></div>
+                </div>
+                <div ng-show="workCenter.name.toLowerCase() =='outright'">
+                    <div ng-include="'templates/Processes/Outright.html'"></div>
+                </div>
+                <div ng-show="workCenter.name.toLowerCase() == 'accessories'">
+                    <div ng-include="'templates/Processes/Accessories.html'"></div>
+                </div>
+
+            </md-tab>
+
+             <md-tab label="Schedule" data-ng-if="showTab==true" md-active="showTab">
+          <md-button class="md-raised md-primary" ng-click="schedulemachine(scheduleDuration)">Schedule</md-button>
+          <md-button class="md-raised md-primary" ng-click="cancelAfterSplit()">Cancel</md-button>
+            <md-input-container>
+              <label>Filter Machines By vendor</label>
+              <md-select ng-model="vendor" required ng-change="vendorChange(vendor)">
+              <md-option ng-repeat="vendor in vendors" ng-value="vendor">{{vendor.name}}</md-option>
+             <!--    <md-option ng-value="all">all vendors</md-option>
+                 <md-option ng-value="nearestavailable">Filter by Nearest avialable Date</md-option> -->
+              </md-select>
+          </md-input-container> 
+             <md-content ng-show="movemachine">
+
+             <md-content ng-show="qcschedule">
+               <label>Distribute QC tickets to Multiple Machines</label> </br></br>
+                <label>Pick Machines</label>
+                <md-select ng-model="machine" required  multiple>
+                <md-option ng-repeat="machine in machines" ng-value="machine">{{machine.name}}</md-option>
+                </md-select>
+                 <md-button class="md-raised md-primary"  ng-click="distributeQCTicket(machine)">Distribute QC tickets to Multiple Machines</md-button> 
+            </md-content>    
+            </br></br>
+
+            <!-- .......................... rinsha's changes.................................. -->
+             <!-- <h>Allot This process to a new machine</h></br></br>
+             <label>Pick Your workcentervendor</label>
+             
+           <md-select ng-model="selectedworkcentervendor" ng-change="workcentervendorOnChange(selectedworkcentervendor)"><md-option  ng-value="workcentervendor" ng-repeat="workcentervendor in dialogData.workcentervendors">{{workcentervendor.displayName}}</md-option></md-select>
+           </br>
+            <div ng-if="selectedworkcentervendor.type=='Internal'">
+               <label>Pick Your Machine</label></br>
+               <md-select ng-model="selectedmachine" ng-change="machineOnChange(selectedmachine)"><md-option  ng-value="machine" ng-repeat="machine in dialogData.machines">{{machine.name}}</md-option></md-select>
+            </div>
+           <md-button class="md-raised md-primary"  ng-click="MoveToNewMachine(selectedworkcentervendor)">Move To New Machine</md-button> -->
+
+
+           <h>Allot This process to a new machine</h></br></br>
+             <label>Pick Your workcentervendor</label>
+
+             <md-select ng-model="selectedworkcentervendor" ng-change="workcentervendorOnChange(selectedworkcentervendor)"><md-option  ng-value="workcentervendor" ng-repeat="workcentervendor in dialogData.workcentervendors">{{workcentervendor.displayName}}</md-option></md-select>
+           </br>
+           
+               <label>Pick Your Machine</label></br>
+               <md-select ng-model="selectedmachine" ng-change="machineOnChange(selectedmachine)"><md-option  ng-value="machine.id" ng-repeat="machine in dialogData.machines">{{machine.name}}</md-option></md-select>
+            
+           <md-button class="md-raised md-primary"  ng-click="MoveToNewMachine(selectedworkcentervendor)">Move To New Machine</md-button>
+
+
+            </md-content>
+
+
+
+           <md-input-container>
+                      <label>Duration</label>
+                     <!-- <input ng-model="scheduleDuration" required ng-change="scheduleDurationChange(scheduleDuration)"> -->
+            </md-input-container>
+          <!-- <div ng-if="eventsData!=null"> -->
+                <div data="eventsData" dhx-scheduler-schedule style='width:100%; height:300px;'>
+                      <div class="dhx_cal_prev_button">&nbsp;</div>
+                      <div class="dhx_cal_next_button">&nbsp;</div>
+                      <!-- <div class="dhx_cal_today_button"></div> -->
+                     <!--  <div class="dhx_cal_tab" name="timeline_tab" style="right:280px;"></div> -->
+                      <div class="dhx_cal_date"></div>
+                      <!-- <div class="dhx_cal_tab" name="day_tab" style="right:204px;"></div>
+                      <div class="dhx_cal_tab" name="week_tab" style="right:140px;"></div>
+                      <div class="dhx_cal_tab" name="month_tab" style="right:76px;"></div> -->    
+
+                      <div dhx-template="event_bar_text">
+                        <strong>#{{event.id}}</strong>: {{event.text | uppercase}}
+                      </div>
+                  </div>
+
+
+                  <!-- <div id="my_form" style="display:none"> -->
+                  <div id="my_form">
+                    <label for="description">Event text </label><input type="text" name="description" value="" id="description"><br>
+                    <label for="duration">Duration </label><input type="text" name="duration" value="" id="duration"><br>
+                    <input type="button" name="save" value="Save" id="save" style='width:100px;' ng-click="save_form()">
+                    <input type="button" name="close" value="Close" id="close" style='width:100px;' ng-click="close_form()">
+                    
+                  </div>
+
+              <!-- </div> -->
+
+          </md-tab>
+
+          <md-tab label="Duration Change" data-ng-if="showDurationChange==true">
+                <md-radio-group ng-model="duration.DurationIncDec">
+                  <md-radio-button value="increment" class="md-primary">Increment</md-radio-button>
+                  <md-radio-button value="decrement"> Decrement </md-radio-button>
+                </md-radio-group>
+                <md-input-container>
+                        <label>Duration</label>
+                     <input ng-model="duration.DurationChange">
+                </md-input-container>
+                <br>
+                <md-button class="md-raised md-primary"  ng-click="DurationChangeClcik(duration)">Save</md-button>
+          </md-tab>
+
+    </md-dialog-content>
+</md-dialog>

@@ -1,0 +1,353 @@
+<div ng-controller="vatController">
+    <div layout="row" layout-padding style="height:50px;">
+        <div flex>
+            <md-input-container>
+                <label>Job Order for Full Qty</label>
+                <md-select name="type" ng-model="processticket.jobOrder" required>
+                    <md-option value="Full">Full</md-option>
+                    <md-option value="Part">Part</md-option>
+                </md-select>
+                <div ng-messages="procesvatdyeingform.vendorname.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+        </div>
+        <div flex="16">
+            <md-input-container>
+                <label>Process Start date </label>
+                <input ng-model="processtartDate" md-placeholder="Enter Date" name="processStartDate" ng-focus="DyeingChange(processticket.mtrs)">
+                <div ng-messages="processcabinetform.processStartDate.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+        </div>
+        <div flex="31">
+            <md-input-container>
+                <label>Duration</label>
+                <input ng-model="processticket.duration" required>
+                <div ng-messages="processcabinetform.vendorname.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+        </div>
+    </div>
+    <div layout="row" layout-padding style="height:50px;">
+        <div flex="1">
+            <md-input-container>
+                <label>Process End Date </label>
+                <input ng-model="processEndDate" md-placeholder="Enter Date" name="processStartDate" ng-focus="DyeingChange()">
+                <div ng-messages="processcabinetform.processStartDate.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+        </div>
+        
+    </div>
+    
+    <br>
+    <div layout="row" layout-padding style="height:20px;">
+      
+        <div flex="20">
+            <label style="font-weight:bold">Warp</label>
+        </div>
+        <div flex="20">
+            <md-icon style="cursor:pointer" ng-click="AddMore('warp')"><i class="material-icons">note_add</i></md-icon>
+        </div>
+    </div>
+    
+    <div layout="row" layout-padding style="height:50px;" ng-repeat="warp in processticket.WarpRow">
+    
+        <div flex>
+            <md-input-container>
+                <label>Warp</label>
+                 <input ng-model="warp.warp" required>
+                
+            </md-input-container>
+        </div>
+        <div flex>
+            <md-input-container>
+                <label>Lots</label>
+                <input ng-model="warp.lots" required>
+                <div ng-messages="processcabinetform.vendorname.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+        </div>
+        <div flex>
+            <md-input-container>
+                <label> Bundles</label>
+                <input ng-model="warp.bundles" required>
+                <div ng-messages="processcabinetform.currentDelay.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+        </div>
+        <div flex>
+            <md-input-container>
+                <label>Type</label>
+                <md-select name="type" ng-model="warp.types" required>
+                    <md-option value="Peroxide">Peroxide</md-option>
+                    <md-option value="Dyeing">Dyeing</md-option>
+                    <md-option value="Boiling">Boiling </md-option>
+                </md-select>
+                <div ng-messages="processcabinetform.currentDelay.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+        </div>
+    
+        <div flex>
+            <md-input-container>
+                <label>Tie N Dye Lots</label>
+                <input ng-model="warp.tiendyelots" required>
+                <div ng-messages="procesvatdyeingform.processStartDate.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+        </div>
+        <div flex>
+            <md-input-container>
+                <label> Tie N Dye Bundles</label>
+                <input ng-model="warp.tiendyebundles" required>
+                <div ng-messages="procesvatdyeingform.processStartDate.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+        </div>
+        <div flex>
+            <md-input-container>
+                <label>PO</label>
+                <input ng-model="warp.po" required>
+                <div ng-messages="processcabinetform.currentDelay.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+        </div>
+        <div flex>
+            <md-input-container>
+                <label>Line Item</label>
+                <input ng-model="warp.lineitem" required>
+                <div ng-messages="processcabinetform.currentDelay.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+        </div>
+    </div>
+   
+   
+   <div layout="row" layout-padding style="height:50px;">
+        <div flex="5">
+          
+        </div>
+    </div>
+    
+   <div layout="row" layout-padding style="height:20px;">
+      
+        <div flex="20">
+            <label style="font-weight:bold">Weft</label>
+        </div>
+        <div flex="20">
+            <md-icon style="cursor:pointer" ng-click="AddMore('weft')"><i class="material-icons">note_add</i></md-icon>
+        </div>
+    </div>
+    
+    <div layout="row" layout-padding style="height:50px;" ng-repeat="weft in processticket.WeftRow">
+    
+    
+        <div flex>
+            <md-input-container>
+                <label>Weft</label>
+                 <input ng-model="weft.weft" required>
+                
+            </md-input-container>
+        </div>
+
+        <div flex>
+            <md-input-container>
+                <label>Lots</label>
+                <input ng-model="weft.weftlots" required>
+                <div ng-messages="processcabinetform.vendorname.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+        </div>
+
+        <div flex>
+            <md-input-container>
+                <label> Bundles</label>
+                <input ng-model="weft.weftbundles" required>
+                <div ng-messages="processcabinetform.currentDelay.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+        </div>
+
+        <div flex>
+            <md-input-container>
+                <label>Type</label>
+                <md-select name="type" ng-model="weft.wefttype" required="">
+                    <md-option value="Peroxide">Peroxide</md-option>
+                    <md-option value="Dyeing">Dyeing</md-option>
+                    <md-option value="Boiling">Boiling </md-option>
+                </md-select>
+                <div ng-messages="processcabinetform.currentDelay.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+        </div>
+
+    
+        <div flex>
+            <md-input-container>
+                <label>Tie N Dye Lots</label>
+                <input ng-model="weft.wefttiendyelots" required>
+                <div ng-messages="procesvatdyeingform.processStartDate.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+        </div>
+
+        <div flex>
+            <md-input-container>
+                <label> Tie N Dye Bundles</label>
+                <input ng-model="weft.wefttiendyebundles" required>
+                <div ng-messages="procesvatdyeingform.processStartDate.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+        </div>
+
+    <div flex>
+            <md-input-container>
+                <label>PO</label>
+                <input ng-model="warp.po" required>
+                <div ng-messages="processcabinetform.currentDelay.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+        </div>
+        
+        <div flex>
+            <md-input-container>
+                <label>Line Item</label>
+                <input ng-model="warp.lineitem" required>
+                <div ng-messages="processcabinetform.currentDelay.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+        </div>
+
+        <div flex="5">
+          
+        </div>
+    </div>
+    
+    <div layout="row" layout-padding style="height:20px;">
+      
+        <div flex="20">
+            <label style="font-weight:bold">Emb Thread</label>
+        </div>
+        <div flex="20">
+            <md-icon style="cursor:pointer" ng-click="AddMore('embThread')"><i class="material-icons">note_add</i></md-icon>
+        </div>
+    </div>
+    
+    <div layout="row" layout-padding style="height:50px;" ng-repeat="embThread in processticket.EmbThreadRow">
+   
+        <div flex>
+            <md-input-container>
+                <label>Emb Thread</label>
+                <md-select name="type" ng-model="embThread.embthread" required="">
+                    <md-option value="a">a</md-option>
+                    <md-option value="b">b</md-option>
+                </md-select>
+                <div ng-messages="processcabinetform.processStartDate.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+        </div>
+        <div flex>
+            <md-input-container>
+                <label>Lots</label>
+                <input ng-model="embThread.emblots" required="">
+                <div ng-messages="processcabinetform.vendorname.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+        </div>
+        <div flex>
+            <md-input-container>
+                <label> Bundles</label>
+                <input ng-model="embThread.embbundles" required="">
+                <div ng-messages="processcabinetform.currentDelay.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+        </div>
+        <div flex>
+            <md-input-container>
+                <label>Type</label>
+                <md-select name="type" ng-model="embThread.embtypes" required="">
+                    <md-option value="Peroxide">Peroxide</md-option>
+                    <md-option value="Dyeing">Dyeing</md-option>
+                    <md-option value="Boiling">Boiling </md-option>
+                </md-select>
+                <div ng-messages="processcabinetform.currentDelay.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+        </div>
+    
+        <div flex>
+            <md-input-container>
+                <label>Tie N Dye Lots</label>
+                <input ng-model="embThread.embtiendyelots" required>
+                <div ng-messages="procesvatdyeingform.processStartDate.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+        </div>
+        <div flex>
+            <md-input-container>
+                <label> Tie N Dye Bundles</label>
+                <input ng-model="embThread.embtiendyebundles" required>
+                <div ng-messages="procesvatdyeingform.processStartDate.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+        </div>
+        <div flex>
+            <md-input-container>
+                <label>PO</label>
+                <input ng-model="warp.po" required>
+                <div ng-messages="processcabinetform.currentDelay.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+        </div>
+        <div flex>
+            <md-input-container>
+                <label>Line Item</label>
+                <input ng-model="warp.lineitem" required>
+                <div ng-messages="processcabinetform.currentDelay.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+        </div>
+  
+   </div>
+    
+    <div layout="row" layout-padding style="height:50px;">
+        <div flex="5">
+          
+        </div>
+    </div>
+    
+    <div layout="row" layout-padding style="height:50px;">
+    	<!-- Updated By Ramesh -->
+        <!--md-button class="md-raised md-primary" ng-click="$scope.StoreAdd(workCenter,processticket)">Save</md-button-->
+        <md-button ng-show="processticket.id === undefined" class="md-raised md-primary" ng-click="addProcessTicket(processticket)">Save</md-button>
+        <md-button ng-show="processticket.id !== undefined" class="md-raised md-primary" ng-click="saveProcessTicket(processticket)">Save Exist</md-button>
+    </div>
+</div>
+</div>

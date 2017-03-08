@@ -1,0 +1,365 @@
+
+<!doctype html>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<title>Twomot Scheduler Matrix</title>
+</head>
+	<script src='lib/scheduler/dhtmlxscheduler.js' type="text/javascript" charset="utf-8"></script>
+	<script src='lib/scheduler/dhtmlxscheduler_timeline.js' type="text/javascript" charset="utf-8"></script>
+	<script src='lib/scheduler/dhtmlxscheduler_tooltip.js' type="text/javascript" charset="utf-8"></script>
+	<script src='lib/scheduler/dhtmlxscheduler_collision1.js' type="text/javascript" charset="utf-8"></script>
+	
+	<link rel='stylesheet' type='text/css' href='lib/scheduler/matrix/dhtmlxscheduler.css'>
+	
+<style type="text/css" media="screen">
+	html, body{
+		margin:0px;
+		padding:0px;
+		height:100%;
+		overflow:scroll;
+	}	
+	.white_cell{
+		background-color:white;
+	}
+	.green_cell{
+		background-color:#95FF95;
+	}
+	.yellow_cell{
+		background-color:#FFFF79;
+	}
+	/*.red_cell{
+		background-color:#FF5353;
+	}*/
+	.red_cell{
+		background-color:#fff;
+	}
+/*.vivinput{
+  padding: 10px;
+  margin-left: 5px;
+  border: solid 1px #fff;
+  box-shadow: inset 1px 1px 2px 0 #707070;
+  transition: box-shadow 0.3s;
+}
+.vivinput:focus,
+.vivinput.focus {
+  box-shadow: inset 1px 1px 2px 0 #c9c9c9;
+}
+  .viv{ font-family:arial; font-size:small; font-weight:normal; text-decoration:none; padding-left: 15%;}
+  .viv1{ font-family:arial; font-size:small; font-weight:normal; text-decoration:none; padding:10px; float:left;}
+  .myButton {
+	-moz-box-shadow: 0px 10px 14px -7px #276873;
+	-webkit-box-shadow: 0px 10px 14px -7px #276873;
+	box-shadow: 0px 10px 14px -7px #276873;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #599bb3), color-stop(1, #408c99));
+	background:-moz-linear-gradient(top, #599bb3 5%, #408c99 100%);
+	background:-webkit-linear-gradient(top, #599bb3 5%, #408c99 100%);
+	background:-o-linear-gradient(top, #599bb3 5%, #408c99 100%);
+	background:-ms-linear-gradient(top, #599bb3 5%, #408c99 100%);
+	background:linear-gradient(to bottom, #599bb3 5%, #408c99 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#599bb3', endColorstr='#408c99',GradientType=0);
+	background-color:#599bb3;
+	-moz-border-radius:8px;
+	-webkit-border-radius:8px;
+	border-radius:8px;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:12px;
+	font-weight:bold;
+	padding:7px 12px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #3d768a;
+}
+.myButton:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #408c99), color-stop(1, #599bb3));
+	background:-moz-linear-gradient(top, #408c99 5%, #599bb3 100%);
+	background:-webkit-linear-gradient(top, #408c99 5%, #599bb3 100%);
+	background:-o-linear-gradient(top, #408c99 5%, #599bb3 100%);
+	background:-ms-linear-gradient(top, #408c99 5%, #599bb3 100%);
+	background:linear-gradient(to bottom, #408c99 5%, #599bb3 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#408c99', endColorstr='#599bb3',GradientType=0);
+	background-color:#408c99;
+}
+.myButton:active {
+	position:relative;
+	top:1px;
+}*/
+
+</style>
+
+<script type="text/javascript" charset="utf-8">
+	function init() {
+
+		/*Collision Prevention*/
+		scheduler.config.collision_limit = 2;
+		scheduler.locale.labels.matrix_tab = "Matrix"
+		scheduler.locale.labels.section_custom="Section";
+		scheduler.config.details_on_create=true;
+		scheduler.config.details_on_dblclick=true;
+		scheduler.config.xml_date="%Y-%m-%d %H:%i";
+		// scheduler.config.repeat_date = "%m/%d/%Y";
+		scheduler.config.include_end_by = true;
+		// scheduler.config.multi_day = true;
+		//brief_mode = true; 
+		/*tooltip*/
+		dhtmlXTooltip.config.className = 'dhtmlXTooltip tooltip'; 
+		dhtmlXTooltip.config.timeout_to_display = 50; 
+		dhtmlXTooltip.config.delta_x = 15; 
+		dhtmlXTooltip.config.delta_y = -20;
+		//var format=scheduler.date.date_to_str("%Y-%m-%d %H:%i"); 
+scheduler.templates.tooltip_text = function(start,end,event) {
+	var myStyle;
+	if(event.text=="Default Day")
+	{
+		myStyle="<b>Task:</b> "+event.text;
+	}
+	else if(event.text=="QC")
+	{
+		myStyle="<b>Task:</b> "+event.text;
+	}
+	else
+	{
+		 myStyle="<b>Task:</b> "+event.text+"<br/><br/><b>Order: 1</b><br/><b>Vendor: 2</b> <br/><b>Vendor Details: 1</b> <br/><b>Sales Order: 1</b> <br/><b>Design/Colour: 1</b> <br/><b>Quantity: 1</b><br/><b>Ex-Factory Date: 1</b><br/><b>Processor: 1</b><br/><b>Process Start Date: 1</b><br/><b>Process End Date: 1</b><br/><b>No of jobs ahead: 1</b><br/><b>No of days ahead: 1</b><br/><b>Current Delay : 1</b><br/><b>Estimated End Date: 1</b><br/><b>Current Quantity: 1</b><br/><b>workcenterID: 1</b>";
+	}
+
+	
+
+    return myStyle;
+};
+
+		
+		//===============
+		//Configuration
+		//===============
+
+		scheduler.templates.event_bar_text = function(start,end,event){
+			// console.log(event)
+		     // return event.color
+		     var myHtml;
+		    /* myHtml='<img src="image/ic_watch_later_black_24px.svg" style="width:95%;height:95%;align:left" align="right"></img>';*/
+		     /*myHtml='<div style="width:100%;height:100%;float:right"><img src="image/ic_watch_later_black_24px.svg" style="width:95%;height:95%;float:right"></img></div>';*/
+		     myHtml='<div style="width:100%;height:100%;margin-right:10%;border:1px;"><img src="lib/scheduler/matrix/imgs_flat/clock.png" "></img><span>'+event.text+'</span><p style="font-size: 9px;">'+event.start_date+'</p><p style="font-size: 9px;">'+event.end_date+'</p> </div>';
+		      return myHtml;
+		};
+
+		// scheduler.renderEvent = function(container, ev) {
+		// 	    var container_width = "150px"; // e.g. "105px"
+			 
+			    // move section
+			    /*var html = "<div class='dhx_event_move my_event_move' style='width: " + 
+			    container_width + "'></div>";
+			 
+			    // container for event's content
+			    html+= "<div class='my_event_body'>";
+			    html += "<span class='event_date'>";
+			    //two options here:show only start date for short events or start+end for long
+			    if ((ev.end_date - ev.start_date)/60000>40){//if event is longer than 40 minutes
+			        html += scheduler.templates.event_header(ev.start_date, ev.end_date, ev);
+			        html += "</span><br/>";
+			    } else {
+			        html += scheduler.templates.event_date(ev.start_date) + "</span>";
+			    }
+			    // displaying event's text
+			    html += "<span>" + scheduler.templates.event_text(ev.start_date,ev.end_date,ev)+
+			    "</span>" + "</div>";
+			 
+			    // resize section
+			    html += "<div class='dhx_event_resize my_event_resize' style='width: " +
+			    container_width + "'></div>";*/
+
+			   /* var html="<div style='color:red'><h4>aaaaaaaaa</h4></div>";
+			 
+			    container.innerHTML = html;
+			    return true; //required, true - display a custom form, false - the default form*/
+			// };
+
+
+
+		//scheduler.attachEvent("onTemplatesReady", function(){
+			    /*scheduler.templates.event_text=function(start,end,event){
+			        return '<img src="image/ic_watch_later_black_24px.svg">aaaa</img>';
+			    }*/
+			//}); 
+
+/*scheduler.templates.event_header = function(start,end,ev){
+            return scheduler.templates.event_date(start)+" - "+
+            scheduler.templates.event_date(end);
+            return '<h3>aaaa</h3>'
+};*/
+
+
+		// var sections=[
+		// 	{key:1, label:""},
+		// 	{key:2, label:"Section B"},
+		// 	{key:3, label:"Section C"},
+		// 	{key:4, label:"Section D"}
+		// ];
+		
+		/*scheduler.createTimelineView({
+			name:	"matrix",
+			x_unit:	"day",
+			x_date:	"%d %M",
+			x_step:	1,
+			x_size: 15,
+			y_unit:	sections,
+			y_property:	"section_id"
+		});*/
+		// scheduler.createTimelineView({
+		//     name:   "matrix",
+		//     x_unit: "day",
+		//     x_date: "%d %M",
+		//     x_step: 1,
+		//     x_size: 20,
+		//     //x_start: 20,
+		//     //x_length:   48,
+		//     y_unit: sections,
+		//     y_property: "section_id",
+		//     render:"bar"
+		// });
+		scheduler.createTimelineView({
+	     name:      "matrix",
+	     x_unit:    "day",
+	     x_date:    "%d %M",
+	     x_step:    1,
+	     x_size:    20,
+	     // x_start:   16,
+	     // x_length:  48,
+	     fit_events: 1,
+	     y_unit:
+	        [   {key:1, label:"Section A"},
+	            {key:2, label:"Section B"},
+	            {key:3, label:"Section C"},
+	            {key:4, label:"Section D"},  ],
+	     y_property:"section_id",
+	     render:    "bar"
+	});
+
+		
+		//===============
+		//Customization
+		//===============
+		scheduler.templates.matrix_cell_class = function(evs,x,y){
+			if (!evs) {
+				var day = x.getDay();
+				return (day==0 || day == 6) ? "yellow_cell" : "green_cell";
+			}
+			if (evs.length<3) return "white_cell";
+			if (evs.length<5) return "yellow_cell";
+			return "red_cell";
+		};
+		
+
+		scheduler.templates.matrix_scalex_class = function(date){
+			if (date.getDay()==0 || date.getDay()==6)  return "yellow_cell";
+			return "";
+		}
+	
+		//===============
+		//Data loading
+		//===============
+
+		// scheduler.config.lightbox.sections=[	
+		// 	{name:"description", height:130, map_to:"text", type:"textarea" , focus:true},
+		// 	{name:"custom", height:23, type:"select", options:sections, map_to:"section_id" },
+		// 	{name:"time", height:72, type:"time", map_to:"auto"}
+		// ]
+		
+		// scheduler.init('scheduler_here',new Date(2016,11,18),"matrix");
+		// scheduler.config.left_border = true;
+		scheduler.init('scheduler_here', new Date(2016,11,18), "matrix");
+		//scheduler.load("./data/units.xml");
+		/*var mySample=[
+				{ start_date: "2016-12-19 01:00", end_date: "2016-12-19 08:00", text:"Stores", section_id:1,color:"#D4AC0D"},
+				// { start_date: "2016-12-19 01:00", end_date: "2016-12-19 08:00", text:"QC", section_id:1,color:"#D4AC0D"},
+				{ start_date: "2016-12-20 01:00", end_date: "2016-12-20 08:00", text:"Dyeing", section_id:1,color:"#D4AC0D"},
+				{ start_date: "2016-12-21 01:00", end_date: "2016-12-21 08:00", text:"Default Day", section_id:1,color:"#DB7093"},
+				{ start_date: "2016-12-22 01:00", end_date: "2016-12-22 08:00", text:"Printing", section_id:1,color:"#D4AC0D",location:"Bangalore"},
+				{ start_date: "2016-12-23 01:00", end_date: "2016-12-23 08:00", text:"Default Day", section_id:1,color:"#DB7093"},
+				{ start_date: "2016-12-24 01:00", end_date: "2016-12-24 08:00", text:"Weaving", section_id:1,color:"#D4AC0D",location:"Shruthi Loom-1"},
+				{ start_date: "2016-12-25 01:00", end_date: "2016-12-25 08:00", text:"Final QC", section_id:1,color:"#D4AC0D"},
+
+
+			];
+			scheduler.parse(mySample,"json");*/
+			var mySample=[ 
+				{ start_date: "2016-12-19 01:00", end_date: "2016-12-20 18:00", text:"Stores", section_id:1,color:"#D4AC0D"},
+				{ start_date: "2016-12-21 01:00", end_date: "2016-12-21 23:00", text:"QC", section_id:1,color:"grey"},
+				{ start_date: "2016-12-22 01:00", end_date: "2016-12-23 18:00", text:"Dyeing", section_id:1,color:"#28B463"},
+				{ start_date: "2016-12-24 01:00", end_date: "2016-12-24 23:00", text:"QC", section_id:1,color:"grey"},
+				{ start_date: "2016-12-25 01:00", end_date: "2016-12-26 23:00", text:"Default Day", section_id:1,color:"#DB7093"},
+				{ start_date: "2016-12-27 01:00", end_date: "2016-12-28 18:00", text:"Printing", section_id:1,color:"#7D3C98",location:"Bangalore"},
+				{ start_date: "2016-12-29 01:00", end_date: "2016-12-29 23:00", text:"QC", section_id:1,color:"grey"},
+				{ start_date: "2016-12-30 01:00", end_date: "2016-12-31 23:00", text:"Default Day", section_id:1,color:"#DB7093"},
+				{ start_date: "2017-01-01 01:00", end_date: "2017-01-02 18:00", text:"Weaving", section_id:1,color:"red",location:"Shruthi Loom-1"},
+				{ start_date: "2017-01-03 01:00", end_date: "2017-01-03 23:00", text:"QC", section_id:1,color:"grey"},
+				{ start_date: "2017-01-04 01:00", end_date: "2017-01-05 18:00", text:"Final QC", section_id:1,color:"#3498DB"},
+				{ start_date: "2017-01-06 01:00", end_date: "2017-01-07 18:00", text:"Invoice", section_id:1,color:"#3333FF"},
+
+				{ start_date: "2016-12-19 01:00", end_date: "2016-12-20 18:00", text:"Stores", section_id:2,color:"#D4AC0D"},
+				{ start_date: "2016-12-21 01:00", end_date: "2016-12-24 23:00", text:"QC", section_id:2,color:"grey"},
+				{ start_date: "2016-12-22 01:00", end_date: "2016-12-26 23:00", text:"Default Day", section_id:2,color:"#DB7093"},
+				{ start_date: "2016-12-26 01:00", end_date: "2016-12-28 18:00", text:"Printing", section_id:2,color:"#7D3C98",location:"Bangalore"},
+				{ start_date: "2016-12-27 01:00", end_date: "2016-12-29 23:00", text:"QC", section_id:2,color:"grey"},
+				{ start_date: "2017-01-01 01:00", end_date: "2017-01-03 23:00", text:"QC", section_id:4,color:"grey"},
+				{ start_date: "2017-01-02 01:00", end_date: "2017-01-05 18:00", text:"Final QC", section_id:3,color:"green"},
+
+				{ start_date: "2016-12-27 01:00", end_date: "2016-12-28 18:00", text:"Printing", section_id:4,color:"red",location:"Bangalore"}
+			];
+			scheduler.parse(mySample,"json");
+
+			scheduler.attachEvent("onBeforeDrag", function (id, mode, e){
+			    //any custom logic here
+			    return false;
+			});
+
+
+	}
+</script>
+
+<body onload="init();">
+	<!-- <div class="viv"><div class="viv1">
+	<label>Process</label></div><div class="viv1">
+	<select ng-model="gantt.process" style="width: 170px; height: 25px;">    
+		<option value="">Choose</option>
+		<option value="Stores">Stores</option>
+		<option value="Dyeing">Dyeing</option>
+		<option value="Weaving">Weaving</option>
+		<option value="Printing">Printing</option>
+		<option value="Stiching">Stiching</option>
+		<option value="Invoice">Invoice</option>
+	</select></div>
+	<div class="viv1">
+	<label>Design</label></div><div class="viv1">
+	<input class="vivinput" type="text" ng-model="gantt.design">
+	</div><div class="viv1">
+	<label>Quantity</label>&nbsp;&nbsp;</div>
+	<div class="viv1"><input class="vivinput" type="text" ng-model="gantt.quantity">
+	</div><div class="viv1">
+	<label>Start Date</label></div><div class="viv1">
+	<input class="vivinput" type="text" ng-model="gantt.sDate">
+	</div><div class="viv1">
+	<label>Duration</label></div><div class="viv1">
+	<input class="vivinput" type="text" ng-model="gantt.duration">
+	</div>
+	 <div class="viv1"><button class="myButton" type="button" ng-click="addGantt(gantt)">ADD</button></div>
+	 <div class="viv1"><button class="myButton" type="button" ng-click="addGantt(gantt)">Save</button></div>
+	 </div> -->
+
+	<div id="scheduler_here" class="dhx_cal_container" style='width:100%; height:100%;'>
+		<div class="dhx_cal_navline">
+			<div class="dhx_cal_prev_button">&nbsp;</div>
+			<div class="dhx_cal_next_button">&nbsp;</div>
+			<div class="dhx_cal_today_button"></div>
+			<div class="dhx_cal_date" style="visibility:hidden"></div>
+			<div class="dhx_cal_tab" name="day_tab" style="right:204px;"></div>
+			<div class="dhx_cal_tab" name="week_tab" style="right:140px;"></div>
+			<div class="dhx_cal_tab" name="matrix_tab" style="right:280px;"></div>
+			<div class="dhx_cal_tab" name="month_tab" style="right:76px;"></div>
+		</div>
+		<div class="dhx_cal_header">
+		</div>
+		<div class="dhx_cal_data">
+		</div>		
+	</div>
+</body>

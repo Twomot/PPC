@@ -1,0 +1,33 @@
+<md-dialog flex="700">
+
+    <md-dialog-content flex="700">
+   
+<div>
+
+  <md-input-container>
+                 <label>Search</label>
+                 <input ng-model="search">
+     </md-input-container>
+</div>
+
+
+
+
+  <div layout="row" ng-show="search">
+  <div flex style="font-weight:bold">Plant</div>
+  <div flex style="font-weight:bold">Sales Order</div>
+ <div flex style="font-weight:bold">Ex-Factory Date</div> 
+  
+</div>
+
+     <div ng-repeat="MasterTicket in dialogData.tickets | filter: search">
+
+ <div layout="row" ng-click="navigateToJobTrain(MasterTicket)" style="cursor:pointer" ng-show="search"	>
+  <div flex>{{MasterTicket.plant}}</div>
+  <div flex>{{MasterTicket.salesorderNo}}</div>
+ <div flex>{{MasterTicket.exFactoryDate}}</div> 
+  	
+</div>
+     </div>
+     </md-dialog-content>
+ </md-dialog >

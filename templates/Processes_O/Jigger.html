@@ -1,0 +1,95 @@
+<div ng-controller="jiggerController">
+    <div layout="row" layout-padding style="height:50px;">
+        <div flex>
+            <md-input-container>
+                <label>Job Order for Full Qty</label>
+                <md-select name="type" ng-model="processticket.joborder" required="">
+                    <md-option value="Full">Full</md-option>
+                    <md-option value="Part">Part</md-option>
+                </md-select>
+            </md-input-container>
+        </div>
+        <div flex>
+            <md-input-container>
+                <label>Process Start date </label>
+                <input ng-model="processtartDate" md-placeholder="Enter Date" name="processStartDate" ng-focus="DyeingChange(processticket.mtrs)">
+                <div ng-messages="processcabinetform.processStartDate.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+        </div>
+        <div flex="1">
+            <md-input-container>
+                <label>Process End Date </label>
+                <input ng-model="processEndDate" md-placeholder="Enter Date" name="processStartDate" ng-focus="DyeingChange()">
+                <div ng-messages="processcabinetform.processStartDate.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+        </div>
+    </div>
+
+    <div layout="row" layout-padding style="height:50px;">
+        <div flex>
+            <md-input-container>
+                <label> First Time</label>
+                <input ng-model="processticket.firsttime" required>
+                
+            </md-input-container>
+        </div>
+        <div flex>
+            <md-input-container>
+                <label> Topping</label>
+                <input ng-model="processticket.topping" required="">
+              
+            </md-input-container>
+        </div>
+        <div flex>
+            <md-input-container>
+                <label> Fabric</label>
+                <input ng-model="processticket.fabric" required="">
+                
+            </md-input-container>
+        </div>
+        <div flex>
+            <md-input-container>
+                <label> Tape</label>
+                <input ng-model="processticket.tape" required="">
+                <div ng-messages="processemjiggerdyeingform.currentDelay.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+        </div>
+    </div>
+
+    <div layout="row" layout-padding style="height:20px;">
+      
+        <div flex="20">
+            <label>Base Fabric</label>
+        </div>
+        <div flex="20">
+            <md-icon style="cursor:pointer" ng-click="AddMore()"><i class="material-icons">note_add</i></md-icon>
+        </div>
+    </div>
+    <div layout="row" layout-padding style="height:50px;" ng-repeat="fabric in processticket.FabricRow">
+        
+            <md-input-container>
+                <label>From Stores</label>
+                <input ng-model="fabric.basefabric" required="">
+            </md-input-container>
+            <md-input-container>
+                <label>PO</label>
+                <input ng-model="fabric.FabricPo" required="">
+            </md-input-container>
+            <md-input-container>
+                <label>Line Item</label>
+                <input ng-model="fabric.FabricLineitem" required="">
+            </md-input-container>
+        
+    </div>
+    <br>
+    <div layout="row" layout-padding style="height:50px;">
+       <md-button ng-show="processticket.id == undefined" class="md-raised md-primary" ng-click="$parent.addProcessTicket(processticket)">Save New</md-button>
+    <md-button ng-show="processticket.id !== undefined" class="md-raised md-primary" ng-click="$parent.saveProcessTicket(processticket)">Save Exist</md-button>
+    </div>
+</div>

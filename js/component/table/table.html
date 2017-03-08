@@ -1,0 +1,69 @@
+<div ng-controller="tableController">
+  <md-button class="md-fab" ng-click="$ctrl.addtableevent();" ng-if="$ctrl.headings[0].model!='blackout'">Add</md-button>
+  <md-button class="md-primary md-raised" ng-click="$ctrl.deletetableevent()" ng-if="$ctrl.headings[0].model!='blackout'">Delete</md-button>
+
+   <md-button class="md-primary md-raised" ng-click="$ctrl.harthaltableevent()" ng-if="$ctrl.headings[0].model=='holiday'">Set Harthal Day</md-button>
+
+   <md-button class="md-primary md-raised" ng-click="$ctrl.blackouttableevent()" ng-if="$ctrl.headings[0].model=='machine'">Set BlackOut Day</md-button>
+   
+  <md-table-container>
+    <table md-table multiple>
+      <thead md-head>
+        <tr md-row>
+          <th md-column ng-repeat="heading in $ctrl.headings"><span>{{heading.title}}</span></th>
+          <th md-column> </th>
+        </tr>
+      </thead>
+      <tbody md-body>
+         <tr md-row ng-repeat="tabledata in $ctrl.tabledatas">
+          
+
+<td md-cell ng-if="$ctrl.headings[0].model=='holiday'" >{{tabledata.holidayname}}</td>
+<td md-cell ng-if="$ctrl.headings[0].model=='blackout' || ($ctrl.headings[0].model=='holiday')" >{{tabledata.from}}</td>
+
+<td md-cell ng-if="$ctrl.headings[0].model=='blackout' || $ctrl.headings[0].model=='holiday'" >{{tabledata.to}}</td>
+<td md-cell ng-if="$ctrl.headings[0].model=='holiday'" >{{tabledata.recursiveDays[0].name}}</td>
+
+          <td md-cell ng-if="tabledata.name!=null" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">{{tabledata.name}}</td>
+          <td md-cell ng-if="tabledata.email!=null" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">{{tabledata.email}}</td>
+          <td md-cell ng-if="tabledata.role!=null" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">{{tabledata.role}}</td>
+
+          <td md-cell ng-if="tabledata.workCenterRelation.name!=null" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">{{tabledata.workCenterRelation.name}}</td>
+           <td md-cell ng-if="tabledata.vendorRelation.name!=null" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">{{tabledata.vendorRelation.name}}</td>
+            <td md-cell ng-if="tabledata.locationRelation.name!=null" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">{{tabledata.locationRelation.name}}</td>
+             <td md-cell ng-if="(tabledata.type!=null) && ($ctrl.headings[0].modelname!='machine')" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">{{tabledata.type}}</td>
+
+              <td md-cell ng-if="(tabledata.workcenterrelation.name!=null)" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">{{tabledata.workcenterrelation.name}}</td>
+              <td md-cell ng-if="(tabledata.capacity!=null)" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">{{tabledata.capacity}}</td>
+              <td md-cell ng-if="(tabledata.plantrelation.name!=null)" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">{{tabledata.plantrelation.name}}</td>
+
+
+          
+         
+
+        
+          <!-- for plant -->
+          <td md-cell ng-if="tabledata.UserPlant.name!=null" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">{{tabledata.UserPlant.name}}</td>
+          
+          <!-- <td md-cell ng-if="$ctrl.headings[0].modelname=='vendor'" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">
+          <span ng-repeat="locationName in tabledata.locationID track by $index">{{locationName.name}} &nbsp;</span></td> -->
+          
+          <td md-cell layout="row" layout-align="end start">
+            <div>
+              <md-button class="md-secondary">
+                  <md-tooltip md-direction="left">
+                          Delete
+                  </md-tooltip>
+                  <md-icon class="material-icons" ng-style="{'font-size': '30px', height: '30px','color':'#cc0000'}" ng-click="$ctrl.deletetableclick(tabledata,$ctrl.selectedlist)">delete</md-icon>
+              </md-button>
+              <md-checkbox class="md-secondary" ng-click="$ctrl.toggletablelist(tabledata,$ctrl.selectedlist)"></md-checkbox>
+            </div>
+          </td>
+
+        </tr>
+      </tbody>
+    </table>
+  </md-table-container>
+  <md-divider></md-divider>
+
+</div>

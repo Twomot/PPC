@@ -1,0 +1,194 @@
+<div ng-controller="embroideryController">
+    <div layout="row" layout-padding style="height:50px;">
+        <div flex>
+            <md-input-container>
+                <label>Hand Embroidery</label>
+                <input ng-model="embroidary.handembroidary" required>
+            </md-input-container>
+        </div>
+        <div flex>
+            <md-input-container>
+                <label>CAD Embroidery</label>
+                <input ng-model="embroidary.cadembroidary" required>
+            </md-input-container>
+        </div>
+        <div flex>
+            <md-input-container>
+                <label>Job Order for Full Qty</label>
+                <md-select name="type" ng-model="embroidary.jobOrder" required>
+                    <md-option value="Full">Full</md-option>
+                    <md-option value="Part">Part</md-option>
+                </md-select>
+            </md-input-container>
+        </div>
+    </div>
+    <div layout="row" layout-padding style="height:50px;">
+        <div flex>
+            <md-input-container>
+                <label>Process Start date </label>
+                <input ng-model="processtartDate" md-placeholder="Enter Date" name="processStartDate" ng-focus="DyeingChange(processticket.mtrs)">
+                <div ng-messages="processcabinetform.processStartDate.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+        </div>
+        
+        <div flex>
+            <md-input-container>
+                <label>Process End Date </label>
+                <input ng-model="processEndDate" md-placeholder="Enter Date" name="processStartDate" ng-focus="DyeingChange()">
+                <div ng-messages="processcabinetform.processStartDate.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+        </div>
+        <div flex>
+            <md-input-container>
+                <label>Duration</label>
+                <input ng-model="embroidary.duration" required>
+                <div ng-messages="processembroiderryform.vendorname.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+        </div>
+    </div>
+    
+    
+    <div layout="row" layout-padding style="height:50px;">
+        <div flex>
+            <md-input-container>
+                <label> Fabric</label>
+                <input ng-model="embroidary.fabric" required>
+                <div ng-messages="processembroiderryform.currentDelay.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+        </div>
+        <div flex>
+            <md-input-container>
+                <label>Tape</label>
+                <md-select name="type" ng-model="embroidary.fabrictype" required>
+                    <md-option value="Peroxide">Peroxide</md-option>
+                    <md-option value="Dyeing">Dyeing</md-option>
+                    <md-option value="Boiling">Boiling </md-option>
+                </md-select>
+            </md-input-container>
+        </div>
+        <div flex>
+            <md-input-container>
+                <label>PO Number</label>
+                <input ng-model="embroidary.fabricponumber" required>
+                <div ng-messages="processembroiderryform.currentDelay.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+        </div>
+        <div flex>
+            <md-input-container>
+                <label>Line Item</label>
+                <input ng-model="embroidary.fabriclineitem" required>
+                <div ng-messages="processembroiderryform.currentDelay.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+        </div>
+    </div>
+    
+    <div layout="row" layout-padding style="height:50px;">
+        <div flex="10">
+            <label style="font-weight:bold">Base Fabric</label>
+        </div>
+        <div flex="10">
+            <md-icon style="cursor:pointer" ng-click="addMore('Fabric')"><i class="material-icons">note_add</i></md-icon>
+        </div>
+    </div>
+    
+    <div layout="row" layout-padding ng-repeat="fabric in processticket.Fabric" >
+    <div layout="row" layout-padding>
+        <div flex>
+            <md-input-container>
+                <label>From Stores</label>
+                <input ng-model="fabric.fromStores" required>
+            </md-input-container>
+        </div>
+        <div flex>
+            <md-input-container>
+                <label>Mtrs</label>
+                <input ng-model="fabric.mtrs" required>
+            </md-input-container>
+        </div>
+        <div flex>
+            <md-input-container>
+                <label> Dyed/RFP</label>
+                <input ng-model="fabric.dyed" required>
+            </md-input-container>
+        </div>
+    	<div flex>
+            <md-input-container>
+                <label>No of Screens/Block</label>
+                <input ng-model="fabric.noofscreens" required>
+            </md-input-container>
+        </div>
+    </div>
+    </div>
+    
+    <div layout="row" layout-padding style="height:50px;">
+        <div flex="10">
+            <label style="font-weight:bold">Thread</label>
+        </div>
+        <div flex="10">
+            <md-icon style="cursor:pointer" ng-click="addMore('Thread')"><i class="material-icons">note_add</i></md-icon>
+        </div>
+    </div>
+    <div layout="row" layout-padding ng-repeat="thread in processticket.Thread" >
+    <div layout="row" layout-padding>
+        <div flex>
+            <md-input-container>
+                <label>Thread</label>
+                <md-select name="type" ng-model="thread.thread">
+                    <md-option value="byvendor">By Vendor</md-option>
+                    <md-option value="byambadi">By Ambadi</md-option>
+                </md-select>
+                <div ng-messages="processembroiderryform.currentDelay.$error">
+                </div>
+            </md-input-container>
+        </div>
+        <div flex>
+            <md-input-container>
+                <label>Approved</label>
+                <md-select name="type" ng-model="thread.approved">
+                    <md-option value="yes">Yes</md-option>
+                    <md-option value="no">No</md-option>
+                </md-select>
+                <div ng-messages="processembroiderryform.currentDelay.$error">
+                </div>
+            </md-input-container>
+        </div>
+        <div flex>
+            <md-input-container>
+                <label>Bulk Purchase</label>
+                <md-select name="type" ng-model="thread.bulkpurchase">
+                    <md-option value="yes">Yes</md-option>
+                    <md-option value="no">No</md-option>
+                    <md-option value="available">Available </md-option>
+                    <md-option value="indyeing">In Dyeing </md-option>
+                </md-select>
+                <div ng-messages="processembroiderryform.currentDelay.$error">
+                </div>
+            </md-input-container>
+        </div>
+    </div>
+    </div>
+    <md-input-container>
+        <label>Other Accessories</label>
+        <input ng-model="embroidary.otheraccesories" required>
+        <div ng-messages="processembroiderryform.vendorname.$error">
+            <div ng-message="required">This is required.</div>
+        </div>
+    </md-input-container>
+    <br>
+    <!-- Updated By Ramesh -->
+    <!--md-button class="md-raised md-primary" ng-click="$scope.StoreAdd(workCenter,embroidary)">Save</md-button-->
+    <md-button ng-show="processticket.id === undefined" class="md-raised md-primary" ng-click="addProcessTicket(processticket)">Save</md-button>
+    <md-button ng-show="processticket.id !== undefined" class="md-raised md-primary" ng-click="saveProcessTicket(processticket)">Save Exist</md-button>
+</div>

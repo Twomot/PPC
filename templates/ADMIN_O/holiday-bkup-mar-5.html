@@ -1,0 +1,268 @@
+<table-component headings="headingArray" tabledatas="holidayData" selectedlist="selecteddata" addtableevent="addPopup()" deletetableevent="massDelete($event)" harthaltableevent="harthalPopup()" deletetableclick2="deleteFunction($event)" tableclick2="updatePopup()" toggletable2="toggleFun()"></table-component>
+
+
+<div style="visibility: hidden">
+    <div class="md-dialog-container" id="addDialogholiday">
+        <md-dialog flex="50">
+            <!-- <md-toolbar md-scroll-shrink> -->
+            <md-toolbar>
+                          <div class="md-toolbar-tools">
+                             <h2>
+                                <span>Add</span>
+                             </h2>
+                             <span flex></span>
+                          </div>
+             </md-toolbar>
+                
+
+                       <md-content layout-padding>
+                      
+                         <form name="projectAddForm" class="projectAddForm">
+                          <label >Recurring<input type="checkbox" ng-model="recurring"></label><br/>
+                           <md-content  ng-show="recurring">
+                           		<md-input-container class="md-block">
+                                <label >Name</label>
+	                                <input required name="holidayname" ng-model="holiday.holidayname" id="holidaynameId">
+	                                <div ng-messages="projectAddForm.holidayname.$error">
+	                                  <div ng-message="required">This is required.</div>
+	                                </div></br>
+	                              </md-input-container></br>
+	                              
+                                 <md-input-container ng-show="recurring">
+                                    <label >Year</label>
+                                    <md-select  ng-model="holiday.year" required>
+                                    <md-option ng-repeat="year in range" ng-value="year.year" >{{year.year}}</md-option>
+                                      </md-select>
+                                  </md-input-container> 
+                                 </br> <label>Recurring Week Days</label></br>
+                                   <md-content>
+                                <!--   <md-input-container ng-show="recurring"> -->
+                                       <label ng-repeat="day in weekdays">
+                                        <input
+                                          type="checkbox"
+                                          value="{{day.name}}"
+                                          ng-model="day.selected"
+                                        > {{day.name}}</p>
+                                      </label></br>
+                                       </md-content>
+                                 <!--  </md-input-container></br> -->
+                                   <md-content> </br>
+                                    <label >Recurring Date<input type="checkbox" ng-model="holiday.recurringdate"></label><br/>
+                               </md-content></br>
+                        <md-input-container ng-show="recurring">
+                           <md-datepicker  ng-model="holiday.recurringdateselected" md-placeholder="Enter Date"></md-datepicker></br>
+                        </md-input-container></br>
+                            </md-content>           
+                          <!--    </md-input-container></br> -->
+                             <md-input-container ng-show="!recurring" class="md-block">
+                                <label ng-show="!recurring">Name</label>
+                                <input required name="holidayname" ng-model="holiday.holidayname" id="holidaynameId">
+                                <div ng-messages="projectAddForm.holidayname.$error">
+                                  <div ng-message="required">This is required.</div>
+                                </div></br>
+                              </md-input-container></br>
+                              <md-input-container  ng-show="!recurring">
+                                   <md-datepicker  ng-model="holiday.from" md-placeholder="Enter  from date"></md-datepicker>
+                              </md-input-container></br>
+                               <md-input-container  ng-show="!recurring">
+                                  <md-datepicker ng-model="holiday.to" md-placeholder="Enter  to date"></md-datepicker></br>
+                            </md-input-container></br>
+
+                            
+
+                           
+
+
+                             <md-input-container>
+                              <label>Location</label>
+                              <md-select ng-model="holiday.locationID" required>
+
+                                 <md-option ng-repeat="location in locations" ng-value="location.id">{{location.name}}</md-option>
+                              </md-select>
+                            </md-input-container></br>
+
+
+
+
+                            <div>
+                              <md-button  type="submit" class="md-raised" ng-click="addholiday(holiday,projectAddForm.$invalid)">add</md-button>
+                              <md-button class="md-raised" ng-click="cancel('add',holiday)">Cancel</md-button>
+                            </div>
+                        
+                          </form>
+                         
+                      </md-content>
+          </md-dialog>
+    </div>
+</div> 
+
+<!-- <md-button class="md-raised md-primary" ng-click="setHarthalPopUp()">SET HARTHAL</md-button><br><br> -->
+
+<div style="visibility: hidden">
+      <div class="md-dialog-container" id="editDialogholiday">
+         <md-dialog flex="50">
+            <!-- <md-toolbar md-scroll-shrink> -->
+            <md-toolbar>
+                          <div class="md-toolbar-tools">
+                             <h2>
+                                <span>Edit</span>
+                             </h2>
+                             <span flex></span>
+                          </div>
+                       </md-toolbar>
+                       
+                       <form name="projectEditForm" class="projectEditForm">
+                       	<md-content  ng-show="holidayEdit.type==='RECURSIVE'" layout-padding>
+		                       		<md-input-container class="md-block">
+		                                <label >Name</label>
+			                                <input required name="holidayname" ng-model="holidayEdit.holidayname" id="holidaynameId">
+			                                <div ng-messages="projectEditForm.holidayname.$error">
+			                                  <div ng-message="required">This is required.</div>
+			                                </div>
+	                              </md-input-container></br>
+                                 <md-input-container >
+                                    <label >Year</label>
+                                    <md-select  ng-model="holidayEdit.year" required>
+                                    <md-option ng-repeat="year in range" ng-value="year.year" ng-disabled="selectdisabled">{{year.year}}</md-option>
+                                      </md-select>
+                                  </md-input-container> 
+                                 </br> <label>Recurring Week Days</label></br>
+                                   <md-content>
+                                       <label ng-repeat="day in weekdays">
+                                        <input type="checkbox" value="{{day.name}}" ng-model="day.selected" ng-disabled="selectdisabled"> {{day.name}}</p>
+                                      </label></br>
+                                       </md-content>
+                                       <md-input-container>
+                              <label>Location</label>
+                              <md-select ng-model="holidayEdit.locationID" required>
+                                 <md-option ng-repeat="location in locations" ng-value="location.id" ng-disabled="selectdisabled">{{location.name}}</md-option>
+                              </md-select>
+                            </md-input-container>
+
+                            <div>
+                              <md-button class="md-raised" ng-click="updateholidayclick(holidayEdit,projectEditForm.$invalid,buttonText)" type="submit">{{buttonText}}</md-button>
+                              <md-button class="md-raised" ng-click="cancel('edit')">Cancel</md-button>
+                            </div>
+                      </md-content>
+                      </form>
+                      <form name="projectEditForm1" class="projectEditForm1">              
+                       <md-content ng-show="holidayEdit.type!=='RECURSIVE'" layout-padding>
+                         
+
+                              <md-input-container class="md-block">
+                                <label>Name</label>
+                                <input required name="editholidayname" ng-model="holidayEdit.holidayname"  ng-readonly=editRead>
+                                <div ng-messages="projectEditForm.editholidayname.$error">
+                                  <div ng-message="required">This is required.</div>
+                                </div>
+                             </md-input-container>
+
+                              <md-datepicker ng-model="holidayEdit.from" md-placeholder="Enter from date" ng-disabled=dateDisable></md-datepicker>
+
+                             
+                              <md-datepicker ng-model="holidayEdit.to" md-placeholder="Enter  to date" ng-disabled=dateDisable></md-datepicker>
+                         
+                         <md-input-container>
+                              <label>Location</label>
+                              <md-select ng-model="holidayEdit.locationID" required>
+                                 <md-option ng-repeat="location in locations" ng-value="location.id" ng-disabled="selectdisabled">{{location.name}}</md-option>
+                              </md-select>
+                            </md-input-container>
+
+                            <div>
+                              <md-button class="md-raised" ng-click="updateholidayclick(holidayEdit,projectEditForm1.$invalid,buttonText)" type="submit">{{buttonText}}</md-button>
+                              <md-button class="md-raised" ng-click="cancel('edit')">Cancel</md-button>
+                            </div>
+                      </md-content>
+                      
+                      		
+                        
+                      </form>
+          </md-dialog>
+      </div>
+</div> 
+<!-- harthal dialog -->
+
+<div style="visibility: hidden">
+      <div class="md-dialog-container" id="addDialogharthal">
+         <md-dialog flex="50">
+            
+            <md-toolbar>
+                          <div class="md-toolbar-tools">
+                             <h2>
+                                <span>Set Harthal Day</span>
+                             </h2>
+                             <span flex></span>
+                          </div>
+                       </md-toolbar>
+                      
+                         <md-content layout-padding>
+                           <form name="projectAddForm" class="projectAddForm">
+                                <md-input-container>
+                                <label>Location</label>
+                                <md-select ng-model="harthal.locationID" required multiple>
+                                   <md-option ng-repeat="location in locations" ng-value="location">{{location.name}}</md-option>
+                                </md-select>
+                          </md-input-container>
+                    
+                          <md-datepicker ng-model="harthal.date" md-placeholder="Enter Date"></md-datepicker><br>
+                     
+
+                               <md-checkbox ng-model="harthal.check" aria-label="Checkbox 1">
+                        Include External Vendor
+                     </md-checkbox>
+
+                              <div>
+                                <md-button  type="submit" class="md-raised" ng-click="setHarthalDay(harthal,projectAddForm.$invalid)">SET HARTHAL</md-button>
+                                <md-button class="md-raised" ng-click="cancel('add',harthal)">Cancel</md-button>
+                              </div>
+                        
+                          </form>
+                          
+                      </md-content>
+          </md-dialog>
+      </div>
+</div>
+
+<!-- add dialog -->
+<!-- <div style="visibility: hidden">
+      <div class="md-dialog-container" id="addDialogharthal">
+         <md-dialog flex="50">
+            
+            <md-toolbar>
+                          <div class="md-toolbar-tools">
+                             <h2>
+                                <span>Set Harthal Day</span>
+                             </h2>
+                             <span flex></span>
+                          </div>
+                       </md-toolbar>
+                      
+                         <md-content layout-padding>
+                           <form name="projectAddForm" class="projectAddForm">
+                                <md-input-container>
+                                <label>Location</label>
+                                <md-select ng-model="harthal.locationID" required multiple>
+                                   <md-option ng-repeat="location in locations" ng-value="location">{{location.name}}</md-option>
+                                </md-select>
+                          </md-input-container>
+
+                    
+                          <md-datepicker ng-model="harthal.date" md-placeholder="Enter Date"></md-datepicker>
+                     
+                        </br>  </br>
+                               <md-checkbox ng-model="harthal.check" aria-label="Checkbox 1">
+                        Include External Vendor
+                     </md-checkbox>
+
+                              <div>
+                                <md-button  type="submit" class="md-raised" ng-click="setHarthalDay(harthal,projectAddForm.$invalid)">Set Harthal</md-button>
+                                <md-button class="md-raised" ng-click="cancel('add',harthal)">Cancel</md-button>
+                              </div>
+                        
+                          </form>
+                          
+                      </md-content>
+          </md-dialog>
+      </div>
+</div>  -->

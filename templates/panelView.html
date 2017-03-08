@@ -1,0 +1,227 @@
+<style type="text/css">
+  md-tooltip .md-content {
+    height: auto;
+}
+</style>
+
+<style type="text/css">
+.popover {
+  position: absolute;
+  z-index: 100;
+}
+</style>
+
+<div layout="row"  layout-wrap ng-attr-dir="{{master.ltr}}"> 
+<div flex-xs flex-gt-xs="10" layout="column">
+  <md-card md-colors="::{background: '{{master.colourcode}}'}" ng-dblclick="clickFun(jsondata.masterDetails)">
+<md-icon style="margin-left:1%;cursor:pointer" ng-click="ViewMaster(jsondata.masterDetails)"><i class="material-icons">pageview</i></md-icon>        <md-tooltip md-direction="bottom">
+              Plant : {{jsondata.masterDetails.plant}}<br>
+              SalesOrder  : {{jsondata.masterDetails.salesorderNo}}<br>
+              Line Item No : {{jsondata.masterDetails.lineItemNo}}<br>
+          Customer POorCOD : {{jsondata.masterDetails.customerPOorCOD}}<br>
+              Design Name : {{jsondata.masterDetails.designname}}<br>
+              Material Group1 : {{jsondata.masterDetails.materialGroup1}}<br>
+              Material Group2 : {{jsondata.masterDetails.materialGroup2}}<br>
+              Ex-Factory Date : {{jsondata.masterDetails.exFactoryDate}}<br>
+              Current Process : {{jsondata.masterDetails.currentProcess}}<br>
+              no Of Process To go : {{jsondata.masterDetails.noOfProcessTogo}}<br>
+              Current Delay : {{jsondata.masterDetails.currentDelay}}<br>
+              Quantity    : {{jsondata.masterDetails.quantity}}<br>
+              Start Date  : {{jsondata.masterDetails.actualstartdate}}<br>
+              End Date  : {{jsondata.masterDetails.actualenddate}}
+        </md-tooltip>
+      
+
+      <md-card-content flex style="font-size:200%">
+        <p style="font-size:30%;margin-left:-10%;">
+          {{jsondata.masterDetails.salesorderNo}} <br>
+           {{jsondata.masterDetails.lineItemNo}} <br>
+            {{jsondata.masterDetails.customerPOorCOD}} <br> 
+            {{jsondata.masterDetails.exFactoryDate.split('T')[0]}}
+          <!-- <md-icon>
+            <i class="material-icons"></i>
+          </md-icon> -->
+        </p>
+      </md-card-content>
+    </md-card>
+  </div>
+
+
+<!-- <div ng-repeat="process in master.processes | limitTo:17:0" layout="column" > -->
+<div ng-repeat="process in jsondata | limitTo:17:0" layout="column" > 
+
+  <md-card ng-click="clickFun(master)" ng-style="process.mystyle">
+                  <md-tooltip md-direction="bottom">
+                        {{process.processName}}<br>
+                        VendorName  : {{process.vendorname}}<br>
+                        Start Date  : {{process.actualstartdate}}<br>
+                        End Date    : {{process.actualenddate}}
+<!--  Quantity    : {{process.quantity}}<br> -->
+                       <!--  SalesOrder  : {{process.salesorderNumber}}<br>
+                        Line Item No: {{process.lineItemNo}}<br> -->
+                  </md-tooltip>
+
+           <md-card-content flex style="font-size:200%" >
+                <p style="font-size:30%;margin-left:-10%;" ng-if="process.processType=='process'">
+                  {{process.processNameData}} 
+                  {{process.vendorname}}<br>
+                  {{process.actualstartdate.split('T')[0]}}<br>
+                  {{process.actualenddate.split('T')[0]}}
+                 <!--   {{process.quantity}}<br>
+                    {{process.salesorderNumber}} 
+                  {{process.lineItemNo}} <br>  -->
+                <md-icon ng-if="process.criticalpathstatus==true" layout-align="end end" layout="row">
+                <i class="material-icons">watch_later</i>
+              </md-icon>
+              <md-icon ng-if="process.criticalpathstatus==false">
+                <i class="material-icons"></i>
+              </md-icon>
+            </p>
+          </md-card-content>
+            <md-card md-colors="::{background: 'green'}" style="width:8%;height:5%;margin-left:80%" >
+            </md-card>
+    </md-card>
+</div>
+</div>
+<!-- <svg width="300px" height="400px" class="example" style="margin-left:80%;margin-top:-50%;margin-bottom:-35%;z-index:-5;position:absolute" ng-if="processLength > 17">
+   <defs>
+    <marker id="markerArrow" markerWidth="13" markerHeight="13" refX="2" refY="6"
+           orient="auto">
+        <path d="M2,2 L2,11 L10,6 L2,2" style="fill: #000000;" />
+    </marker>
+  </defs> 
+    <path d="M193,234 C262,273 247,325 186,363" fill='none' stroke='black' marker-end="url(#markerArrow)"/> 
+</svg> -->
+<svg width="300px" height="400px" class="example" style="z-index:-1;position:absolute;margin-left:80%;margin-top:-25%" ng-if="processLength > 17" opacity="1">
+   <defs>
+    <marker id="markerArrow" markerWidth="13" markerHeight="13" refX="2" refY="6"
+           orient="auto">
+        <path d="M2,2 L2,11 L10,6 L2,2" style="fill: #000000;" />
+    </marker>
+  </defs> 
+    <path d="M193,234 C262,273 247,325 186,363" fill='none' stroke='black' marker-end="url(#markerArrow)"/> 
+</svg>
+
+<div layout="row" ng-repeat="master in jsondata" layout-wrap ng-attr-dir="{{master.rtl}}" style="margin-right:5%"> 
+<div ng-repeat="process in master.processes | limitTo:19:17" layout="column">
+
+  <md-card ng-click="clickFun(master)" ng-style="process.mystyle">
+
+        <md-tooltip md-direction="bottom">
+              {{process.processName}}<br>
+              SalesOrder  : {{process.salesorderNumber}}<br>
+              Line Item No: {{process.lineItemNo}}<br>
+              VendorName  : {{process.vendorname}}<br>
+              Quantity    : {{process.quantity}}<br>
+              Start Date  : {{process.actualstartdate}}<br>
+              End Date    : {{process.actualenddate}}
+
+        </md-tooltip>
+           <md-card-content flex style="font-size:200%" >
+                <p style="font-size:30%;margin-left:-10%;" ng-if="process.processType=='process'">{{process.salesorderNumber}} {{process.lineItemNo}} <br> {{process.processNameData}} {{process.vendorname}}<br>{{process.quantity}}<br>{{process.actualstartdate.split('T')[0]}} {{process.actualenddate.split('T')[0]}}
+                <md-icon ng-if="process.criticalpathstatus==true" layout-align="end end" layout="row">
+                <i class="material-icons">watch_later</i>
+              </md-icon>
+              <md-icon ng-if="process.criticalpathstatus==false">
+                <i class="material-icons"></i>
+              </md-icon>
+            </p>
+          </md-card-content>
+    </md-card>
+</div>
+</div>
+
+<svg width="300px" height="400px" class="example" style="margin-left:-3%;margin-top:-20%;margin-bottom:-15%;z-index:-5;position:absolute" ng-if="processLength > 36">
+  <defs>
+    <marker id="markerArrow1" markerWidth="13" markerHeight="13" refX="2" refY="6"
+           orient="auto">
+        <path d="M2,2 L2,11 L10,6 L2,2" style="fill: #000000;" />
+    </marker>
+  </defs> 
+  <path d="M114,194 C38,218 29,292 98,297" fill='none' stroke='black' marker-end="url(#markerArrow1)"/>
+</svg>
+<!-- <canvas id="canvas1" width="500" height="500" style="margin-left:-3%;margin-top:-5%;margin-bottom:-35%;z-index:-5;position:absolute"></canvas> -->
+
+
+<div layout="row" ng-repeat="master in jsondata" layout-wrap ng-attr-dir="{{master.ltr}}" style="margin-left:5%"> 
+<div ng-repeat="process in master.processes | limitTo:18:36" layout="column">
+
+  <md-card ng-click="clickFun(master)" ng-style="process.mystyle">
+
+        <md-tooltip md-direction="bottom">
+              {{process.processName}}<br>
+              SalesOrder  : {{process.salesorderNumber}}<br>
+              Line Item No: {{process.lineItemNo}}<br>
+              VendorName  : {{process.vendorname}}<br>
+              Quantity    : {{process.quantity}}<br>
+              Start Date  : {{process.actualstartdate}}<br>
+              End Date    : {{process.actualenddate}}
+
+        </md-tooltip>
+           <md-card-content flex style="font-size:200%" >
+                <p style="font-size:30%;margin-left:-10%;" ng-if="process.processType=='process'">
+                  {{process.salesorderNumber}}
+                 {{process.lineItemNo}} <br>
+                  {{process.processNameData}} 
+                  {{process.vendorname}}<br>
+                  {{process.quantity}}<br>
+                  {{process.actualstartdate.split('T')[0]}}<br>
+                  {{process.actualenddate.split('T')[0]}}
+                <md-icon ng-if="process.criticalpathstatus==true" layout-align="end end" layout="row">
+                <i class="material-icons">watch_later</i>
+              </md-icon>
+              <md-icon ng-if="process.criticalpathstatus==false">
+                <i class="material-icons"></i>
+              </md-icon>
+            </p>
+          </md-card-content>
+    </md-card>
+</div>
+</div>
+
+<svg width="300px" height="400px" class="example" style="margin-left:80%;margin-top:-25%;z-index:-5;position:absolute" ng-if="processLength > 54">
+   <defs>
+    <marker id="markerArrow" markerWidth="13" markerHeight="13" refX="2" refY="6"
+           orient="auto">
+        <path d="M2,2 L2,11 L10,6 L2,2" style="fill: #000000;" />
+    </marker>
+  </defs> 
+  <path d="M172,236 C268,271 248,326 189,360" fill='none' stroke='black' marker-end="url(#markerArrow)"/>
+   <!-- <path d="M146,237 C268,271 248,326 189,360" fill='none' stroke='black' marker-end="url(#markerArrow)"/> -->
+</svg>
+
+<div layout="row" ng-repeat="master in jsondata" layout-wrap ng-attr-dir="{{master.rtl}}" style="margin-right:5%"> 
+<div ng-repeat="process in master.processes | limitTo:18:54" layout="column">
+
+  <md-card ng-click="clickFun(master)" ng-style="process.mystyle">
+
+        <md-tooltip md-direction="bottom">
+              {{process.processName}}<br>
+              SalesOrder  : {{process.salesorderNumber}}<br>
+              Line Item No: {{process.lineItemNo}}<br>
+              VendorName  : {{process.vendorname}}<br>
+              Quantity    : {{process.quantity}}<br>
+              Start Date  : {{process.actualstartdate}}<br>
+              End Date    : {{process.actualenddate}}
+
+        </md-tooltip>
+           <md-card-content flex style="font-size:200%" >
+                <p style="font-size:30%;margin-left:-10%;" ng-if="process.processType=='process'">{{process.salesorderNumber}} {{process.lineItemNo}} <br> {{process.processNameData}} {{process.vendorname}}<br>{{process.quantity}}<br>{{process.actualstartdate.split('T')[0]}} {{process.actualenddate.split('T')[0]}}
+                <md-icon ng-if="process.criticalpathstatus==true" layout-align="end end" layout="row">
+                <i class="material-icons">watch_later</i>
+              </md-icon>
+              <md-icon ng-if="process.criticalpathstatus==false">
+                <i class="material-icons"></i>
+              </md-icon>
+            </p>
+          </md-card-content>
+    </md-card>
+</div>
+</div>
+
+
+  <!--   <div layout="row" layout-sm="column" layout-align="space-around">
+      <md-progress-circular md-mode="indeterminate" ng-disabled="!activated" style="margin-top:100px"></md-progress-circular>
+    </div> -->
+
+  <canvas id="canvas1" width="500" height="500" ng-hide="true"></canvas>

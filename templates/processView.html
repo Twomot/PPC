@@ -1,0 +1,460 @@
+<style type="text/css">
+.highlighted_timespan {
+      background-color: #87cefa;
+      /*opacity:0.5;
+      filter:alpha(opacity=50);
+      cursor: pointer;
+      z-index: 0;*/
+    }
+.holiday_timespan{
+  background-color: red;
+}
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    /*left: 0;
+    top: 0;*/
+    left:0;
+    top: 10%;
+    width:100%;
+    height:50%;
+    /*width: 100%*/; /* Full width */
+    /*height: 100%;*/ /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    /*background-color: rgb(0,0,0);*/ /* Fallback color */
+    /*background-color: rgba(0,0,0,0.4);*/ /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+
+/*scheduler style*/
+
+ .dhx_cal_event_clear {
+          height:150px;
+          white-space: normal;
+          background-color:#1796b0;
+              color: #fff;
+                font-family: Tahoma;
+                font-size: 8pt;
+               /*font-style: italic;*/
+        }
+        .dhx_cal_event_line {
+          height:36px;
+        }
+
+        .dhx_scale_hour{
+          display: none;
+        }
+
+        .dhx_title{
+          display: none;
+
+        }
+        .dhx_footer{display:none;}
+
+        .dhx_scale_holder {
+          border-right: 1px solid #CECECE;
+      }
+</style>
+ 
+<md-tabs md-dynamic-height md-border-bottom md-selected="1">
+        <md-tab label="Details">
+        	<!-- {{masterData.salesorderNo}}
+          {{masterData}} -->
+
+       <!-- Plant:{{masterData.plant}} <br>
+        Sales Order No: {{masterData.salesorderNo}} <br>
+        Line Item No: {{masterData.LineItemNo}} <br>
+         
+       customer PO or COD: {{masterData.customerPOorCOD}} <br>
+          
+       Design Name : {{masterData.designName}} <br>
+          
+       colour code: {{masterData.colourcode}} <br>
+          
+        MaterialGroup1: {{masterData.materialGroup1}} <br>
+          
+        MaterialGroup2: {{masterData.materialGroup2}} <br>
+          
+        Quantity: {{masterData.quantity}} <br>
+          
+       Planed Start Date: {{masterData.planstartdate}} <br>
+          
+     Planed End Date: {{masterData.planenddate}} <br> -->
+
+     <md-content class="md-padding">   
+    <md-dialog-content width="100%">
+      <div class="md-dialog-content" >
+    
+    <div layout="row" style="padding:0px 10px 0px 10px;">
+  <div layout="column" style="padding:0px 80px 20px 0px;width:20%;">
+    <label>Plant:</label>
+  </div>
+   <div layout="column" style="padding:0px 10px 20px 0px;">
+    <label>{{masterData.plant}}</label> 
+  </div>
+  </div>
+  
+  <div layout="row" style="padding:0px 10px 0px 10px;">
+  <div layout="column" style="padding:0px 80px 20px 0px;width:20%;">
+    <label>Sales Order No:</label>
+  </div>
+   <div layout="column" style="padding:0px 10px 20px 0px;">
+    <label>{{masterData.salesorderNo}}</label> 
+  </div>
+  </div>
+
+<div layout="row" style="padding:0px 10px 0px 10px;">
+  <div layout="column" style="padding:0px 80px 20px 0px;width:20%;">
+    <label>Line Item No:</label>
+  </div>
+   <div layout="column" style="padding:0px 10px 20px 0px;">
+    <label>{{masterData.LineItemNo}}</label> 
+  </div>
+  </div>
+  
+  
+<div layout="row" style="padding:0px 10px 0px 10px;">
+  <div layout="column" style="padding:0px 80px 20px 0px;width:20%;">
+    <label>Customer PO or COD:</label>
+  </div>
+   <div layout="column" style="padding:0px 10px 20px 0px;">
+    <label>{{masterData.customerPOorCOD}}</label> 
+  </div>
+  </div>
+ 
+<div layout="row" style="padding:0px 10px 0px 10px;">
+  <div layout="column" style="padding:0px 80px 20px 0px;width:20%;">
+    <label>Design Name:</label>
+  </div>
+   <div layout="column" style="padding:0px 10px 20px 0px;">
+    <label>{{masterData.designName}}</label> 
+  </div>
+  </div>
+ 
+ <div layout="row" style="padding:0px 10px 0px 10px;">
+  <div layout="column" style="padding:0px 80px 20px 0px;width:20%;">
+    <label>Colour code:</label>
+  </div>
+   <div layout="column" style="padding:0px 10px 20px 0px;">
+    <label>{{masterData.colourcode}}</label> 
+  </div>
+  </div>  
+  
+  <div layout="row" style="padding:0px 10px 0px 10px;">
+  <div layout="column" style="padding:0px 80px 20px 0px;width:20%;">
+    <label>Material Group1:</label>
+  </div>
+   <div layout="column" style="padding:0px 10px 20px 0px;">
+    <label>{{masterData.materialGroup1}}</label> 
+  </div>
+  </div> 
+  
+  <div layout="row" style="padding:0px 10px 0px 10px;">
+  <div layout="column" style="padding:0px 80px 20px 0px;width:20%;">
+    <label>Material Group2:</label>
+  </div>
+   <div layout="column" style="padding:0px 10px 20px 0px;">
+    <label>{{masterData.materialGroup2}} </label> 
+  </div>
+  </div> 
+  
+    <div layout="row" style="padding:0px 10px 0px 10px;">
+  <div layout="column" style="padding:0px 80px 20px 0px;width:20%;">
+    <label>Quantity:</label>
+  </div>
+   <div layout="column" style="padding:0px 10px 20px 0px;">
+    <label>{{masterData.quantity}}</label> 
+  </div>
+  </div> 
+  
+    <div layout="row" style="padding:0px 10px 0px 10px;">
+  <div layout="column" style="padding:0px 80px 20px 0px;width:20%;">
+    <label>Planed Start Date:</label>
+  </div>
+   <div layout="column" style="padding:0px 10px 20px 0px;">
+    <label>{{masterData.planstartdate}}</label> 
+  </div>
+  </div> 
+  
+    <div layout="row" style="padding:0px 10px 0px 10px;">
+  <div layout="column" style="padding:0px 80px 20px 0px;width:20%;">
+    <label>Planed End Date:</label>
+  </div>
+   <div layout="column" style="padding:0px 10px 20px 0px;">
+    <label>{{masterData.planenddate}}</label> 
+  </div>
+  </div> 
+     <!-- </div>-->
+    </md-dialog-content> 
+      
+        </md-content>
+
+          
+
+
+
+
+         </md-tab>
+
+        <md-tab label="Schedule">
+
+  <!--       <md-button class="md-raised md-primary" ng-hide="role !='ownerplanner'" ng-click="addProcess($event)">Add Process</md-button> -->
+         <md-button class="md-raised md-primary" ng-click="saveSchedule()">Save Schedule</md-button><br><br>
+          <!-- <md-content class="md-padding" ng-controller="MainGanttCtrl"> -->
+            <!-- <div data="tasks" dhx-gantt style="height:300px; width:100%;">
+                <div gantt-template="task_text">
+                  <strong>#{{task.id}}</strong>: {{task.text | uppercase}}
+                </div>
+              </div> -->
+              <md-content class="md-padding" ng-if="drafttasks!=null">
+              <div data="drafttasks" dhx-gantt style="height:300px; width:100%;">
+                <div gantt-template="task_text">
+                  <strong>{{task.text | uppercase}}</strong>
+                </div>
+              </div> 
+          </md-content>
+
+
+
+           <!-- <md-content class="md-padding" ng-controller="MainSchedulerCtrl">
+                <div data="events" dhx-scheduler style="height:600px; width:800px;">
+                <div class="dhx_cal_prev_button">&nbsp;</div>
+                <div class="dhx_cal_next_button">&nbsp;</div>
+                <div class="dhx_cal_today_button"></div>
+                <div class="dhx_cal_date"></div>
+                <div class="dhx_cal_tab" name="day_tab" style="right:204px;"></div>
+                <div class="dhx_cal_tab" name="week_tab" style="right:140px;"></div>
+                <div class="dhx_cal_tab" name="month_tab" style="right:76px;"></div>    
+
+                <div dhx-template="event_bar_text">
+                  <strong>#{{event.id}}</strong>: {{event.text | uppercase}}
+                </div>
+              <div>
+          </md-content> -->
+          
+
+          <md-content class="md-padding" ng-if="eventsReschedule!=null">
+                <!-- <div data="events" dhx-scheduler style='width:100%; height:300px;' ng-show="scheduleShow"> -->
+                <div data="eventsReschedule" dhx-scheduler-reschedule style='width:100%; height:400px;' ng-show="scheduleShow">
+                  <div class="dhx_cal_prev_button">&nbsp;</div>
+                  <div class="dhx_cal_next_button">&nbsp;</div>
+                  <!-- <div class="dhx_cal_today_button"></div>
+                  <div class="dhx_cal_tab" name="timeline_tab" style="right:280px;"></div> -->
+                  <div class="dhx_cal_date"></div>
+                  <!-- <div class="dhx_cal_tab" name="day_tab" style="right:204px;"></div>
+                  <div class="dhx_cal_tab" name="week_tab" style="right:140px;"></div>
+                  <div class="dhx_cal_tab" name="month_tab" style="right:76px;"></div>  -->   
+
+                  <div dhx-template="event_bar_text">
+                    <strong>#{{event.id}}</strong>: {{event.text | uppercase}}
+                  </div>
+                </div>
+          </md-content>
+        </md-tab>
+        <md-tab label="Original Gantt">
+
+            <md-content class="md-padding" ng-if="tasks!=null">
+              <div data="tasks" dhx-gantt-original style="height:300px; width:100%;">
+                <div gantt-template="task_text">
+                  <strong>{{task.text | uppercase}}</strong>
+                </div>
+              </div> 
+          </md-content>
+        </md-tab>
+        <!-- <md-tab label="Audit History">
+            <md-content class="md-padding">
+      <div class="md-dialog-content" >
+    
+  <div layout="row" style="padding:0px 10px 0px 10px;">
+  <div layout="column" style="padding:0px 80px 20px 0px;">
+    <label><b>Date</b></label>
+  </div>
+   <div layout="column" style="padding:0px 0px 20px 45px;">
+    <label><b>Details</b></label> 
+  </div>
+  </div>
+  
+  <div layout="row" style="padding:0px 10px 0px 10px;">
+  <div layout="column" style="padding:0px 80px 20px 0px;">
+    <label>12/12/2016</label>
+  </div>
+   <div layout="column" style="padding:0px 0px 20px 0px;">
+    <label>Google is an American multinational technology company specializing in Internet-related services</label> 
+  </div>
+  </div>
+
+<div layout="row" style="padding:0px 10px 0px 10px;">
+  <div layout="column" style="padding:0px 80px 20px 0px;">
+    <label>12/12/2016</label>
+  </div>
+   <div layout="column" style="padding:0px 10px 20px 0px;">
+    <label>Google is an American multinational technology company specializing in Internet-related services</label> 
+  </div>
+  </div>  
+  
+<div layout="row" style="padding:0px 10px 0px 10px;">
+  <div layout="column" style="padding:0px 80px 20px 0px;">
+    <label>12/12/2016</label>
+  </div>
+   <div layout="column" style="padding:0px 10px 20px 0px;">
+    <label>Google is an American multinational technology company specializing in Internet-related services</label> 
+  </div>
+  </div>
+ 
+<div layout="row" style="padding:0px 10px 0px 10px;">
+  <div layout="column" style="padding:0px 80px 20px 0px;">
+    <label>12/12/2016</label>
+  </div>
+   <div layout="column" style="padding:0px 10px 20px 0px;">
+    <label>Google is an American multinational technology company specializing in Internet-related services</label> 
+  </div>
+  </div>
+ 
+  <div layout="row" style="padding:0px 10px 0px 10px;">
+  <div layout="column" style="padding:0px 80px 20px 0px;">
+    <label>12/12/2016</label>
+  </div>
+   <div layout="column" style="padding:0px 10px 20px 0px;">
+    <label>Google is an American multinational technology company specializing in Internet-related services</label> 
+  </div>
+  </div>  
+      </div>
+      
+        </md-content>
+
+
+
+        </md-tab> -->
+        <!--   <md-tab label="Draft Gantt">
+
+     
+              <md-content class="md-padding" ng-if="tasks!=null">
+              <div data="tasks" dhx-gantt style="height:300px; width:100%;">
+                <div gantt-template="task_text">
+                  <strong>{{task.text | uppercase}}</strong>
+                </div>
+              </div> 
+          </md-content>
+        </md-tab> -->
+      </md-tabs>
+
+
+      <!-- The Modal -->
+  <div id="myModal" class="modal">
+
+    <!-- Modal content -->
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <!-- <p>Some text in the Modal..</p> -->
+        <!-- <select ng-change="selectTypeChange(select)" ng-model="select">
+          <option ng-value="0">Select</option>
+          <option ng-value="split">Split</option>
+          <option ng-value="create">Create</option>
+        </select>  -->
+
+        <md-input-container>
+              <label>State</label>
+              <md-select ng-model="select" ng-change="selectTypeChange(select)">
+                <!-- <md-option>None</md-option> -->
+                <md-option value="0">Select</md-option>
+                <md-option value="split">Split</md-option>
+                <md-option value="create">Create</md-option>
+              </md-select>
+        </md-input-container>
+        <br><br>
+        <div id="createDiv" ng-show="createView">
+
+          <md-radio-group ng-model="afterorbefore">
+
+            <md-radio-button value="after" class="md-primary">After</md-radio-button>
+            <md-radio-button value="before"> Before </md-radio-button>
+
+          </md-radio-group>
+
+          <!-- <md-input-container>
+              <label>Process Name</label>
+              <input ng-model="p" required="">
+          </md-input-container> -->
+
+          <!-- <md-checkbox ng-checked="selected=='male'" ng-true-value="'male'" ng-model="selected" aria-label="Checkbox 1">
+            After
+          </md-checkbox>
+          <md-checkbox ng-checked="selected=='female'" ng-true-value="'female'" ng-model="selected" aria-label="Checkbox 2">
+            Before
+          </md-checkbox>
+          <md-checkbox ng-checked="selected=='other'" ng-true-value="'other'" ng-model="selected" aria-label="Checkbox 3">
+            Before
+          </md-checkbox> -->
+
+          <!--  <md-checkbox ng-checked="selected=='male'" ng-true-value="'male'" ng-model="selected">
+            Male
+          </md-checkbox>
+          <md-checkbox type="checkbox" ng-checked="selected=='female'" ng-true-value="'female'" ng-model="selected">
+            Female
+          </md-checkbox>
+          <md-checkbox ng-checked="selected=='other'" ng-true-value="'other'" ng-model="selected">
+            Other
+          </md-checkbox>
+
+                
+                    <input type="checkbox" ng-checked="selected=='male'" ng-true-value="'male'" ng-model="selected">Male
+                    <br>
+                    <input type="checkbox" ng-checked="selected=='female'" ng-true-value="'female'" ng-model="selected">Female
+                    <br>
+                    <input type="checkbox" ng-checked="selected=='other'" ng-true-value="'other'" ng-model="selected">Other -->
+                 
+        </div>
+
+
+
+        <!-- <div id="splitDiv" style="display:none;"> -->
+
+          <!-- <label>Split</label>
+          <input type="text" ng-model="split.no" ng-change="splitChange(split.no)">
+          <br><br>
+          <div id="myDiv">
+          </div>
+          <button type="submit" ng-click="splitFun(split)">Split</button> -->
+
+
+          <!-- <button type="submit" ng-click="ScheduleView()">Schedule</button><br>
+          <md-input-container ng-show="dyeingEnd">
+                               <label>Process end date </label>
+                               <md-datepicker ng-model="processEndDate" md-placeholder="Enter Date" name="processEndDate" id="processEndDateId"></md-datepicker>
+                            <div ng-messages="processcabinetform.processEndDate.$error">
+                                  <div ng-message="required">This is required.</div></div>
+          </md-input-container>
+          <md-input-container ng-show="dyeingEnd">
+                        <label>Duartion</label>
+                        <input ng-model="duration">
+                </md-input-container>
+          <md-button class="md-raised md-primary" ng-click="okClick()" ng-show="dyeingEnd">Ok</md-button> -->
+        <!-- </div> -->
+    </div>
+  </div>

@@ -1,0 +1,871 @@
+
+
+<md-dialog id="mdDialogprocess" flex>
+  <form>
+   
+    <md-dialog-content flex="100">
+    <md-tabs md-dynamic-height md-border-bottom flex="100">
+        <md-tab label="Dyeing Edit" md-active="!showTab">
+
+      
+            <md-input-container>
+                    <label>Type of Dyeing</label>
+                    <md-select name="type" ng-model="subType" required="">
+                        <md-option value="jigger" ng-selected="true">Jigger_Dyeing</md-option>
+                        <md-option value="vat">Vat_Dyeing</md-option>
+                        <md-option value="cabinet">Cabinet_Dyeing</md-option>
+                      </md-select>
+                    <div ng-messages="procesvatdyeingform.vendorname.$error">
+                        <div ng-message="required">This is required.</div></div>
+                </md-input-container> 
+
+          <div ng-if="subType=='jigger'">
+             <div layout="row" layout-padding>
+              <div flex> 
+                <md-input-container>
+                    <label>Job Order for Full Qty</label>
+                    <md-select name="type" ng-model="processEdit.joborder" ng-disabled="selectdisabled">
+                        <md-option value="Full">Full</md-option>
+                        <md-option value="Part">Part</md-option>
+                      </md-select>
+                    <div ng-messages="procesvatdyeingform.vendorname.$error">
+                        </div>
+                </md-input-container>
+              </div>
+           
+              <div flex="1">
+                <md-input-container>
+                    <label>Sales Order Creation Date</label>
+                    <md-datepicker ng-model="processEdit.creation" md-placeholder="Enter Date" ng-disabled=dateDisable></md-datepicker>
+                    <div ng-messages="processticket.noOfWeeks.$error">
+                    </div>
+                </md-input-container>
+              </div>  
+
+                <div flex>
+                  <md-input-container>
+                        <label>No of Processes Ahead</label>
+                      <input ng-model="processEdit.processahead"  ng-readonly=editRead>
+                       <div ng-messages="processemjiggerdyeingform.processStartDate.$error">
+                            </div>
+                </md-input-container>
+              </div>
+
+              <div flex>
+                <md-input-container>
+                        <label>No of Days to go</label>
+                     <input ng-model="processEdit.daystogo"  ng-readonly=editRead>
+                      <div ng-messages="processemjiggerdyeingform.vendorname.$error">
+                            </div>
+                </md-input-container>
+              </div>
+            </div>
+
+              <div layout="row" layout-padding>
+                <div flex>
+                 <md-input-container>
+                        <label>Current Delay </label>
+                     <input ng-model="processEdit.currentDelay"  ng-readonly=editRead>
+                      <div ng-messages="processemjiggerdyeingform.currentDelay.$error">
+                            </div>
+                </md-input-container>
+              </div>
+
+                <div flex>
+                 <md-input-container>
+                        <label> First Time</label>
+                     <input ng-model="processEdit.firsttime"  ng-readonly=editRead>
+                      <div ng-messages="processemjiggerdyeingform.currentDelay.$error">
+                            </div>
+                </md-input-container>
+              </div>
+
+                <div flex>
+                 <md-input-container>
+                        <label> Topping</label>
+                     <input ng-model="processEdit.topping"  ng-readonly=editRead>
+                      <div ng-messages="processemjiggerdyeingform.currentDelay.$error">
+                            </div>
+                </md-input-container>
+              </div>
+
+              <div flex> 
+                <md-input-container>
+                        <label> Fabric</label>
+                     <input ng-model="processEdit.fabric"  ng-readonly=editRead>
+                      <div ng-messages="processemjiggerdyeingform.currentDelay.$error">
+                            </div>
+                </md-input-container>
+              </div>
+            </div>
+
+              <div layout="row" layout-padding>
+                <div flex>
+                 <md-input-container>
+                        <label> Tape</label>
+                     <input ng-model="processEdit.tape"  ng-readonly=editRead>
+                      <div ng-messages="processemjiggerdyeingform.currentDelay.$error">
+                            </div>
+                </md-input-container>
+              </div>
+
+                <div flex>
+                 <md-input-container>
+                        <label>Base Fabric</label>
+                     <md-select name="type" ng-model="processEdit.basefabric"  ng-disabled="selectdisabled">
+                            <md-option value="Full">Full</md-option>
+                            <md-option value="Part">Part</md-option>
+                          </md-select>
+                      <div ng-messages="processemjiggerdyeingform.currentDelay.$error">
+                            </div>
+                </md-input-container>
+              </div>
+
+                <div flex>
+                 <md-input-container>
+                        <label> Mtrs</label>
+                     <input ng-model="processEdit.mtrs"  ng-readonly=editRead>
+                      <div ng-messages="processemjiggerdyeingform.currentDelay.$error">
+                            </div>
+                </md-input-container>
+              </div>
+
+              <div flex>
+                <md-input-container>
+                        <label> PO</label>
+                     <input ng-model="processEdit.po"  ng-readonly=editRead>
+                      <div ng-messages="processemjiggerdyeingform.currentDelay.$error">
+                            </div>
+                </md-input-container>
+              </div>
+            </div>
+
+            <div layout="row" layout-padding>
+              <div flex>
+                <md-input-container>
+                        <label> Line Item</label>
+                     <input ng-model="processEdit.lineitem"  ng-readonly=editRead>
+                      <div ng-messages="processemjiggerdyeingform.currentDelay.$error">
+                            </div>
+                  </md-input-container>
+                </div>
+            
+                      <div flex>
+                        <md-input-container>
+                               <label>Process Start date </label>
+                               
+                               <md-datepicker ng-model="processEdit.processStartDate" md-placeholder="Enter Date" ng-disabled=dateDisable></md-datepicker>                            
+                               <div ng-messages="processcabinetform.processStartDate.$error">
+                                  </div>
+                        </md-input-container>
+                      </div>
+
+                      <div flex="15">
+                        <md-input-container>
+                            <label>Duration</label>
+                            <input ng-model="processEdit.duration"  ng-readonly=editRead>
+                            <div ng-messages="processemjiggerdyeingform.vendorname.$error">
+                            </div>
+                        </md-input-container>
+                      </div>
+
+                      <div flex="30">
+                        <md-input-container>
+                               <label>Process End Date </label>
+                               
+                               <md-datepicker ng-model="processEdit.processEndDate" md-placeholder="Enter Date" ng-disabled=dateDisable></md-datepicker> 
+                            <div ng-messages="processcabinetform.processStartDate.$error">
+                                  </div>
+                        </md-input-container>
+                    </div>
+                  </div>
+              </div>
+                <!-- ////////////////////////////////////////vat/////////////////// -->
+      <div ng-if="subType=='vat'">
+                <div layout="row" layout-padding>
+              <div flex="1">
+                <md-input-container>
+                <label>Sales Order Creation Date</label>
+                <md-datepicker ng-model="processEdit.creation" md-placeholder="Enter Date" ng-disabled=dateDisable></md-datepicker>
+                <div ng-messages="processticket.noOfWeeks.$error">
+                </div>
+            </md-input-container>
+          </div>
+
+                  <div flex>
+                    <md-input-container>
+                        <label>Job Order for Full Qty</label>
+                        <md-select name="type" ng-model="processEdit.jobOrder"  ng-disabled="selectdisabled">
+                          <md-option value="a">a</md-option>
+                          <md-option value="b">b</md-option>
+                        </md-select>
+                        <div ng-messages="procesvatdyeingform.vendorname.$error">
+                        </div>
+                    </md-input-container>
+                  </div>
+
+                  <div flex="16">
+                    <md-input-container>
+                      <label>Process Start Date</label>
+                      <md-datepicker ng-model="processEdit.processStartDate" md-placeholder="Enter Date" ng-disabled=dateDisable></md-datepicker>
+                      <div ng-messages="processcabinetform.processStartDate.$error">
+                      </div>
+                  </md-input-container>
+                </div>
+
+                <div flex="31">
+                  <md-input-container>
+                      <label>Duration</label>
+                      <input ng-model="processEdit.duration"  ng-readonly=editRead>
+                      <div ng-messages="processcabinetform.vendorname.$error">
+                      </div>
+                  </md-input-container>
+                </div>
+              </div>
+
+              <div layout="row" layout-padding>
+                <div flex="1">
+                  <md-input-container>
+
+                      <label>Process End date </label>
+                      <md-datepicker ng-model="processEdit.processEndDate" md-placeholder="Enter Date" ng-disabled=dateDisable></md-datepicker>
+                      <div ng-messages="processcabinetform.processEndDate.$error">
+                      </div>
+                  </md-input-container>
+                </div>
+
+                <div flex>
+                  <md-input-container>
+                      <label>No of Processes Ahead</label>
+                      <input ng-model="processEdit.processahead"  ng-readonly=editRead>
+                      <div ng-messages="processcabinetform.processStartDate.$error">
+                      </div>
+                  </md-input-container>
+                </div>
+
+              <div flex>
+                <md-input-container>
+                    <label>No of Days to go</label>
+                    <input ng-model="processEdit.daystogo"  ng-readonly=editRead>
+                    <div ng-messages="processcabinetform.vendorname.$error">
+                    </div>
+                </md-input-container>
+              </div>
+
+              <div flex>
+                <md-input-container>
+                    <label>Current Delay </label>
+                    <input ng-model="processEdit.currentDelay"  ng-readonly=editRead>
+                    <div ng-messages="processcabinetform.currentDelay.$error">
+                    </div>
+                </md-input-container>
+              </div>
+            </div>
+
+            <div layout="row" layout-padding>
+              <div flex>
+                <md-input-container>
+                    <label>Warp</label>
+                    <md-select name="type" ng-model="processEdit.warp"  ng-disabled="selectdisabled">
+                        <md-option value="a">a</md-option>
+                        <md-option value="b">b</md-option>
+                    </md-select>
+                    <div ng-messages="processcabinetform.processStartDate.$error">
+                    </div>
+                </md-input-container>
+              </div>
+
+               <div flex>
+                <md-input-container>
+                    <label>Lots</label>
+                    <input ng-model="processEdit.lots"  ng-readonly=editRead>
+                    <div ng-messages="processcabinetform.vendorname.$error">
+                    </div>
+                </md-input-container>
+              </div>
+
+               <div flex>
+                <md-input-container>
+                    <label> Bundles</label>
+                    <input ng-model="processEdit.bundles"  ng-readonly=editRead>
+                    <div ng-messages="processcabinetform.currentDelay.$error">
+                    </div>
+                </md-input-container>
+              </div>
+
+             <div flex>
+              <md-input-container>
+                  <label>Type</label>
+                  <md-select name="type" ng-model="processEdit.types"  ng-disabled="selectdisabled">
+                    <md-option value="Peroxide">Peroxide</md-option>
+                    <md-option value="Dyeing">Dyeing</md-option>
+                    <md-option value="Boiling">Boiling  </md-option>
+               
+                  </md-select>
+                  <div ng-messages="processcabinetform.currentDelay.$error">
+                  </div>
+              </md-input-container>
+            </div>
+          </div>
+
+          <div layout="row" layout-padding>
+            <div flex>
+              <md-input-container>
+                  <label>Tie N Dye Lots</label>
+                  <input ng-model="processEdit.tiendyelots"  ng-readonly=editRead>
+                  <div ng-messages="procesvatdyeingform.processStartDate.$error">
+                  </div>
+              </md-input-container>
+            </div>
+
+            <div flex>
+              <md-input-container>
+                  <label> Tie N Dye Bundles</label>
+                  <input ng-model="processEdit.tiendyebundles"  ng-readonly=editRead>
+                  <div ng-messages="procesvatdyeingform.processStartDate.$error">
+                  </div>
+              </md-input-container>
+            </div>
+
+             <div flex>
+              <md-input-container>
+                  <label>PO</label>
+                  <input ng-model="processEdit.po"  ng-readonly=editRead>
+                  <div ng-messages="processcabinetform.currentDelay.$error">
+                  </div>
+              </md-input-container>
+            </div>
+
+             <div flex>
+              <md-input-container>
+                  <label>Line Item</label>
+                  <input ng-model="processEdit.lineitem"  ng-readonly=editRead>
+                  <div ng-messages="processcabinetform.currentDelay.$error">
+                  </div>
+              </md-input-container>
+            </div>
+          </div>
+
+          <div layout="row" layout-padding>
+            <div flex>
+              <md-input-container>
+                  <label>Weft</label>
+                  <md-select name="type" ng-model="processEdit.weft"  ng-disabled="selectdisabled">
+                    <md-option value="a">a</md-option>
+                    <md-option value="b">b</md-option>
+                  </md-select>
+                  <div ng-messages="processcabinetform.processStartDate.$error">
+                  </div>
+              </md-input-container>
+            </div>
+
+            <div flex>
+              <md-input-container>
+                  <label>Lots</label>
+                  <input ng-model="processEdit.weftlots"  ng-readonly=editRead>
+                  <div ng-messages="processcabinetform.vendorname.$error">
+                  </div>
+              </md-input-container>
+            </div>
+
+            <div flex>
+              <md-input-container>
+                  <label> Bundles</label>
+                  <input ng-model="processEdit.weftbundles"  ng-readonly=editRead>
+                  <div ng-messages="processcabinetform.currentDelay.$error">
+                  </div>
+              </md-input-container>
+            </div>
+
+            <div flex>
+              <md-input-container>
+                  <label>Type</label>
+                  <md-select name="type" ng-model="processEdit.wefttype"  ng-disabled="selectdisabled">
+                      <md-option value="Peroxide">Peroxide</md-option>
+                      <md-option value="Dyeing">Dyeing</md-option>
+                      <md-option value="Boiling">Boiling  </md-option>
+               
+                  </md-select>
+                  <div ng-messages="processcabinetform.currentDelay.$error">
+                  </div>
+              </md-input-container>
+            </div>
+          </div>
+
+          <div layout="row" layout-padding>
+             <div flex>
+              <md-input-container>
+                  <label>Tie N Dye Lots</label>
+                  <input ng-model="processEdit.wefttiendyelots"  ng-readonly=editRead>
+                  <div ng-messages="procesvatdyeingform.processStartDate.$error">
+                  </div>
+              </md-input-container>
+            </div>
+
+             <div flex>
+              <md-input-container>
+                  <label> Tie N Dye Bundles</label>
+                  <input ng-model="processEdit.wefttiendyebundles"  ng-readonly=editRead>
+                  <div ng-messages="procesvatdyeingform.processStartDate.$error">
+                  </div>
+              </md-input-container>
+            </div>
+
+             <div flex>
+              <md-input-container>
+                  <label>PO</label>
+                  <input ng-model="processEdit.weftpo"  ng-readonly=editRead>
+                  <div ng-messages="processcabinetform.currentDelay.$error">
+                  </div>
+              </md-input-container>
+            </div>
+
+             <div flex>
+              <md-input-container>
+                  <label>Line Item</label>
+                  <input ng-model="processEdit.weftlineitem"  ng-readonly=editRead>
+                  <div ng-messages="processcabinetform.currentDelay.$error">
+                  </div>
+              </md-input-container>
+            </div>
+          </div>
+
+          <div layout="row" layout-padding>
+            <div flex>
+              <md-input-container>
+                  <label>Emb Thread</label>
+                  <md-select name="type" ng-model="processEdit.embthread"  ng-disabled="selectdisabled">
+                    <md-option value="a">a</md-option>
+                    <md-option value="b">b</md-option>
+                  </md-select>
+                  <div ng-messages="processcabinetform.processStartDate.$error">
+                  </div>
+              </md-input-container>
+            </div>
+
+            <div flex>
+              <md-input-container>
+                  <label>Lots</label>
+                  <input ng-model="processEdit.emblots"  ng-readonly=editRead>
+                  <div ng-messages="processcabinetform.vendorname.$error">
+                  </div>
+              </md-input-container>
+            </div>
+
+            <div flex>
+              <md-input-container>
+                  <label> Bundles</label>
+                  <input ng-model="processEdit.embbundles"  ng-readonly=editRead>
+                  <div ng-messages="processcabinetform.currentDelay.$error">
+                  </div>
+              </md-input-container>
+            </div>
+
+            <div flex>
+              <md-input-container>
+                  <label>Type</label>
+                  <md-select name="type" ng-model="processEdit.embtypes"  ng-disabled="selectdisabled">
+                    <md-option value="Peroxide">Peroxide</md-option>
+                    <md-option value="Dyeing">Dyeing</md-option>
+                    <md-option value="Boiling">Boiling  </md-option>
+               
+                  </md-select>
+                  <div ng-messages="processcabinetform.currentDelay.$error">
+                  </div>
+              </md-input-container>
+            </div>
+          </div>
+
+          <div layout="row" layout-padding>
+            <div flex>
+              <md-input-container>
+                  <label>Tie N Dye Lots</label>
+                  <input ng-model="processEdit.embtiendyelots"  ng-readonly=editRead>
+                  <div ng-messages="procesvatdyeingform.processStartDate.$error">
+                  </div>
+              </md-input-container>
+            </div>
+
+            <div flex>
+              <md-input-container>
+                  <label> Tie N Dye Bundles</label>
+                  <input ng-model="processEdit.embtiendyebundles"  ng-readonly=editRead>
+                  <div ng-messages="procesvatdyeingform.processStartDate.$error">
+                  </div>
+              </md-input-container>
+            </div>
+
+            <div flex>
+              <md-input-container>
+                  <label>PO</label>
+                  <input ng-model="processEdit.embpo"  ng-readonly=editRead>
+                  <div ng-messages="processcabinetform.currentDelay.$error">
+                  </div>
+              </md-input-container>
+            </div>
+
+            <div flex>
+              <md-input-container>
+                  <label>Line Item</label>
+                  <input ng-model="processEdit.emblineitem"  ng-readonly=editRead>
+                  <div ng-messages="processcabinetform.currentDelay.$error">
+                  </div>
+              </md-input-container>
+            </div>
+          </div>
+
+          <div layout="row" layout-padding>
+            <div flex>
+              <md-input-container>
+                  <label>Back Panel</label>
+                  <input ng-model="processEdit.backpanel"  ng-readonly=editRead>
+                  <div ng-messages="procesvatdyeingform.processStartDate.$error">
+                  </div>
+              </md-input-container>
+            </div>
+
+            <div flex>
+              <md-input-container>
+                  <label>Zipper</label>
+                  <input ng-model="processEdit.zipper"  ng-readonly=editRead>
+                  <div ng-messages="procesvatdyeingform.processStartDate.$error">
+                  </div>
+              </md-input-container>
+            </div>
+
+            <div flex>
+              <md-input-container>
+                  <label>Piping</label>
+                  <input ng-model="processEdit.piping"  ng-readonly=editRead>
+                  <div ng-messages="procesvatdyeingform.processStartDate.$error">
+                  </div>
+              </md-input-container>
+            </div>
+          
+            <div flex>
+              <md-input-container>
+                  <label>Other Acessories</label>
+                  <input ng-model="processEdit.others"  ng-readonly=editRead>
+                  <div ng-messages="procesvatdyeingform.processStartDate.$error">
+                  </div>
+              </md-input-container>
+            </div>
+          </div>
+      </div>
+
+      <!-- ///////////////////cabinet///////////////////////////// -->
+      <div ng-if="subType=='cabinet'">
+              <div layout="row" layout-padding>
+                <div flex="1">
+                  <md-input-container>
+                  <label>Sales Order Creation Date</label>
+                  <md-datepicker ng-model="processEdit.creation" md-placeholder="Enter Date" ng-disabled=dateDisable></md-datepicker>
+                  <div ng-messages="processticket.noOfWeeks.$error">
+                  </div>
+                  </md-input-container>
+                </div>
+
+            <div flex>
+              <md-input-container>
+                  <label>Job Order for Full Qty</label>
+                  <input ng-model="processEdit.jobOrder"  ng-readonly=editRead>
+                  <div ng-messages="processcabinetform.vendorname.$error">
+                  </div>
+              </md-input-container>
+            </div>
+
+            <div flex="16">
+              <md-input-container>
+                  <label>Process Start Date</label>
+                  <md-datepicker ng-model="processEdit.processStartDate" md-placeholder="Enter Date" ng-disabled=dateDisable></md-datepicker>
+                  <div ng-messages="processcabinetform.processStartDate.$error">
+                  </div>
+              </md-input-container>
+            </div>
+
+            <div flex="31">
+              <md-input-container>
+                  <label>Duration</label>
+                  <input ng-model="processEdit.duration"  ng-readonly=editRead>
+                  <div ng-messages="processcabinetform.vendorname.$error">
+                  </div>
+              </md-input-container>
+            </div>
+          </div>
+
+          <div layout="row" layout-padding>
+            <div flex="1">
+              <md-input-container>
+
+                  <label>Process End date </label>
+                  <md-datepicker ng-model="processEdit.processEndDate" md-placeholder="Enter Date" ng-disabled=dateDisable></md-datepicker>
+                  <div ng-messages="processcabinetform.processEndDate.$error">
+                  </div>
+              </md-input-container>
+            </div>
+
+            <div flex>
+              <md-input-container>
+                  <label>No of Processes Ahead</label>
+                  <input ng-model="processEdit.processahead"  ng-readonly=editRead>
+                  <div ng-messages="processcabinetform.processStartDate.$error">
+                  </div>
+              </md-input-container>
+            </div>
+
+          <div flex>
+            <md-input-container>
+                <label>No of Days to go</label>
+                <input ng-model="processEdit.daystogo"  ng-readonly=editRead>
+                <div ng-messages="processcabinetform.vendorname.$error">
+                </div>
+            </md-input-container>
+          </div>
+
+          <div flex>
+            <md-input-container>
+                <label>Current Delay </label>
+                <input ng-model="processEdit.currentDelay"  ng-readonly=editRead>
+                <div ng-messages="processcabinetform.currentDelay.$error">
+                </div>
+            </md-input-container>
+          </div>
+        </div>
+
+        <div layout="row" layout-padding>
+          <div flex>
+            <md-input-container>
+                <label>Warp</label>
+                <md-select name="type" ng-model="processEdit.warp"  ng-disabled="selectdisabled">
+                    <md-option value="a">a</md-option>
+                    <md-option value="b">b</md-option>
+                </md-select>
+                <div ng-messages="processcabinetform.processStartDate.$error">
+                </div>
+            </md-input-container>
+          </div>
+
+          <div flex>
+            <md-input-container>
+                <label>Lots</label>
+                <input ng-model="processEdit.lots"  ng-readonly=editRead>
+                <div ng-messages="processcabinetform.vendorname.$error">
+                </div>
+            </md-input-container>
+          </div>
+
+          <div flex>
+            <md-input-container>
+                <label> Bundles</label>
+                <input ng-model="processEdit.bundles"  ng-readonly=editRead>
+                <div ng-messages="processcabinetform.currentDelay.$error">
+                </div>
+            </md-input-container>
+          </div>
+
+        <div flex>
+          <md-input-container>
+              <label>Type</label>
+              <md-select name="type" ng-model="processEdit.types"  ng-disabled="selectdisabled">
+                <md-option value="Peroxide">Peroxide</md-option>
+                <md-option value="Dyeing">Dyeing</md-option>
+                <md-option value="Boiling">Boiling  </md-option>
+           
+              </md-select>
+              <div ng-messages="processEdit.currentDelay.$error">
+              </div>
+          </md-input-container>
+        </div>
+      </div>
+
+      <div layout="row" layout-padding>
+        <div flex>
+          <md-input-container>
+              <label>PO</label>
+              <input ng-model="processEdit.po"  ng-readonly=editRead>
+              <div ng-messages="processcabinetform.currentDelay.$error">
+              </div>
+          </md-input-container>
+        </div>
+
+        <div flex>
+          <md-input-container>
+              <label>Line Item</label>
+              <input ng-model="processEdit.lineitem"  ng-readonly=editRead>
+              <div ng-messages="processcabinetform.currentDelay.$error">
+              </div>
+          </md-input-container>
+        </div>
+
+        <div flex>
+          <md-input-container>
+              <label>Weft</label>
+              <md-select name="type" ng-model="processEdit.weft"  ng-disabled="selectdisabled">
+                <md-option value="a">a</md-option>
+                <md-option value="b">b</md-option>
+              </md-select>
+              <div ng-messages="processcabinetform.processStartDate.$error">
+              </div>
+          </md-input-container>
+        </div>
+
+        <div flex>
+          <md-input-container>
+              <label>Lots</label>
+              <input ng-model="processEdit.weftlots"  ng-readonly=editRead>
+              <div ng-messages="processcabinetform.vendorname.$error">
+              </div>
+          </md-input-container>
+        </div>
+      </div>
+
+      <div layout="row" layout-padding>
+        <div flex>
+          <md-input-container>
+              <label> Bundles</label>
+              <input ng-model="processEdit.weftbundles"  ng-readonly=editRead>
+              <div ng-messages="processcabinetform.currentDelay.$error">
+              </div>
+          </md-input-container>
+        </div>
+
+        <div flex>
+          <md-input-container>
+              <label>Type</label>
+              <md-select name="type" ng-model="processEdit.wefttype"  ng-disabled="selectdisabled">
+                  <md-option value="Peroxide">Peroxide</md-option>
+                  <md-option value="Dyeing">Dyeing</md-option>
+                  <md-option value="Boiling">Boiling  </md-option>
+           
+              </md-select>
+              <div ng-messages="processEdit.currentDelay.$error">
+              </div>
+          </md-input-container>
+        </div>
+
+        <div flex>
+          <md-input-container>
+              <label>PO</label>
+              <input ng-model="processEdit.weftpo"  ng-readonly=editRead>
+              <div ng-messages="processcabinetform.currentDelay.$error">
+              </div>
+          </md-input-container>
+        </div>
+
+        <div flex>
+          <md-input-container>
+              <label>Line Item</label>
+              <input ng-model="processEdit.weftlineitem"  ng-readonly=editRead>
+              <div ng-messages="processcabinetform.currentDelay.$error">
+              </div>
+          </md-input-container>
+        </div>
+      </div>
+
+      <div layout="row" layout-padding>
+        <div flex>
+          <md-input-container>
+              <label>Emb Thread</label>
+              <md-select name="type" ng-model="processEdit.embthread"  ng-disabled="selectdisabled">
+                <md-option value="a">a</md-option>
+                <md-option value="b">b</md-option>
+              </md-select>
+              <div ng-messages="processcabinetform.processStartDate.$error">
+              </div>
+          </md-input-container>
+        </div>
+
+        <div flex>
+          <md-input-container>
+              <label>Lots</label>
+              <input ng-model="processEdit.emblots"  ng-readonly=editRead>
+              <div ng-messages="processcabinetform.vendorname.$error">
+              </div>
+          </md-input-container>
+        </div>
+
+        <div flex>
+          <md-input-container>
+              <label> Bundles</label>
+              <input ng-model="processEdit.embbundles"  ng-readonly=editRead>
+              <div ng-messages="processcabinetform.currentDelay.$error">
+              </div>
+          </md-input-container>
+        </div>
+
+        <div flex>
+          <md-input-container>
+              <label>Type</label>
+              <md-select name="type" ng-model="processEdit.embtypes"  ng-disabled="selectdisabled">
+                <md-option value="Peroxide">Peroxide</md-option>
+                <md-option value="Dyeing">Dyeing</md-option>
+                <md-option value="Boiling">Boiling  </md-option>
+           
+              </md-select>
+              <div ng-messages="processcabinetform.currentDelay.$error">
+              </div>
+          </md-input-container>
+        </div>
+      </div>
+
+          <md-input-container>
+              <label>PO</label>
+              <input ng-model="processEdit.embpo"  ng-readonly=editRead>
+              <div ng-messages="processcabinetform.currentDelay.$error">
+              </div>
+          </md-input-container>
+
+          <md-input-container>
+              <label>Line Item</label>
+              <input ng-model="processEdit.emblineitem"  ng-readonly=editRead>
+              <div ng-messages="processcabinetform.currentDelay.$error">
+              </div>
+          </md-input-container>
+      </div>
+                  <br>
+
+                  <md-button class="md-raised" ng-click="click(processEdit,buttonText)" type="submit">{{buttonText}}</md-button></md-button>
+                  <md-button class="md-raised" ng-click="onclick(data)">Close this ticket</md-button>
+         
+
+          
+          </md-tab>
+
+            <md-tab label="Audit History">
+
+            <md-table-container>
+                <table md-table multiple>
+                    <thead md-head>
+                        <tr md-row>
+                            <th md-column>Date </th>
+                            <th md-column>Action </th>
+                            <th md-column> Master Ticket ID </th>
+                            <th md-column> User ID </th>
+                            <th md-column>Type </th>
+                            <th md-column>ID </th>
+                        </tr>
+                  </thead>
+                  <tbody md-body>
+                    <tr md-row ng-repeat="obj in objs">
+                      <td md-cell>{{obj.date}}</td>
+                      <td md-cell>{{obj.action}}</td>
+                      <td md-cell>{{obj.masterTicketID}}</td>
+                      <td md-cell>{{obj.userId}}</td>
+                      <td md-cell>{{obj.type}}</td>
+                      <td md-cell>{{obj.id}}</td>
+
+
+                    </tr>
+                  </tbody>
+                </table>
+            </md-table-container>
+
+
+        </md-tab>
+           
+          </md-tabs>
+    
+    </md-dialog-content>
+  
+  </form>
+</md-dialog>

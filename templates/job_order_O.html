@@ -1,0 +1,278 @@
+<md-dialog id="mdDialogprocess" flex>
+  <form name="masterTktForm" novalidate>
+   
+    <md-dialog-content flex="100">
+<!-- ////////toolbar/////////////// -->
+      <md-toolbar>
+          <div class="md-toolbar-tools">
+            <h2>
+              <span>Job Order</span>
+            </h2>
+            <span flex></span>
+            <!-- ///close icon/// -->
+            <a href=""><md-icon ng-click="closeDialog()">
+            <i class="material-icons">ic_close</i>
+          </md-icon></a>
+          </div>
+      </md-toolbar>
+
+    <!-- <md-tabs md-dynamic-height md-border-bottom flex="100">
+        <md-tab label="Add Job Order" md-active="!showTab"> -->
+
+<div layout="row" layout-padding>
+<div flex="1">
+            <md-input-container>
+                  <label>SalesOrder Creation Date</label>
+                  <!-- <md-datepicker ng-model="master.salesOrderCreationDate" md-placeholder="Enter Date" ></md-datepicker> -->
+                    <input ng-model="master.salesOrderCreationDate | date: 'MM/dd/yyyy'" ng-disabled="true">
+                </md-input-container>
+                </md-input-container>
+          </div>
+        
+          <div flex>
+            <md-input-container>
+                  <label>Plant</label>
+                  <md-select name="plant" ng-model="master.plant" ng-disabled="ReadMode" ng-required="true">
+                     <md-option ng-repeat="off in plant" ng-value="off">{{off.name}}</md-option>
+                  </md-select>
+                  <div ng-messages="masterTktForm.plant.$error">
+			          <div ng-message="required">Plant Name is required.</div>
+		        	</div>
+                </md-input-container>
+          </div>
+
+          <div flex>
+            <md-input-container>
+                <label>Sales  Order No</label>
+            	<input name="salesOrder" ng-model="master.salesorderNo" ng-required="true" ng-disabled="ReadMode">
+            	<div ng-messages="masterTktForm.salesOrder.$error">
+		          	 <div ng-message="required">Sales Order No is required.</div>
+		    	</div>
+            </md-input-container>
+            
+          </div>
+
+     
+          <div flex>
+        	<md-input-container>
+	            <label>Line Item No</label>
+	            <input name="lineItemNo" ng-model="master.lineItemNo" ng-required="true" ng-disabled="ReadMode">
+	            <div ng-messages="masterTktForm.lineItemNo.$error">
+		          	 <div ng-message="required">Line Item No is required.</div>
+	        	</div>
+            </md-input-container>
+          </div>
+
+  
+          <div flex>
+            <md-input-container>
+                <label>Customer Name</label>
+                <input name="customerName" ng-model="master.customerName" ng-required="true" ng-disabled="ReadMode">
+                <div ng-messages="masterTktForm.customerName.$error">
+		          	 <div ng-message="required">Customer Name is required.</div>
+	        	</div>
+            </md-input-container>
+          </div>
+        </div>
+
+        <div layout="row" layout-padding>
+        	<div flex>
+            <md-input-container>
+                <label>Customer PO /COD</label>
+                <input name="customerPO" ng-model="master.customerPOorCOD" ng-required="true" ng-disabled="ReadMode">
+                <div ng-messages="masterTktForm.customerPO.$error">
+		          	 <div ng-message="required">Customer PO is required.</div>
+	        	</div>
+            </md-input-container>
+          </div>
+          
+          <div flex>
+            <md-input-container>
+                <label>Colour Code</label>
+                <input name="colorCode" ng-model="master.colorCode" ng-required="true" ng-disabled="ReadMode">
+                <div ng-messages="masterTktForm.colorCode.$error">
+		          	 <div ng-message="required">Colour Code is required.</div>
+	        	</div>
+            </md-input-container>
+            
+          </div>
+          
+          <div flex>
+            <md-input-container>
+                <label>Design Name</label>
+                <input name="designName" ng-model="master.designName" ng-required="true" ng-disabled="ReadMode">
+                <div ng-messages="masterTktForm.designName.$error">
+		          	 <div ng-message="required">Design Name is required.</div>
+		    	</div>
+            </md-input-container>
+            
+          </div>
+ 
+          <div flex>
+            <md-input-container>
+                <label>Quantity</label>
+                <input name="quantity" ng-model="master.quantity" type="number" ng-required="true" ng-disabled="ReadMode">
+                <div ng-messages="masterTktForm.quantity.$error">
+		          	 <div ng-message="required">Quantity is required.</div>
+	        	</div>
+           	</md-input-container>
+           	
+             <!--<md-input-container>
+                        <label>ColourCode</label>
+                        <input ng-model="master.colourcode">
+                </md-input-container> -->
+                 <!-- <md-input-container >
+                  <label>Office</label>
+                  <md-select ng-model="master.office">
+                     <md-option ng-repeat="off in office" ng-value="off">{{off.name}}</md-option>
+                  </md-select>
+                </md-input-container> -->
+          </div>
+
+          <div flex>
+            <md-input-container>
+                <label>Material Group 1</label>
+                <input name="materialGroup1" ng-model="master.materialGroup1" ng-required="true" ng-disabled="ReadMode">
+                <div ng-messages="masterTktForm.materialGroup1.$error">
+		          	 <div ng-message="required">Material Group 1 is required.</div>
+	        	</div>
+            </md-input-container>
+            
+          </div>
+
+          <div flex>
+            <md-input-container>
+                <label>Material Group 2</label>
+                <input name="materialGroup2" ng-model="master.materialGroup2" ng-required="false" ng-disabled="ReadMode">
+                <div ng-messages="masterTktForm.materialGroup2.$error">
+		          	 <div ng-message="required">Material Group 2 is required.</div>
+	        	</div>
+            </md-input-container>
+            
+          </div>
+        </div>
+
+        <div layout="row" layout-padding>
+        <!--   <div flex>
+         
+
+          </div> -->
+<!-- <div flex>
+            <md-input-container>
+                 <label>Ex- Factory date</label>
+                  <md-datepicker ng-model="master.exFactoryDate" md-placeholder="Enter Date" ng-disabled="ReadMode"></md-datepicker>
+                       </md-input-container>
+          </div>
+          <div flex>
+            <md-input-container>
+                        <label>No Of Weeks</label>
+                        <input ng-model="master.noOfWeeks" ng-disabled="ReadMode">
+                </md-input-container>
+          </div> -->
+        </div>
+  
+          
+
+          
+
+ 
+          
+
+
+ 
+      <div layout="row" layout-padding ng-if="master.currentProcess">
+        <div flex>
+          <md-input-container>
+                        <label>Current Process</label>
+                        <input ng-model="master.currentProcess" ng-disabled="true">
+                </md-input-container>
+        </div>
+
+        <div flex ng-if="master.noOfProcessTogo">
+          <md-input-container>
+
+                        <label>No of Processes to go</label>
+                        <input ng-model="master.noOfProcessTogo" ng-disabled="true">
+                </md-input-container>
+        </div>
+
+        <div flex="1" ng-if="master.noofplanneddaystogo">
+          <md-input-container>
+                 <label>No of planned days to go</label>
+                  <!-- <md-datepicker ng-model="master.noofplanneddaystogo" md-placeholder="Enter Date" ng-disabled="true" ></md-datepicker> -->
+                  <input ng-model="master.noofplanneddaystogo" ng-disabled="true">
+                      </md-input-container>
+        </div>
+
+        <div flex ng-if="master.currentDelay">
+          <md-input-container>
+                        <label>Current Delay</label>
+                        <input ng-model="master.currentDelay" ng-disabled="true">
+                </md-input-container>
+        </div>
+      </div>
+
+      <div layout="row" layout-padding ng-if="master.lastUpdate">
+         <div flex>
+          <md-input-container>
+                 <label>Last Update </label>
+                 <!--  <md-datepicker ng-model="master.lastUpdate" md-placeholder="Enter Date" ></md-datepicker> -->
+                 <input ng-model="master.lastUpdate" ng-disabled="true">
+                      </md-input-container>
+        </div>
+       <!--  <div flex>
+                <md-input-container >
+                  <label>Office</label>
+                  <md-select ng-model="master.office">
+                     <md-option  ng-value="Kannur">Kannur</md-option>
+                     <md-option  ng-value="Kannur">Mysore</md-option>
+                     <md-option  ng-value="Kannur">Noida</md-option>
+                  </md-select>
+                </md-input-container>
+          </div> -->
+          
+            <!-- <div flex ng-if="master.actualstartdate">
+             <md-input-container>
+                 <label>Process Start Date</label>
+                  <md-datepicker ng-model="master.actualstartdate" md-placeholder="Enter Date" ></md-datepicker>
+                      </md-input-container>
+                       <input ng-model="master.actualstartdate" ng-disabled="true">
+                      </md-input-container>
+          </div> -->
+
+           <!-- <div flex ng-if="master.actualenddate">
+            <md-input-container>
+                        <label>Process End Date</label>
+                  <md-datepicker ng-model="master.actualenddate" md-placeholder="Enter Date" ></md-datepicker>
+                   <input ng-model="master.actualenddate" ng-disabled="true">
+                </md-input-container>
+          </div> -->
+
+          
+        </div>
+
+       
+
+
+       <!--  <md-input-container>
+                 <label>Plan End Date</label>
+                  <md-datepicker ng-model="master.planenddate" md-placeholder="Enter Date" ></md-datepicker>
+                    ///editMaster()
+                </md-input-container><br> -->
+<div>
+ <md-button class="md-raised md-primary" ng-click="ReadMode = !ReadMode" ng-show="ReadMode">Edit</md-button>
+                  <md-button type="submit" class="md-raised md-primary" ng-click="SaveMasterTicket(master)" ng-show="!ReadMode" ng-disabled="masterTktForm.$invalid">Save</md-button></div>
+        
+         
+
+          
+          <!-- </md-tab>
+
+           
+           
+          </md-tabs> -->
+    
+    </md-dialog-content>
+  
+  </form>
+</md-dialog>

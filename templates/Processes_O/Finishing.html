@@ -1,0 +1,41 @@
+<div style="height:200px;">
+    <div layout="row" layout-padding style="height:50px;">
+        <div>
+            <label style="width:30px;">Finishing</label>
+            <input type="checkbox" ng-model="finishing.finishings" ng-true-value="'YES'" ng-false-value="'NO'">
+        </div>
+        <div >
+            <label>Ironing</label>
+            <input type="checkbox" ng-model="finishing.ironing" ng-true-value="'YES'" ng-false-value="'NO'">
+        </div>
+        <div >
+            <label>Zero Zero</label>
+            <input type="checkbox" ng-model="finishing.zero" ng-true-value="'YES'" ng-false-value="'NO'">
+        </div>
+        <div >
+            <label>Stentering</label>
+            <input type="checkbox" ng-model="finishing.stentering" ng-true-value="'YES'" ng-false-value="'NO'">
+        </div>
+        <div >
+            <label>Washing</label>
+            <input type="checkbox" ng-model="finishing.washing" ng-true-value="'YES'" ng-false-value="'NO'">
+        </div>
+        <div >
+            <label>Others</label>
+            <input type="checkbox" ng-model="finishing.others" ng-true-value="'YES'" ng-false-value="'NO'">
+        </div>
+    </div>
+    <div layout="row" layout-padding style="height:50px;">
+        <div flex>
+            <label>Job Order for Full Qty</label>
+            <input type="checkbox" ng-model="finishing.jobOrder" ng-true-value="'YES'" ng-false-value="'NO'">
+        </div>
+        <div flex>
+            <label>Full/Part</label>
+            <input type="checkbox" ng-model="finishing.fullpart" ng-true-value="'YES'" ng-false-value="'NO'">
+        </div>
+    </div>
+    <div layout="row" layout-padding style="height:50px;">
+        <md-button class="md-raised md-primary" ng-click="StoreAdd(workCenter,finishing)">Save</md-button>
+    </div>
+</div>

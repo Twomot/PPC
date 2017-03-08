@@ -1,0 +1,182 @@
+<table-component headings="headingArray" tabledatas="appuserdata" selectedlist="selecteddata" addtableevent="addPopup()" deletetableevent="massDelete($event)" deletetableclick2="deleteFunction($event)" tableclick2="updatePopup()" toggletable2="toggleFun()"></table-component>
+
+
+     <div style="visibility: hidden">
+        <div class="md-dialog-container" id="addDialogappuser">
+         <md-dialog flex="50">
+            <md-toolbar md-scroll-shrink>
+                          <div class="md-toolbar-tools">
+                             <h2>
+                                <span>Add</span>
+                             </h2>
+                             <span flex></span>
+                          </div>
+                       </md-toolbar>
+
+                       <md-content layout-padding>
+                          <form name="projectAddForm" class="projectAddForm">
+
+                              <md-input-container class="md-block">
+                                <label>User Name</label>
+                                <input required name="username" ng-model="appuser.name" id="nameId"  >
+                                <div ng-messages="projectAddForm.username.$error">
+                                  <div ng-message="required">This is required.</div>
+                                </div>
+                             </md-input-container>
+
+                      
+
+
+                            <md-input-container class="md-block">
+                              <label>User Superior</label>
+                                 <md-select ng-model="appuser.superiorID" required>  
+                                   <md-option ng-repeat="user in users" ng-value="user.id">
+                                      {{user.name}}
+                                    </md-option>   
+                                </md-select>
+                            </md-input-container>
+
+                            
+
+                            <md-input-container>
+                               <label>Role</label>
+                                <md-select ng-model="appuser.role" required multiple>  
+                                   <md-option ng-repeat="role in roles" ng-value="role">
+                                      {{role.name}}
+                                    </md-option>   
+                                </md-select>
+                            </md-input-container><br>
+
+
+                            <md-input-container class="md-block">
+                                <label>Email</label>
+                                <input required type="email" name="useremail" ng-model="appuser.email" minlength="10" maxlength="100" ng-pattern="/^.+@.+\..+$/" >
+                                <div ng-messages="projectAddForm.useremail.$error" role="alert">
+                                  <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">Please enter valid email id.</div>
+                                </div>
+                             </md-input-container>
+
+                               <md-input-container class="md-block">
+                                <label>Password</label>
+                                <input required type="password" name="password" ng-model="appuser.password" minlength="8"  >
+                                <div ng-messages="projectAddForm.password.$error" role="alert">
+                                  <div ng-message-exp="['required','minlength']">Passwords must contain at least eight characters.</div>
+                                </div>
+                             </md-input-container>
+                             
+                          <div>
+                            
+                            <md-button  type="submit" class="md-raised" ng-click="addappuser(appuser,projectAddForm.$invalid)">add</md-button>
+                            <md-button class="md-raised" ng-click="cancel('add')">Cancel</md-button>
+                          </div>
+
+
+                    
+                      </form>
+                      
+                      
+                      </md-content>
+          </md-dialog>
+      </div>
+
+  </div>
+
+<!-------------------------- EDIT FORM  ------------------ -->
+    <div style="visibility: hidden">
+        <div class="md-dialog-container" id="editDialogappuser">
+         <md-dialog flex="50">
+            <md-toolbar md-scroll-shrink>
+                          <div class="md-toolbar-tools">
+                             <h2>
+                                <span>Add</span>
+                             </h2>
+                             <span flex></span>
+                          </div>
+                       </md-toolbar>
+
+                        <form name="projectEditForm" class="projectEditForm">
+                       <md-content layout-padding>
+                         
+                        
+                              <md-input-container class="md-block">
+                                <label>User Name</label>
+                                <input required name="name" ng-model="appuserEdit.name" id="nameId" ng-readonly=editRead  >
+                                <div ng-messages="projectEditForm.name.$error">
+                                  <div ng-message="required">This is required.</div>
+                                </div>
+                             </md-input-container>
+                           
+                            <!-- <md-input-container>
+                      
+                      <label>Type</label>
+                      <md-select ng-model="appuserEdit.type" required ng-disabled="selectdisabled">
+                     
+                         <md-option value="internal">
+                                    Internal
+                                   </md-option>
+                                   <md-option value="external">
+                                    External
+                                   </md-option>
+                      </md-select>
+                    </md-input-container><br>
+ -->
+                     <md-input-container class="md-block">
+                                <label>Superior</label>
+                               <!--  <input required name="superior" ng-model="appuserEdit.superior" ng-readonly=editRead>
+                                <div ng-messages="projectEditForm.superior.$error">
+                                  <div ng-message="required">This is required.</div>
+                                </div> -->
+                                <md-select ng-model="appuserEdit.superiorID" required>  
+                                   <md-option ng-repeat="user in users" ng-value="user.id" ng-disabled="selectdisabled">
+                                      {{user.name}}
+                                    </md-option>   
+                                </md-select>
+                             </md-input-container>
+
+<md-input-container>
+                               <label>Role</label>
+                                <md-select ng-model="tempUserRoles" required multiple>  
+                                   <md-option ng-repeat="role in roles" ng-value="role" ng-disabled="selectdisabled">
+                                      {{role.name}}
+                                    </md-option>   
+                                </md-select>
+                            </md-input-container><br>
+
+                            <md-input-container class="md-block">
+                                <label>Email</label>
+                                <input required type="email" name="useremail" ng-model="appuserEdit.email" minlength="10" maxlength="100" ng-pattern="/^.+@.+\..+$/"  ng-readonly=editRead>
+                                <div ng-messages="projectAddForm.useremail.$error" role="alert">
+                                  <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">Please enter valid email id.</div>
+                                </div>
+                             </md-input-container>
+
+                               
+
+                             <!-- <md-input-container class="md-block"> 
+                              
+                                <div>
+                                  <md-checkbox ng-model="appuserEdit.password" aria-label="Change"  ng-show="isChecked=true">Change 
+                                   
+                                  <input required type="password" name="cpassword" ng-model="appuserEdit.cpassword" minlength="8"  compare-to="appuser.password" >
+                                  </md-checkbox>
+                                
+                                </div>                     
+
+                              </md-input-container> -->
+                             
+                           <div>
+                              <md-button class="md-raised" ng-click="updateappuserclick(appuserEdit,projectEditForm.$invalid,buttonText)" type="submit">{{buttonText}}</md-button>
+                              <md-button class="md-raised" ng-click="cancel('edit')">Cancel</md-button>
+                            </div>
+                    
+                      </form>
+                    
+                      </md-content>
+          </md-dialog>
+      </div>
+
+  </div>
+
+
+
+

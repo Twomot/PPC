@@ -1,0 +1,55 @@
+<div>
+    <div layout="row" layout-padding style="height:50px;">
+        <div flex>
+            <md-input-container>
+                <label>Job Order for Full Qty</label>
+                <md-select name="type" ng-model="outright_purchase.jobOrder" required>
+                    <md-option value="Full">Full</md-option>
+                    <md-option value="Part">Part</md-option>
+                </md-select>
+                <div ng-messages="processoutrightform.vendorname.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+        </div>
+        <div flex="30">
+            <md-input-container>
+                <label>Process Start date </label>
+                <input ng-model="processtartDate" md-placeholder="Enter Date" name="processStartDate" ng-focus="DyeingChange(processticket.mtrs)">
+                <div ng-messages="processcabinetform.processStartDate.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+        </div>
+   
+        <div flex>
+            <md-input-container>
+                <label>Duration</label>
+                <input ng-model="outright_purchase.duration" required>
+                <div ng-messages="processoutrightform.vendorname.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+        </div>
+        <div flex="1">
+            <md-input-container>
+                <label>Process End Date </label>
+                <input ng-model="processEndDate" md-placeholder="Enter Date" name="processStartDate" ng-focus="DyeingChange()">
+                <div ng-messages="processcabinetform.processStartDate.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+        </div>
+    </div>
+    <br>
+   <div layout="row" layout-padding style="height:50px;">
+        <div flex="0.5"></div>
+        <div flex="0.5"></div>
+        <div flex ng-show="processticket.id == undefined">
+            <md-button class="md-raised md-primary" ng-click="$parent.addProcessTicket(processticket)">Save</md-button>
+        </div>
+        <div ng-show="processticket.id !== undefined">
+            <md-button class="md-raised md-primary" ng-click="$parent.saveProcessTicket(processticket)">Save</md-button>
+        </div>
+    </div>
+</div>

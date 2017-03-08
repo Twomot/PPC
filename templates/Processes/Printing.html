@@ -1,0 +1,119 @@
+<div ng-controller="printingController">
+    <div layout="row" layout-padding style="height:50px;">
+        <div flex>
+            <md-input-container>
+                <label>Screen Printing</label>
+                <input ng-model="processticket.screenprinting" required="">
+                <div ng-messages="processemjiggerdyeingform.currentDelay.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+        </div>
+        <div flex>
+            <md-input-container>
+                <label>Rotary Printing</label>
+                <input ng-model="processticket.rotaryprinting" required="">
+                <div ng-messages="processemjiggerdyeingform.currentDelay.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+        </div>
+        <div flex>
+            <md-input-container>
+                <label>Block Printing</label>
+                <input ng-model="processticket.blockprinting" required="">
+                <div ng-messages="processemjiggerdyeingform.currentDelay.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+        </div>
+        <div flex>
+            <md-input-container>
+                <label>Digital Printing</label>
+                <input ng-model="processticket.digitalprinting" required="">
+                <div ng-messages="processemjiggerdyeingform.currentDelay.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+        </div>
+    </div>
+    <div layout="row" layout-padding style="height:50px;">
+        <div flex>
+            <md-input-container>
+                <label>Discharge Printing</label>
+                <input ng-model="processticket.dischargeprinting" required="">
+                <div ng-messages="processemjiggerdyeingform.currentDelay.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+        </div>
+        <div flex>
+            <md-input-container>
+                <label>Job Order for Full Qty</label>
+                <input ng-model="processticket.joborderforfullqty" required="">
+                <div ng-messages="processemjiggerdyeingform.currentDelay.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+        </div>
+    </div>
+    <div layout="row" layout-padding style="height:50px;">
+        <div flex="5">
+          
+        </div>
+    </div>
+    <div layout="row" layout-padding style="height:50px;">
+        <div>
+            <label style="font-weight:bold">Base Fabric</label>
+        </div>
+        <div>
+            <md-icon style="cursor:pointer" ng-click="AddMore()"><i class="material-icons">note_add</i></md-icon>
+        </div>
+    </div>
+    <div layout="row" layout-padding style="height:50px;" ng-repeat="fromstores  in processticket.FabricRow">
+        <md-input-container>
+            <label>From Stores</label>
+            <input ng-model="fromstores.fromstores" required="">
+        </md-input-container>
+        <md-input-container>
+            <label>Meter</label>
+            <input ng-model="fromstores.meter" required="">
+        </md-input-container>
+        <md-input-container>
+            <label>Dyed/RFP</label>
+            <input ng-model="fromstores.dyed" required="">
+        </md-input-container>
+        <md-input-container>
+            <label>No of Screens/Blocks</label>
+            <input ng-model="fromstores.screen" required="">
+        </md-input-container>
+    </div>
+    <div layout="row" layout-padding>
+        <div flex>
+            <md-input-container>
+                <label>Process Start date </label>
+                <input ng-model="processtartDate" md-placeholder="Enter Date" name="processStartDate" ng-focus="DyeingChange()">
+                <div ng-messages="processcabinetform.processStartDate.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+        </div>
+        <div flex>
+            <md-input-container>
+                <label>Process End Date </label>
+                <input ng-model="processEndDate" md-placeholder="Enter Date" name="processStartDate" ng-focus="DyeingChange(processticket.mtrs)">
+                <div ng-messages="processcabinetform.processStartDate.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+        </div>
+    </div>
+   <div layout="row" layout-padding style="height:50px;">
+   	<!-- Updated By Ramesh -->
+   	<!--md-button ng-show="processticket.id == undefined" class="md-raised md-primary" ng-click="$parent.addProcessTicket(processticket)">Save New</md-button>
+    <md-button ng-show="processticket.id !== undefined" class="md-raised md-primary" ng-click="$parent.saveProcessTicket(processticket)">Save Exist</md-button-->
+    <md-button ng-show="processticket.id == undefined" class="md-raised md-primary" ng-click="addProcessTicket(processticket)">Save New</md-button>
+    <md-button ng-show="processticket.id !== undefined" class="md-raised md-primary" ng-click="saveProcessTicket(processticket)">Save Exist</md-button>
+    </div>
+</div>
+</div>

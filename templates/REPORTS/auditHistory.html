@@ -1,0 +1,29 @@
+
+<label>Search</label>
+<input type="text" ng-model="searchValue"/>
+
+<md-table-container>
+    <table md-table multiple>
+      <thead md-head>
+        <tr md-row>
+          <th md-column><span>Date</span></th>
+          <th md-column><span>Process Ticket ID</span></th>
+          <th md-column><span>Type</span></th>
+          <th md-column><span>Action</span></th>
+        </tr>
+      </thead>
+      <tbody md-body>
+         <tr md-row ng-repeat="auditHistory in auditHistories | filter: historyFilter  | limitTo: pageSize:offset">
+         	<td md-cell>{{auditHistory.date | date:'MMM dd yyyy HH:mm'}}</td>
+         	<td md-cell>{{auditHistory.id}}</td>
+         	<td md-cell>{{auditHistory.type}}</td>
+         	<td md-cell>{{auditHistory.action}}</td>
+     	</tr>
+ 		</tbody>
+	</table>
+	<section layout="row" layout-padding="">
+        <cl-paging flex cl-pages="paging.total" , cl-steps="10" , cl-page-changed="paging.onPageChanged()" ,
+                   cl-align="start start" , cl-current-page="paging.current"></cl-paging>
+
+    </section>
+</md-table-container>

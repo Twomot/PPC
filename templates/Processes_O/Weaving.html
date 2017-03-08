@@ -1,0 +1,147 @@
+<div>
+    <div layout="row" layout-padding style="height:50px;">
+        <div flex>
+            <label>Power Loom</label>
+            <input type="checkbox" ng-model="weaving.powerloom" ng-true-value="'YES'" ng-false-value="'NO'">
+        </div>
+        <div flex>
+            <label>Handloom</label>
+            <input type="checkbox" ng-model="weaving.handloom" ng-true-value="'YES'" ng-false-value="'NO'">
+        </div>
+        <div flex>
+            <label>Dobby Loom</label>
+            <input type="checkbox" ng-model="weaving.dobbyloom" ng-true-value="'YES'" ng-false-value="'NO'">
+        </div>
+    
+        <div flex>
+            <label>Check Loom</label>
+            <input type="checkbox" ng-model="weaving.checkloom" ng-true-value="'YES'" ng-false-value="'NO'">
+        </div>
+        <div flex>
+            <label>Tape Loom</label>
+            <input type="checkbox" ng-model="weaving.tapeloom" ng-true-value="'YES'" ng-false-value="'NO'">
+        </div>
+        </div>
+    <div layout="row" layout-padding style="height:50px;">
+        <div flex>
+            <label>Net Weaving</label>
+            <input type="checkbox" ng-model="weaving.netweaving" ng-true-value="'YES'" ng-false-value="'NO'">
+        </div>
+        <div flex>
+            <label>Warp Printing Weaving</label>
+            <input type="checkbox" ng-model="weaving.warpweaving" ng-true-value="'YES'" ng-false-value="'NO'">
+        </div>
+        <div flex>
+            <label>Job Order for Full Qty</label>
+            <input type="checkbox" ng-model="weaving.fulqty" ng-true-value="'YES'" ng-false-value="'NO'">
+        </div>
+        <div flex>
+            <label>No Of Warps</label>
+            <input type="checkbox" ng-model="weaving.noofwarps" ng-true-value="'YES'" ng-false-value="'NO'">
+        </div>
+    </div>
+   <div layout="row" layout-padding style="height:50px;">
+    	 <div flex>
+            <label>Gadda fabric</label>
+            <input type="checkbox" ng-model="weaving.gadda" ng-true-value="'YES'" ng-false-value="'NO'">
+        </div>
+         <div flex>
+            <label>Plain Woven Fabric</label>
+            <input type="checkbox" ng-model="weaving.plainwoven" ng-true-value="'YES'" ng-false-value="'NO'">
+        </div>
+         <div flex>
+            <label>Check/Stripe</label>
+            <input type="checkbox" ng-model="weaving.checkstripe" ng-true-value="'YES'" ng-false-value="'NO'">
+        </div>
+         <div flex>
+            <label>Tape Weaving</label>
+            <input type="checkbox" ng-model="weaving.tapeweaving" ng-true-value="'YES'" ng-false-value="'NO'">
+        </div>
+    	</div>
+    <div layout="row" layout-padding style="height:50px;">
+    	<div flex>
+            <md-input-container>
+                <label>Duration</label>
+                <input ng-model="weaving.duration" required="">
+                <div ng-messages="procesvatdyeingform.vendorname.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+        </div>
+        <div flex>
+            <md-input-container>
+                <label>Unit </label>
+                <input ng-model="processticket.mtrs" md-placeholder="Enter Date" name="mtrs">
+                <div ng-messages="processcabinetform.mtrs.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+        </div>
+        <div flex>
+            <md-input-container>
+                <label>Process Start date </label>
+                <input ng-model="processtartDate" md-placeholder="Enter Date" name="processStartDate" ng-focus="$parent.DyeingChange(processticket.mtrs)">
+                <div ng-messages="processcabinetform.processStartDate.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+        </div>
+        
+        <div flex>
+            <md-input-container>
+                <label>Process End Date </label>
+                <input ng-model="processEndDate" md-placeholder="Enter Date" name="processStartDate" ng-focus="$parent.DyeingChange()">
+                <div ng-messages="processcabinetform.processStartDate.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+        </div>
+    </div>
+ <div layout="row" layout-padding style="height:50px;" >
+    <label>Warp</label>
+ </div>
+ <div layout="row" layout-padding style="height:50px;" >
+        
+            <md-input-container>
+                <label>From Stores</label>
+                <input ng-model="fabric.basefabric" required="">
+            </md-input-container>
+            <md-input-container>
+                <label>Mtrs/Bundles</label>
+                <input ng-model="fabric.FabricPo" required="">
+            </md-input-container>
+            <md-input-container>
+                <label>Dyed Yarn/Boiled</label>
+                <input ng-model="fabric.FabricLineitem" required="">
+            </md-input-container>
+        
+    </div>
+     <div layout="row" layout-padding style="height:50px;" >
+    <label>Weft</label>
+ </div>
+ <div layout="row" layout-padding style="height:50px;" >
+        
+            <md-input-container>
+                <label>From Stores</label>
+                <input ng-model="fabric.basefabric" required="">
+            </md-input-container>
+            <md-input-container>
+                <label>Mtrs/Bundles</label>
+                <input ng-model="fabric.FabricPo" required="">
+            </md-input-container>
+            <md-input-container>
+                <label>Dyed Yarn/Boiled</label>
+                <input ng-model="fabric.FabricLineitem" required="">
+            </md-input-container>
+        
+    </div>
+    <br>
+   <!--  <md-button class="md-raised md-primary" ng-click="StoreAdd(workCenter,weaving)">Save</md-button> -->
+   <div layout="row" layout-padding style="height:50px;">
+       <md-button ng-show="processticket.id == undefined" class="md-raised md-primary" ng-click="$parent.addProcessTicket(processticket)">Save New</md-button>
+        <md-button ng-show="processticket.id !== undefined" class="md-raised md-primary" ng-click="$parent.saveProcessTicket(processticket)">Save Exist</md-button>
+        
+         <md-button class="md-raised md-primary" ng-click="$parent.StoreAdd(processticket)">Save for actions</md-button>
+    </div>
+    <br>
+</div>

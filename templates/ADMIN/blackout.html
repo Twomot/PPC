@@ -1,0 +1,24 @@
+<table-component headings="headingArray" tabledatas="blackoutData" selectedlist="selecteddata" addtableevent="addPopup()" deletetableevent="massDelete($event)" harthaltableevent="harthalPopup()" deletetableclick2="deleteFunction($event)" tableclick2="updatePopup(this)" toggletable2="toggleFun()"></table-component>
+<div style="visibility: hidden">
+ <div class="md-dialog-container" id="editDialogholiday">
+        <md-dialog flex="50">
+            <!-- <md-toolbar md-scroll-shrink> -->
+            <md-toolbar>
+                <div class="md-toolbar-tools">
+                    <h2>
+                                <span>Details</span>
+                             </h2>
+                    <span flex></span>
+                </div>
+            </md-toolbar>
+               <md-content>
+                           <div ng-repeat="machine in machineCollection">
+                            <label >
+                                <label> {{machine.name}}</label>
+                            </label>
+                        </div>
+                            </br>
+                        </md-content>
+</md-dialog>
+</div>
+</div>

@@ -1,0 +1,196 @@
+
+<!doctype html>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<title>Displaying a marker at the place of hidden scale units</title>
+
+	<script src='lib/scheduler/dhtmlxscheduler.js' type="text/javascript" charset="utf-8"></script>
+	<script src="lib/scheduler/dhtmlxscheduler_limit.js" type="text/javascript" charset="utf-8"></script>
+	<script src='lib/scheduler/dhtmlxscheduler_timeline.js' type="text/javascript" charset="utf-8"></script>
+	<script src='lib/scheduler/dhtmlxscheduler_tooltip.js' type="text/javascript" charset="utf-8"></script>
+	
+	<link rel='stylesheet' type='text/css' href='lib/scheduler/dhtmlxscheduler.css'>
+
+
+
+
+	
+	<style type="text/css" media="screen">
+		html, body{
+			margin:0;
+			padding:0;
+			height:100%;
+			overflow:hidden;
+		}
+		.yellow_section {
+			background-color: #ffa749;
+			opacity: 0.25;
+		}
+	</style>
+
+	<script type="text/javascript" charset="utf-8">
+	var ganttId;
+	var mySample=[];
+	/*///////////////////////////////////////////////////*/
+	var myFun=function(id)
+	{
+		console.log('myFun');
+		console.log(id);
+		ganttId=id;
+		console.log(gantt.getTask(id));
+	}
+	/*console.log(window.location.search);
+	console.log(localStorage.getItem('mydata'));
+	var passData=localStorage.getItem('mydata');
+	var json = JSON.parse(passData);
+	console.log(json);
+	console.log(json.start_date);
+	console.log(json.ticket);
+	var myTicket=json.ticketno;
+
+	 var today = new Date(json.start_date);
+                      var dd = today.getDate();
+                      //var mm = today.getMonth()+1; //January is 0!
+                      var mm = today.getMonth()+1;
+
+                      var yyyy = today.getFullYear();
+                      if(dd<10){
+                          dd='0'+dd;
+                      } 
+                      if(mm<10){
+                          mm='0'+mm;
+                      } 
+                      //var today = dd+'-'+mm+'-'+yyyy;
+                      var today=yyyy+','+mm+','+dd;
+                      console.log(today);*/
+  /*/////////////////////////////////////////////////////////////////////*/
+
+		function init() {
+
+			/*scheduler.attachEvent("onEventDrag", function (id, mode, e){
+				console.log('onEventDrag');
+				console.log(mode);
+				console.log(e);
+			    //any custom logic here
+			    return true;
+			});*/
+			scheduler.attachEvent("onBeforeEventChanged", function(ev, e, is_new, original){
+			    //any custom logic here
+			    console.log("onBeforeEventChanged");
+			    
+     			var dateArray=[];
+     			for(var i=0;i<scheduler.getEvents().length;i++)
+     			{
+     				dateArray.push(new Date(scheduler.getEvents()[i].end_date));
+     			}
+     			 var maxDate = Math.max.apply(Math, dateArray);
+     			 console.log(new Date(maxDate));
+
+     			 	gantt.getTask(ganttId).end_date =new Date(maxDate);
+     				gantt.updateTask(ganttId);
+     				gantt.autoSchedule(ganttId);
+
+			    return true;
+			});
+
+			scheduler.locale.labels.timeline_tab = "Timeline";
+			scheduler.locale.labels.section_custom="Section";
+			scheduler.config.details_on_create=true;
+			scheduler.config.details_on_dblclick=true;
+			scheduler.config.xml_date="%Y-%m-%d %H:%i";
+			scheduler.config.limit_time_select = true;
+			scheduler.addMarkedTimespan({ start_date: new Date(2014,5,30,17,30), end_date: new Date(2014,06,1,10,30), css: "yellow_section" });
+
+			//===============
+			//Configuration
+			//===============
+			var sections=[
+				{key:1, label:"M-1"},
+				{key:2, label:"M-2"},
+				{key:3, label:"M-3"},
+				{key:4, label:"M-4"},
+				{key:5, label:"M-5"},
+				{key:6, label:"M-6"},
+				{key:7, label:"M-5"},
+				{key:8, label:"M-6"},
+				{key:9, label:"M-5"},
+				{key:10, label:"M-6"},
+				{key:11, label:"M-5"},
+				{key:12, label:"M-6"}
+			];
+
+			scheduler.createTimelineView({
+				name:	"timeline",
+				x_unit:	"day",
+				x_date:	"%d",
+				x_step:	1,
+				x_size: 10,
+				y_unit:	sections,
+				y_property:	"section_id",
+				render:"bar",
+				first_hour:10,
+				last_hour:18
+			});
+
+			//===============
+			//Data loading
+			//===============
+			scheduler.config.lightbox.sections=[
+				{name:"description", height:130, map_to:"text", type:"textarea" , focus:true},
+				{name:"custom", height:23, type:"select", options:sections, map_to:"section_id" },
+				{name:"time", height:72, type:"time", map_to:"auto"}
+			];
+			/*scheduler.xy.scale_width = 0;
+			scheduler.init('scheduler_here',new Date(),"week");*/
+			
+			scheduler.init('scheduler_here',new Date(2016,11,20),"timeline");
+
+			var mySample=[
+				{ start_date: "2016-12-20 09:00", end_date: "2016-12-22 15:00", text:"45637", section_id:1,color:"#7f345a"},
+
+				{ start_date: "2016-12-23 09:00", end_date: "2016-12-24 15:00", text:"1234", section_id:1,color:"#D4AC0D"},
+				{ start_date: "2016-12-22 09:00", end_date: "2016-12-24 15:00", text:"45637", section_id:2,color:"#ff69b4"},
+
+				{ start_date: "2016-12-20 09:00", end_date: "2016-12-21 13:00", text:"9876", section_id:2,color:"#D4AC0D"},
+				{ start_date: "2016-12-25 09:00", end_date: "2016-12-26 15:00", text:"45637", section_id:2,color:"#7f345a"},
+
+				// { start_date: "2016-12-20 09:00", end_date: "2016-12-24 13:00", text:"45637", section_id:3},
+				// { start_date: "2016-12-26 09:00", end_date: "2016-12-28 15:00", text:"3456", section_id:3},
+
+				{ start_date: "2016-12-20 09:00", end_date: "2016-12-22 15:00", text:"45637", section_id:4,color:"#ff69b4"},
+				{ start_date: "2016-12-23 09:00", end_date: "2016-12-24 15:00", text:"4356", section_id:4,color:"#7f345a"}
+			];
+			scheduler.parse(mySample,"json");
+
+
+
+			dhtmlx.message({
+				text:"Each day shows only time from 08:00 to 18:00<br>Event length preserved during DND",
+				expire:-1
+			})
+		}
+
+
+
+	</script>
+</head>
+<body onload="init();">
+	<div id="scheduler_here" class="dhx_cal_container" style='width:100%; height:50%;'>
+		<div class="dhx_cal_navline">
+			<div class="dhx_cal_prev_button">&nbsp;</div>
+			<div class="dhx_cal_next_button">&nbsp;</div>
+			<div class="dhx_cal_today_button"></div>
+			<div class="dhx_cal_date"></div>
+			<div class="dhx_cal_tab" name="day_tab" style="right:204px;"></div>
+			<div class="dhx_cal_tab" name="week_tab" style="right:140px;"></div>
+			<div class="dhx_cal_tab" name="timeline_tab" style="right:280px;"></div>
+			<div class="dhx_cal_tab" name="month_tab" style="right:76px;"></div>
+		</div>
+		<div class="dhx_cal_header">
+		</div>
+		<div class="dhx_cal_data">
+		</div>	
+
+	</div>
+
+</body>

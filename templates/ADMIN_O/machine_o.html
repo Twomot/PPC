@@ -1,0 +1,216 @@
+<table-component headings="headingArray" tabledatas="machinedata" selectedlist="selecteddata" addtableevent="addPopup()" deletetableevent="massDelete($event)" deletetableclick2="deleteFunction($event)" tableclick2="updatePopup()" toggletable2="toggleFun()"></table-component>
+
+<div style="visibility: hidden">
+      <div class="md-dialog-container" id="addDialogmachine">
+         <md-dialog flex="50">
+            <!-- <md-toolbar md-scroll-shrink> -->
+            <md-toolbar>
+                          <div class="md-toolbar-tools">
+                             <h2>
+                                <span>Add</span>
+                             </h2>
+                             <span flex></span>
+                          </div>
+                       </md-toolbar>
+                       <md-content layout-padding>
+                         <form name="projectAddForm" class="projectAddForm">
+                              <md-input-container class="md-block">
+                                <label>Name</label>
+                                <input required name="name" ng-model="machine.name" id="nameId">
+                                <div ng-messages="projectAddForm.name.$error">
+                                  <div ng-message="required">This is required.</div>
+                                </div>
+                             </md-input-container>
+                                <md-input-container>
+                                <label>Work Center-Vendor</label>
+                                <md-select ng-model="machine.workCenterVendor"  ng-change="workcenterChange(machine.workCenterID)">
+                                  <md-option ng-repeat="workcentervendor in workcentervendors" ng-value="workcentervendor" >{{workcentervendor.displayName}}</md-option>
+                                </md-select> 
+                                
+                             </md-input-container>
+                            <!--  <md-input-container>
+                                <label>Work Center</label>
+                                <md-select ng-model="machine.workCenterID" required ng-change="workcenterChange(machine.workCenterID)">
+                                  <md-option ng-repeat="workcenter in workcenters" ng-value="workcenter.id" >{{workcenter.name}}</md-option>
+                                </md-select> 
+                                
+                             </md-input-container>-->
+
+                             <!-- <md-input-container class="md-block">
+                                <label>Vendor</label>
+                                <md-select ng-model="machine.workcenterVendorID" required ng-change="vendorChange(machine.workCenterID,machine.workcenterVendorID)">
+                                 <md-option ng-repeat="vendor in vendors" ng-value="vendor" >{{vendor.vendorRelation.name}}</md-option>
+                                </md-select>
+                             </md-input-container> -->
+
+                            <!--  <md-input-container class="md-block">
+                                <label>Plant</label>
+                                
+                                 <md-select ng-model="machine.plantID" required>
+                                 <md-option ng-repeat="plant in plants" ng-value="plant.plantRelation.id" >{{plant.plantRelation.name}}</md-option>
+                                </md-select>
+
+                             </md-input-container> -->
+
+                             <!-- <md-input-container class="md-block">
+                                <label>Location</label>
+                                
+                                 <md-select ng-model="machine.LocationID" required>
+                                 <md-option ng-repeat="location in locations" ng-value="location.locationRelation.id" >{{location.locationRelation.name}}</md-option>
+                                </md-select>
+
+                             </md-input-container> -->
+
+                             <md-content layout-padding>
+                         
+                             <!--  <md-input-container class="md-block">
+                                <label>UoM</label>
+                                <input required name="UoM" ng-model="machine.UoM" id="nameId">
+                                <div ng-messages="projectAddForm.UoM.$error">
+                                  <div ng-message="required">This is required.</div>
+                                </div>
+                             </md-input-container> -->
+ <md-input-container>
+                                <label>Type </label>
+                                <md-select ng-model="machine.type"" required ">
+                                  <md-option value="normal" >Normal Machine</md-option>
+                                  <md-option value="QCmachine" >QC Machine</md-option>
+                                  <md-option value="inward" >Inward Logistics Machine</md-option>
+                                  <md-option value="outward" >Outward Logistics Machine</md-option>
+                                  <md-option value="stores" >Stores Machine</md-option>
+                                  <md-option value="finalQC" >Final QC</md-option>
+                                  <md-option value="invoice" >Invoice</md-option>
+                                </md-select>
+                                
+                             </md-input-container><br>
+
+
+                             <md-input-container ng-if="machine.type=='normal'">
+                                <label>UoM </label>
+                                <md-select ng-model="machine.UoM"" required ">
+                                  <md-option ng-repeat="UoM in UoMs" ng-value="UoM.id" >{{UoM.name}}</md-option>
+                                </md-select>
+                                
+                             </md-input-container><br>
+
+                            
+
+                             
+
+                             <md-input-container class="md-block" ng-if="machine.type=='normal'">
+                                <label>Capacity</label>
+                                <input required name="capacity" ng-model="machine.capacity" id="nameId">
+                                <div ng-messages="projectAddForm.capacity.$error">
+                                  <div ng-message="required">This is required.</div>
+                                </div>
+                             </md-input-container>
+
+                            <div>
+                              <md-button  type="submit" class="md-raised" ng-click="addmachine(machine,projectAddForm.$invalid)">add</md-button>
+                              <md-button class="md-raised" ng-click="cancel('add',machine)">Cancel</md-button>
+                            </div>
+                        
+                          </form>
+                          <!-- <md-divider></md-divider> -->
+                      </md-content>
+          </md-dialog>
+      </div>
+</div> 
+
+<div style="visibility: hidden">
+      <div class="md-dialog-container" id="editDialogmachine">
+         <md-dialog flex="50">
+            <!-- <md-toolbar md-scroll-shrink> -->
+            <md-toolbar>
+                          <div class="md-toolbar-tools">
+                             <h2>
+                                <span>Edit</span>
+                             </h2>
+                             <span flex></span>
+                          </div>
+                       </md-toolbar>
+                       <md-content layout-padding>
+                         <form name="projectEditForm" class="projectEditForm">
+                              <md-input-container class="md-block">
+                                <label>Name</label>
+                                <input required name="editname" ng-model="machineEdit.name"  ng-readonly=editRead>
+                                <div ng-messages="projectEditForm.editname.$error">
+                                  <div ng-message="required">This is required.</div>
+                                </div>
+                             </md-input-container>
+
+                               <md-input-container>
+                                <label>Work Center</label>
+                                <md-select ng-model="machineEdit.workcenterID" required ng-change="workcenterChange(machine.workcenterID)" ng-disabled="selectdisabled">
+                                  <md-option ng-repeat="workcenter in workcenters" ng-value="workcenter.id" >{{workcenter.name}}</md-option>
+                                </md-select>
+                                
+                             </md-input-container>
+
+                             <md-input-container class="md-block">
+                                <label>Vendor</label>
+                                <md-select ng-model="machineEdit.workcenterVendorID" required ng-change="vendorChange(machine.workcenterID,machine.workcenterVendorID)" ng-disabled="selectdisabled">
+                                 <md-option ng-repeat="vendor in vendors" ng-value="vendor.vendorRelation.id" >{{vendor.vendorRelation.name}}</md-option>
+                                </md-select>
+                             </md-input-container>
+
+                               <md-input-container class="md-block">
+                                <label>Location</label>
+                                
+                                 <md-select ng-model="machineEdit.LocationName" required ng-disabled="selectdisabled">
+                                 <md-option ng-repeat="location in locations" ng-value="location.locationRelation.id" >{{location.locationRelation.name}}</md-option>
+                                </md-select>
+
+                             </md-input-container>
+
+
+                             <!-- <md-input-container class="md-block">
+                                <label>UoM</label>
+                                <input required name="UoM" ng-model="machineEdit.UoM" id="nameId" ng-readonly=editRead>
+                                <div ng-messages="projectAddForm.UoM.$error">
+                                  <div ng-message="required">This is required.</div>
+                                </div>
+                             </md-input-container> -->
+
+                             <md-input-container>
+                                <label>UoM </label>
+                                <md-select ng-model="machineEdit.UoM"" required " ng-disabled="selectdisabled">
+                                  <md-option ng-repeat="UoM in UoMs" ng-value="UoM.id" >{{UoM.name}}</md-option>
+                                </md-select>
+                                
+                             </md-input-container>
+
+                              <md-input-container class="md-block">
+                                <label>Capacity</label>
+                                <input required name="capacityworkcenterVendorID" ng-model="machineEdit.capacityworkcenterVendorID" id="nameId" ng-readonly=editRead>
+                                <div ng-messages="projectAddForm.capacityworkcenterVendorID.$error">
+                                  <div ng-message="required">This is required.</div>
+                                </div>
+                             </md-input-container>
+
+                            <div>
+                              <md-button class="md-raised" ng-click="updatemachineclick(machineEdit,projectEditForm.$invalid,buttonText)" type="submit">{{buttonText}}</md-button>
+                              <md-button class="md-raised" ng-click="cancel('edit')">Cancel</md-button>
+                            </div>
+                        
+                          </form>
+                          <!-- <md-divider></md-divider> -->
+                      </md-content>
+          </md-dialog>
+      </div>
+</div> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

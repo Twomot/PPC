@@ -1,0 +1,35 @@
+<table-component headings="headingArray" tabledatas="workcenterdata" selectedlist="selecteddata" addtableevent="addPopup()" deletetableevent="massDelete($event)" deletetableclick2="deleteFunction($event)" tableclick2="updatePopup()" toggletable2="toggleFun()"></table-component>
+
+<div style="visibility: hidden">
+      <div class="md-dialog-container" id="addDialogworkcenter">
+         <md-dialog flex="50">
+            <!-- <md-toolbar md-scroll-shrink> -->
+            <md-toolbar>
+                          <div class="md-toolbar-tools">
+                             <h2>
+                                <span>Add</span>
+                             </h2>
+                             <span flex></span>
+                          </div>
+                       </md-toolbar>
+                       <md-content layout-padding>
+                         <form name="projectAddForm" class="projectAddForm">
+                              <md-input-container class="md-block">
+                                <label>Name</label>
+                                <input required name="name" ng-model="workcenter.name" id="nameId" ng-readonly=editRead>
+                                <div ng-messages="projectAddForm.name.$error">
+                                  <div ng-message="required">This is required.</div>
+                                </div>
+                             </md-input-container>
+                            <div>
+                             <!--  <md-button  type="submit" class="md-raised" ng-click="addworkcenter(workcenter,projectAddForm.$invalid)">add</md-button> -->
+                             <md-button class="md-raised" ng-click="addworkcenter(workcenter,projectAddForm.$invalid,buttonText)" type="submit">{{buttonText}}</md-button>
+                              <md-button class="md-raised" ng-click="cancel(buttonText,workcenter)">Cancel</md-button>
+                            </div>
+                        
+                          </form>
+                          <!-- <md-divider></md-divider> -->
+                      </md-content>
+          </md-dialog>
+      </div>
+</div> 

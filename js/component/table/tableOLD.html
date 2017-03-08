@@ -1,0 +1,99 @@
+<div ng-controller="tableController">
+  <md-button class="md-fab" ng-click="$ctrl.addtableevent();">Add</md-button>
+  <md-button class="md-primary md-raised" ng-click="$ctrl.deletetableevent()">Delete</md-button>
+   <md-button class="md-primary md-raised" ng-click="$ctrl.harthaltableevent()" ng-if="$ctrl.headings[0].model=='holiday'">Set Harthal Day</md-button>
+   
+  <md-table-container>
+    <table md-table multiple>
+      <thead md-head>
+        <tr md-row>
+          <th md-column ng-repeat="heading in $ctrl.headings"><span>{{heading.title}}</span></th>
+          <th md-column> </th>
+        </tr>
+      </thead>
+      <tbody md-body>
+         <tr md-row ng-repeat="tabledata in $ctrl.tabledatas">
+           <td md-cell ng-if="tabledata.fromlocationRelation.name!=null" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">{{tabledata.fromlocationRelation.name}}</td>
+            
+            <td md-cell ng-if="tabledata.tolocationRelation.name!=null" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">{{tabledata.tolocationRelation.name}}</td>
+
+            
+           
+
+          <td md-cell ng-if="tabledata.workCenterRelation.name!=null">{{tabledata.workCenterRelation.name}}</td>
+          <td md-cell ng-if="tabledata.locationRelation.name!=null">{{tabledata.locationRelation.name}}</td>
+          <td md-cell ng-if="tabledata.vendorRelation.name!=null">{{tabledata.vendorRelation.name}}</td>
+          <td md-cell ng-if="tabledata.name!=null" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">{{tabledata.name}}</td>
+          <td md-cell ng-if="tabledata.holidayname!=null" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">{{tabledata.holidayname}}</td>
+          <td md-cell ng-if="(tabledata.fieldofficerID!=null) && ($ctrl.headings[0].modelname!='workcentervendor')" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">{{tabledata.fieldofficerID}}</td>
+          <!-- <td md-cell ng-if="(tabledata.workcenterID!=null) && ($ctrl.headings[0].modelname!='workcentervendor')" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">{{tabledata.workcenterrelation.workcenterID}}</td> -->
+
+
+          <td md-cell ng-if="tabledata.email!=null" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">{{tabledata.email}}</td>
+          <td md-cell ng-if="tabledata.firstname!=null" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">{{tabledata.firstname}}</td>
+        
+          <!-- <td md-cell ng-if="(tabledata.locationID!=null) && ($ctrl.headings[0].modelname!='vendor')" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">{{tabledata.locationID}}</td> -->
+
+        <!--   <td md-cell ng-if="(tabledata.locationID!=null) && ($ctrl.headings[0].modelname!='workcentervendor') ($ctrl.headings[0].modelname!='holiday')" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">{{tabledata.locationID}}</td> -->
+
+           <td md-cell ng-if="tabledata.workcenterrelation.name!=null">{{tabledata.workcenterrelation.name}}</td>
+           <td md-cell ng-if="tabledata.capacity!=null">{{tabledata.capacity}}</td>
+          <td md-cell ng-if="tabledata.locationrelation.name!=null">{{tabledata.locationrelation.name}}</td>
+
+          <td md-cell ng-if="tabledata.machineID!=null">{{tabledata.machineID}}</td>
+          <td md-cell ng-if="tabledata.date!=null">{{tabledata.date}}</td>
+          <td md-cell ng-if="tabledata.status!=null">{{tabledata.status}}</td>
+          <td md-cell ng-if="tabledata.processTicketID!=null">{{tabledata.processTicketID}}</td>
+          <td md-cell ng-if="tabledata.usedCapacity!=null">{{tabledata.usedCapacity}}</td>
+          <!-- <td md-cell ng-if="tabledata.processTicketID!=null">{{tabledata.processTicketID}}</td> -->
+
+
+          
+         <!--  <td md-cell ng-if="tabledata.workcenterVendorID!=null">{{tabledata.workcenterVendorID}}</td> -->
+           <!-- <td md-cell ng-if="tabledata.UoM!=null">{{tabledata.UoM}}</td> -->
+         <!--  <td md-cell ng-if="(tabledata.vendorID!=null) && ($ctrl.headings[0].modelname!='workcentervendor')">{{tabledata.vendorID}}</td> -->
+          <td md-cell ng-if="tabledata.LocationName!=null">{{tabledata.LocationName}}</td>
+          <td md-cell ng-if="(tabledata.type!=null) && ($ctrl.headings[0].modelname!='machine')">{{tabledata.type}}</td>
+
+         <!--  <td md-cell ng-if="(tabledata.from!=null) && ($ctrl.headings[0].modelname=='holiday')"  ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">{{tabledata.from}}</td>
+
+            <td md-cell ng-if="(tabledata.to!=null) && ($ctrl.headings[0].modelname=='holiday')">{{tabledata.to}}</td> -->
+
+
+
+            <!-- <td md-cell ng-if="$ctrl.headings[0].modelname=='vendor'" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">
+            <span ng-repeat="locationName in tabledata.locationID track by $index">{{locationName.name}} &nbsp;</span></td> -->
+            <td md-cell ng-if="(tabledata.from!=null) && (tabledata.fromlocationRelation.name==null)" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">{{tabledata.from}}</td>
+            <td md-cell ng-if="tabledata.to!=null && (tabledata.tolocationRelation.name==null)" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">{{tabledata.to}}</td>
+
+
+
+          
+          <td md-cell ng-if="tabledata.mode!=null">{{tabledata.mode}}</td>
+          <td md-cell ng-if="tabledata.time!=null">{{tabledata.time}}</td>
+
+          <!-- for plant -->
+          <td md-cell ng-if="tabledata.UserPlant.name!=null">{{tabledata.UserPlant.name}}</td>
+          
+          <td md-cell ng-if="$ctrl.headings[0].modelname=='vendor'" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">
+          <span ng-repeat="locationName in tabledata.locationID track by $index">{{locationName.name}} &nbsp;</span></td>
+          
+          <td md-cell layout="row" layout-align="end start">
+            <div>
+              <md-button class="md-secondary">
+                  <md-tooltip md-direction="left">
+                          Delete
+                  </md-tooltip>
+                  <md-icon class="material-icons" ng-style="{'font-size': '30px', height: '30px','color':'#cc0000'}" ng-click="$ctrl.deletetableclick(tabledata,$ctrl.selectedlist)">delete</md-icon>
+              </md-button>
+              <md-checkbox class="md-secondary" ng-click="$ctrl.toggletablelist(tabledata,$ctrl.selectedlist)"></md-checkbox>
+            </div>
+          </td>
+
+        </tr>
+      </tbody>
+    </table>
+  </md-table-container>
+  <md-divider></md-divider>
+
+</div>

@@ -1,0 +1,11 @@
+<div>
+	<label>Embroidery</label>
+                  
+<md-input-container>
+
+
+                            <md-select ng-model="ProcessQR" required>
+                                <md-option ng-repeat="item in processes" ng-value="item.id" ng-selected="rightClickTask == item.id">{{item.processName}}</md-option>
+                            </md-select>
+  </md-input-container>
+</div>

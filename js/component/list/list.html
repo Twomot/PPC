@@ -1,0 +1,24 @@
+<!-- <md-list>
+	<md-list-item ng-repeat="list in $ctrl.lists" ng-click="null">
+		<h3>{{list.name}}</h3>
+	</md-list-item>
+</md-list> -->
+<div ng-controller="listController">
+<md-list>
+	<md-list-item ng-repeat="list in $ctrl.lists" ng-click="$ctrl.listclick(list,$ctrl.selectedlist)">
+		<div class="md-list-item-text">
+		<h4>{{list.name}}</h4>
+          </div>
+		
+		<!-- <md-checkbox class="md-secondary" ng-click="$ctrl.togglelist(list)"></md-checkbox>  -->
+		 
+	        <md-button class="md-secondary">
+	            <md-tooltip md-direction="left">
+	                    Delete
+	            </md-tooltip>
+	            <md-icon class="material-icons" ng-style="{'font-size': '30px', height: '30px','color':'#cc0000'}" ng-click="$ctrl.deleteclick(list,$ctrl.selectedlist)">delete</md-icon>
+	        </md-button>
+	        <md-checkbox class="md-secondary" ng-click="$ctrl.togglelist(list,$ctrl.selectedlist)"></md-checkbox>
+	</md-list-item>
+</md-list>
+</div>

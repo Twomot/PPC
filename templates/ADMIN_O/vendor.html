@@ -1,0 +1,72 @@
+<table-component headings="headingArray" tabledatas="vendorData" selectedlist="selecteddata" addtableevent="addPopup()" deletetableevent="massDelete($event)" deletetableclick2="deleteFunction($event)" tableclick2="updatePopup()" toggletable2="toggleFun()"></table-component>
+
+<div style="visibility: hidden">
+    <div class="md-dialog-container" id="addDialogvendor">
+        <md-dialog flex="50">
+            <!-- <md-toolbar md-scroll-shrink> -->
+            <md-toolbar>
+                          <div class="md-toolbar-tools">
+                             <h2>
+                                <span>Add</span>
+                             </h2>
+                             <span flex></span>
+                          </div>
+             </md-toolbar>
+                       <md-content layout-padding>
+                         <form name="projectAddForm" class="projectAddForm">
+                              <md-input-container class="md-block">
+                                <label>Name</label>
+                                <input required name="name" ng-model="vendor.name" id="nameId" ng-readonly=editRead>
+                                <div ng-messages="projectAddForm.name.$error">
+                                  <div ng-message="required">This is required.</div>
+                                </div>
+                             </md-input-container>
+
+                             
+                            <div>
+                              <!-- <md-button  type="submit" class="md-raised" ng-click="addvendor(vendor,projectAddForm.$invalid)">add</md-button> -->
+                              <md-button class="md-raised" ng-click="addvendor(vendor,projectAddForm.$invalid,buttonText)" type="submit">{{buttonText}}</md-button>
+                              <md-button class="md-raised" ng-click="cancel(buttonText,vendor)">Cancel</md-button>
+                            </div>
+                        
+                          </form>
+                          <!-- <md-divider></md-divider> -->
+                      </md-content>
+          </md-dialog>
+    </div>
+</div> 
+
+
+<div style="visibility: hidden">
+      <div class="md-dialog-container" id="editDialogvendor">
+         <md-dialog flex="50">
+            <!-- <md-toolbar md-scroll-shrink> -->
+            <md-toolbar>
+                          <div class="md-toolbar-tools">
+                             <h2>
+                                <span>Edit</span>
+                             </h2>
+                             <span flex></span>
+                          </div>
+                       </md-toolbar>
+                       <md-content layout-padding>
+                         <form name="projectEditForm" class="projectEditForm">
+                              <md-input-container class="md-block">
+                                <label>Name</label>
+                                <input required name="editname" ng-model="vendorEdit.name"  ng-readonly=editRead>
+                                <div ng-messages="projectEditForm.editnamevendor.$error">
+                                  <div ng-message="required">This is required.</div>
+                                </div>
+                             </md-input-container>
+
+                            <div>
+                              <md-button class="md-raised" ng-click="updatevendorclick(vendorEdit,projectEditForm.$invalid,buttonText)" type="submit">{{buttonText}}</md-button>
+                              <md-button class="md-raised" ng-click="cancel('edit')">Cancel</md-button>
+                            </div>
+                        
+                          </form>
+                          <!-- <md-divider></md-divider> -->
+                      </md-content>
+          </md-dialog>
+      </div>
+</div> 

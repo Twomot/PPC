@@ -1,0 +1,573 @@
+<!doctype html>
+<html lang="en" ng-app="app">
+<head>
+	<meta charset="utf-8">
+	<title>Angular Gantt demo</title>
+
+	<link rel="stylesheet" href="lib/gantt/dhtmlxgantt.css">
+	<link rel="stylesheet" href="lib/scheduler/dhtmlxscheduler.css">
+  <!-- <link rel='stylesheet' type='text/css' href='lib/scheduler/matrix/dhtmlxscheduler.css'> -->
+
+
+	<!-- Page styles -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="vendor/material/material-design-lite/material.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+
+    <!-- material css -->
+    <link href="vendor/material/angular-material/angular-material.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/font-awesome.min.css" />
+
+    <!-- compress and expansion -->
+    <!-- <link href="vendor/material/angular-material-accordion/dist/angular-material-accordion.css" rel="stylesheet"> -->
+
+    <!-- table style -->
+    <link href="vendor/material/angular-material-data-table/dist/md-data-table.css" rel="stylesheet">
+
+
+
+
+	<script src="vendor/angular/angular.js"></script>
+
+	<script src="vendor/angular-resource/angular-resource.js"></script>
+    <script src="vendor/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="vendor/ngstorage/ngStorage.js"></script>
+
+	<script src="lib/gantt/dhtmlxgantt.js"></script>
+	<script src="lib/gantt/dhtmlx_auto_schedule.js"></script>
+	<script src="lib/gantt/dhtmlxgantt_tooltip.js"></script>
+
+	<script src="lib/scheduler/dhtmlxscheduler.js"></script>
+  <script src="lib/scheduler/dhtmlxscheduler_limit.js" type="text/javascript" charset="utf-8"></script>
+  <script src='lib/scheduler/dhtmlxscheduler_timeline.js' type="text/javascript" charset="utf-8"></script>
+  <script src='lib/scheduler/dhtmlxscheduler_tooltip.js' type="text/javascript" charset="utf-8"></script>
+  <script src="lib/scheduler/dhtmlxscheduler_year_view.js" type="text/javascript" charset="utf-8"></script>
+  <script src="lib/scheduler/dhtmlxscheduler_container_autoresize.js" type="text/javascript" charset="utf-8"></script>
+  
+  <script src='lib/scheduler/dhtmlxscheduler_collision.js' type="text/javascript" charset="utf-8"></script>
+
+
+	 <script src="js/services/lb-services.js"></script>
+	<script src="js/factories.js"></script>
+
+	<script src="js/app.js"></script>
+	<script src="js/app.gantt.js"></script>
+	<script src="js/app.scheduler.js"></script>
+
+ 
+
+	<style>
+  .highlighted_timespan {
+      background-color: #87cefa;
+      /*opacity:0.5;
+      filter:alpha(opacity=50);
+      cursor: pointer;
+      z-index: 0;*/
+    }
+ /*.android-header .mdl-navigation__link {
+    color: #757575;
+    font-weight: 700;
+    font-size: 14px;
+  }
+  .android-navigation .mdl-navigation__link {
+    display: inline-block;
+    height: 60px;
+    line-height: 68px;
+    background-color: transparent !important;
+    border-bottom: 4px solid transparent;
+  }
+  .android-navigation .mdl-navigation__link:hover {
+      border-bottom: 4px solid #8bc34a;
+    }
+  .android-drawer .mdl-navigation__link.mdl-navigation__link {
+    font-size: 14px;
+    color: #757575;
+  }
+   .android-drawer span.mdl-navigation__link.mdl-navigation__link {
+    color: #8bc34a;
+  }
+   .android-header .mdl-navigation__link {
+    color: #757575;
+    font-weight: 700;
+    font-size: 14px;
+  }*/
+
+</style> 
+<script type="text/javascript">
+    /*angular.module('app', [])
+
+.controller('MyCtrl', [function() {
+    angular.element(document).ready(function () {
+      alert('ready');
+        //document.getElementById('msg').innerHTML = 'Hello';
+    });
+}]);*/
+
+</script>
+</head>
+<body>
+
+	<!-- <div data="tasks" dhx-gantt style="height:300px; width:100%;">
+		<div gantt-template="task_text">
+			<strong>#{{task.id}}</strong>: {{task.text | uppercase}}
+		</div>
+	</div> -->
+
+	<!-- <div ui-view></div>		 -->
+	
+
+
+
+	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header" ng-cloak>
+
+      <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header" >
+
+      <div class="android-header mdl-layout__header mdl-layout__header--waterfall" ng-hide="login" ng-controller="homeController">
+    <style>
+
+body{
+width:100%;
+-webkit-background-size:cover;
+-moz-background-size:cover;
+-o-background-size:cover;
+background-size:cover;
+}
+
+@media(max-width:800px)
+{
+#c1
+{
+width:100%;height:61px;
+/*background-image:url('images/twomot/Background  - Copy2.png');*/
+background-image:url('images/twomot/Background-Copy2.png');
+background-size:80% 100%;
+background-repeat:no-repeat;
+background-color:#D4EEFC;
+}
+#logo2
+{
+float:right;
+top:11px;
+position:absolute;
+right:2%;
+}
+#logo1
+{
+float:left;
+top:6px;
+position:absolute;
+left:20px;
+}
+}
+@media(min-width:800px)
+{
+#c1
+{
+width:100%;
+height:61px;
+/*background-image:url('images/twomot/Background  - Copy2.png');*/
+background-image:url('images/twomot/Background-Copy2.png');
+background-size:88% 100%;
+background-repeat:no-repeat;
+background-color:#D4EEFC;
+}
+#logo2
+{
+float:right;
+top:11px;
+position:absolute;
+right:40px;
+}
+#logo1
+{
+float:left;
+top:6px;
+position:absolute;
+left:20px;
+}
+}
+@media(max-width:400px)
+{
+#c1{
+background-size:70% 100%;
+}
+}
+#row1{
+margin-left:60%;
+margin-top:15px;
+}
+</style>
+<div class="container" id="c1">
+<img src="images/twomot/Ambadi Logo.png"  class="img-responsive" id="logo1" width="50px"/>
+<img src="images/twomot/Murugappa Logo.png" class="img-responsive" id="logo2" width="70px" />
+<div class="row" id="row1">
+<style>
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: none;
+}
+
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    color:#4d4d4d ;
+    text-align: center;
+    padding: 10px 12px;
+    text-decoration: none;
+  font-size:16px;
+}
+
+li a:hover {
+    background-color: #4AA8DA;
+  color:white;
+}
+/*#EE2A33*/
+@media(max-width:1000px)
+{
+#row1{
+margin-left:40%;
+margin-top:15px;
+}
+
+}
+@media(max-width:700px)
+{#row1{
+margin-left:20%;
+margin-top:15px;
+}
+
+}
+@media(max-width:450px)
+{#row1{
+margin-left:20%;
+margin-top:15px;
+
+}
+li a {
+font-size:10px;
+}
+
+
+}
+.margin
+{
+  margin-right: 500px;
+}
+
+</style>
+    <!-- <ul>
+      <li><a class="active" href="#">Home</a></li>
+      <li><a href="#">News</a></li>
+      <li><a href="#">Contact</a></li>
+      <li><a href="#">About</a></li>
+    </ul> -->
+    <div class="android-navigation-container" >
+
+            <nav class="android-navigation mdl-navigation margin">
+
+              <md-menu-bar>
+   <!-- --------------------------Admin -------------------- -->
+                     <md-menu>
+                        <button ng-click="$mdOpenMenu()" class="mdl-navigation__link">Admin</button>
+                        <md-menu-content>
+                           <md-menu-item>
+                              <!--<md-button ng-click="ctrl.sampleAction('share', $event)">Job Order1</md-button>-->
+                              <a  class="mdl-navigation__link mdl-typography--text-uppercase" href="#/UoMList"> UoM</a>
+                           </md-menu-item>
+                           <md-menu-divider></md-menu-divider>
+                         <md-menu-item>
+                               <a  class="mdl-navigation__link mdl-typography--text-uppercase" href="#/workcenter">Work Center</a>
+                        </md-menu-item>
+                           <md-menu-divider></md-menu-divider>
+                         <md-menu-item>
+                               <a  class="mdl-navigation__link mdl-typography--text-uppercase" href="#/location">Location</a>
+                        </md-menu-item>
+                           <md-menu-divider></md-menu-divider>
+                        <md-menu-item>
+                               <a  class="mdl-navigation__link mdl-typography--text-uppercase" href="#/vendor">Vendor</a>
+                        </md-menu-item>
+                        <md-menu-divider></md-menu-divider>
+                        <md-menu-item>
+                               <a  class="mdl-navigation__link mdl-typography--text-uppercase" href="#/workcentervendor">Work Center Vendor</a>
+                        </md-menu-item>
+                           <md-menu-divider></md-menu-divider>
+                        <md-menu-item>
+                               <a  class="mdl-navigation__link mdl-typography--text-uppercase" href="#/user">Employee</a>
+                        </md-menu-item>
+                        <md-menu-divider></md-menu-divider>
+                        <md-menu-item>
+                               <a  class="mdl-navigation__link mdl-typography--text-uppercase" href="#/machine">Machine</a>
+                        </md-menu-item>
+                        <md-menu-divider></md-menu-divider>
+                        <md-menu-item>
+                               <a  class="mdl-navigation__link mdl-typography--text-uppercase" href="#/holiday">Holiday</a>
+                        </md-menu-item>
+                         <md-menu-divider></md-menu-divider>
+                        <md-menu-item>
+                               <a  class="mdl-navigation__link mdl-typography--text-uppercase" href="#/transittime">Transit Time</a>
+                        </md-menu-item>
+                       
+                        <!-- <md-menu-divider></md-menu-divider>
+                        <md-menu-item>
+                               <a style="text-decoration:none" class="mdl-navigation__link mdl-typography--text-uppercase" href="">Holiday</a>
+                        </md-menu-item>
+                        <md-menu-divider></md-menu-divider> -->
+               
+                        <md-menu-item>
+                              <md-menu>
+                                 <md-button ng-click="$mdOpenMenu()">More</md-button>
+                                 <md-menu-content>
+                                    
+                                   
+                                     <md-menu-item>
+                               <a  class="mdl-navigation__link mdl-typography--text-uppercase" href="#/circuitbreaker">Circuit Breakers</a>
+                        </md-menu-item>
+                                     <md-menu-item>
+                               <a  class="mdl-navigation__link mdl-typography--text-uppercase" href="#/plant">Plant</a>
+                        </md-menu-item>
+                                    
+                                    </md-menu-content>
+                              </md-menu>
+                        </md-menu-item>
+                      </md-menu-content>
+                     </md-menu>
+
+
+   <!-- --------------------------Planner -------------------- -->                
+                     <!--  <md-menu ng-show="currentRole=='planner'"> -->
+                     <md-menu ng-show="currentRole=='planner'">
+                        <button ng-click="$mdOpenMenu()" class="mdl-navigation__link">Planner</button>
+                        <md-menu-content>
+                           <md-menu-item>
+                             <a  class="mdl-navigation__link mdl-typography--text-uppercase" href="#/calendarView">Calendar View</a>
+                           </md-menu-item>
+
+                           
+                             <md-menu-item style="cursor:pointer">
+                             <a  class="mdl-navigation__link mdl-typography--text-uppercase" ng-click="CreateJobOrder()">Create Job Order</a>
+                           </md-menu-item>
+
+                        <!--    <md-menu-item style="cursor:pointer">
+                             <a  class="mdl-navigation__link mdl-typography--text-uppercase" ng-click="getUOMs()">Get UOM</a>
+                           </md-menu-item> -->
+                          
+                   
+                        </md-menu-content>
+                     </md-menu>
+                   
+<!-- --------------------------Scheduler -------------------- -->
+                     <md-menu ng-show="currentRole=='scheduler'">
+                        <button ng-click="$mdOpenMenu()" class="mdl-navigation__link">Scheduling</button>
+                        <md-menu-content>
+                           <md-menu-item>
+                             <a  class="mdl-navigation__link mdl-typography--text-uppercase" href="#/calendarView">Job Order</a>
+                           </md-menu-item>              
+                         
+                        </md-menu-content>
+                     </md-menu>
+       <!-- ----------------Field Officer -------------------- -->
+                     <md-menu ng-show="currentRole=='fieldofficer'">
+                        <button ng-click="$mdOpenMenu()" class="mdl-navigation__link">Updater</button>
+                        <md-menu-content>
+                         <md-menu-item style="cursor:pointer">
+                             <a  class="mdl-navigation__link mdl-typography--text-uppercase" ng-click="addP1()">Calendar</a>
+                           </md-menu-item>            
+                         
+                        </md-menu-content>
+                     </md-menu>
+<!-- --------------------------QC -------------------- -->
+                     <md-menu ng-show="currentRole=='qcscheduler'">
+                        <button ng-click="$mdOpenMenu()" class="mdl-navigation__link">QC</button>
+                        <md-menu-content>
+                           <md-menu-item>
+                             <a  class="mdl-navigation__link mdl-typography--text-uppercase" href="#/calendarView">Calendar</a>
+                           </md-menu-item>    
+                           <md-menu-item>
+                             <a  class="mdl-navigation__link mdl-typography--text-uppercase" href="#/calendarView">Scheduling</a>
+                           </md-menu-item>            
+                         
+                        </md-menu-content>
+                     </md-menu>
+<!-- -------------------------- Management -------------------- -->
+                     <md-menu ng-show="currentRole=='management'">
+                        <button ng-click="$mdOpenMenu()" class="mdl-navigation__link">Reports</button>
+                        <md-menu-content>
+                           <md-menu-item>
+                              <!--<md-button ng-click="ctrl.sampleAction('share', $event)">Job Order1</md-button>-->
+                              <a  class="mdl-navigation__link mdl-typography--text-uppercase" href=""> Centre</a>
+                           </md-menu-item>
+                           <md-menu-divider></md-menu-divider>
+                        <md-menu-item>
+                               <a style="text-decoration:none" class="mdl-navigation__link mdl-typography--text-uppercase" href="">Location</a>
+                        </md-menu-item>
+                           <md-menu-divider></md-menu-divider>
+                        <md-menu-item>
+                               <a  class="mdl-navigation__link mdl-typography--text-uppercase" href="">process</a>
+                        </md-menu-item>
+                        <md-menu-divider></md-menu-divider>
+                        <md-menu-item>
+                               <a  class="mdl-navigation__link mdl-typography--text-uppercase" href="">vendor</a>
+                        </md-menu-item>
+                        <md-menu-divider></md-menu-divider>
+                         <md-menu-item>
+                               <a  class="mdl-navigation__link mdl-typography--text-uppercase" href="">employee</a>
+                        </md-menu-item>
+                        <md-menu-divider></md-menu-divider>
+                        <md-menu-item>
+                               <a  class="mdl-navigation__link mdl-typography--text-uppercase" href="">Machine</a>
+                        </md-menu-item>
+                        <md-menu-divider></md-menu-divider>
+                        <md-menu-item>
+                               <a  class="mdl-navigation__link mdl-typography--text-uppercase" href="">material group</a>
+                        </md-menu-item>
+                      </md-menu-content>
+                     </md-menu>
+
+                      <md-menu >
+                        <button ng-click="logoutClick($event)" class="mdl-navigation__link">Logout</button>
+                        <md-menu-content>
+                           <md-menu-item>
+                         
+                           </md-menu-item>              
+                         
+                        </md-menu-content>
+                     </md-menu>
+
+
+                  </md-menu-bar>
+
+            </nav>
+          </div>
+</div>
+</div>
+</div>
+
+      <!-- <div class="android-drawer mdl-layout__drawer">
+        <span class="mdl-layout-title">
+          <img class="android-logo-image" src="images/twomot/twomot_logo.png">
+        </span>
+        <nav class="mdl-navigation">
+          <a class="mdl-navigation__link" href="#/UoMList">UoM List</a>
+          <a class="mdl-navigation__link" href="#/panelView">Job Order</a> -->
+
+          <!-- <a class="mdl-navigation__link" href="">3</a>
+          <a class="mdl-navigation__link" href="">4</a>
+          <a class="mdl-navigation__link" href="">5</a>
+          <a class="mdl-navigation__link" href="">6</a>
+          <a class="mdl-navigation__link" href="">7</a> -->
+
+          <!-- <div class="android-drawer-separator"></div>
+          <span class="mdl-navigation__link" href="">Admin</span>
+          <a class="mdl-navigation__link" href="">User List</a>
+          <a class="mdl-navigation__link" href="">Location List</a>
+          <a class="mdl-navigation__link" href="">Transit Time List</a>
+          <a class="mdl-navigation__link" href="#/UoMList">UoM List</a>
+          <a class="mdl-navigation__link" href="">Work Center List</a>
+          <a class="mdl-navigation__link" href="">Vendor List</a> 
+          <a class="mdl-navigation__link" href="">Work Center Vendor List</a>
+          <a class="mdl-navigation__link" href="">Machine List</a> -->
+
+          <!-- <div class="android-drawer-separator"></div>
+          <span class="mdl-navigation__link" href="">Resources</span>
+          <a class="mdl-navigation__link" href="">Official blog</a>
+          <a class="mdl-navigation__link" href="">Android on Google+</a>
+          <a class="mdl-navigation__link" href="">Android on Twitter</a>
+          <div class="android-drawer-separator"></div>
+          <span class="mdl-navigation__link" href="">For developers</span>
+          <a class="mdl-navigation__link" href="">App developer resources</a>
+          <a class="mdl-navigation__link" href="">Android Open Source Project</a>
+          <a class="mdl-navigation__link" href="">Android SDK</a> -->
+
+        <!-- </nav>
+      </div> -->
+
+      <div class="android-content mdl-layout__content">
+        <div ui-view> 
+          <!-- <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" md-theme-watch>
+                  <md-card-title>
+                    <md-card-title-text>
+                      <span class="md-headline">Card with image</span>
+                      <span class="md-subhead">Large</span>
+                    </md-card-title-text>
+                    <md-card-title-media>
+                      <div class="md-media-lg card-media"></div>
+                    </md-card-title-media>
+                  </md-card-title>
+                  <md-card-actions layout="row" layout-align="end center">
+                    <md-button>Action 1</md-button>
+                    <md-button>Action 2</md-button>
+                  </md-card-actions>
+          </md-card> -->
+        </div>
+        </div>
+        
+      </div>
+    </div>
+
+
+
+
+
+
+	 <script src="vendor/material/material-design-lite/material.min.js"></script>
+	 <script src="vendor/material/angular-animate/angular-animate.js"></script>
+        <script src="vendor/material/angular-aria/angular-aria.js"></script>
+        <script src="vendor/material/angular-messages/angular-messages.js"></script>
+        <script src="vendor/material/angular-material/angular-material.js"></script>
+
+        <!-- table view -->
+        <script src="vendor/material/angular-material-data-table/dist/md-data-table.js"></script>
+
+        <!-- pagination -->
+        <script src="vendor/material/material-angular-paging/build/dist.min.js"></script>
+
+        <!-- component -->
+         <script src="js/component/component.js"></script>
+        
+          <script src="js/component/dialog/dialog.js"></script>
+          <script src="js/component/list/list.js"></script> 
+          <script src="js/component/table/table.js"></script> 
+
+    <!-- angular filter -->
+    <script src="vendor/angular-ui/build/angular-ui.js"></script>
+
+	 <!-- admin category -->
+    
+       <script src="js/controllers/ADMIN/UoMList.js"></script>
+       <script src="js/controllers/ADMIN/signup.js"></script>
+       <script src="js/controllers/ADMIN/location.js"></script>
+       <script src="js/controllers/ADMIN/holiday.js"></script>
+       <script src="js/controllers/ADMIN/transittime.js"></script>
+       <script src="js/controllers/ADMIN/workcenter.js"></script>
+       <script src="js/controllers/ADMIN/vendor.js"></script>
+       <script src="js/controllers/ADMIN/workcentervendor.js"></script>
+       <script src="js/controllers/ADMIN/machine.js"></script>
+       <script src="js/controllers/ADMIN/user.js"></script>
+ <script src="js/controllers/ADMIN/plant.js"></script>
+  <script src="js/controllers/ADMIN/circuit.js"></script>
+
+
+       <script src="js/controllers/panelView.js"></script>
+       <script src="js/controllers/login.js"></script>
+       <script src="js/controllers/processView.js"></script>
+        <script src="js/controllers/monthView.js"></script>
+         <script src="js/controllers/matrix.js"></script>
+         <script src="js/controllers/home.js"></script>
+
+         <script src="js/controllers/stores.js"></script>
+             <script src="js/controllers/jigger.js"></script>
+              <script src="js/controllers/printing.js"></script>
+              <script src="js/controllers/accessories.js"></script>
+
+
+      
+         
+</body>
+</html>

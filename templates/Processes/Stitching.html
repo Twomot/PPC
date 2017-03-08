@@ -1,0 +1,98 @@
+<div>
+    <div layout="row" layout-padding style="height:50px;">
+        <div flex="28">
+            <md-input-container>
+                <label>Type Of Stiching</label>
+                <md-select name="type" ng-model="stiching.type" required>
+                    <md-option value="Cushion_Cover">Cushion Cover</md-option>
+                    <md-option value="PatchWork">PatchWork</md-option>
+                    <md-option value="Panel">Panel</md-option>
+                </md-select>
+                <div ng-messages="processticket.noOfWeeks.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+        </div>
+        <div flex="20">
+            <md-input-container>
+                <label>Job Order for Full Qty</label>
+                <md-select name="type" ng-model="stiching.fullqty" required>
+                    <md-option value="Full">Full</md-option>
+                    <md-option value="Part">Part</md-option>
+                </md-select>
+            </md-input-container>
+        </div>
+        <div flex>
+            <md-input-container>
+                <label>Front Panel</label>
+                <input ng-model="stiching.frontpanel" required>
+            </md-input-container>
+        </div>
+        <div flex>
+            <md-input-container>
+                <label>Back Panel</label>
+                <input ng-model="stiching.backpanel" required>
+            </md-input-container>
+        </div>
+        <div flex>
+            <md-input-container>
+                <label>Zipper</label>
+                <input ng-model="stiching.zipper" required>
+            </md-input-container>
+        </div>
+        <div flex>
+            <md-input-container>
+                <label>Piping</label>
+                <input ng-model="stiching.piping" required>
+            </md-input-container>
+        </div>
+        
+    </div>
+    <div layout="row" layout-padding style="height:50px;">
+    	<div flex>
+            <md-input-container>
+                <label>Other Accessories</label>
+                <input ng-model="stiching.otheraccessories" required>
+            </md-input-container>
+        </div>
+    	 <div flex>
+            <md-input-container>
+                <label>Duration</label>
+                <input ng-model="stiching.duration" required>
+            </md-input-container>
+        </div>
+        <div flex>
+            <md-input-container>
+                <label>Process Start date </label>
+                <input ng-model="processtartDate" md-placeholder="Enter Date" name="processStartDate" ng-focus="DyeingChange(processticket.mtrs)">
+                <div ng-messages="processcabinetform.processStartDate.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+        </div>
+       
+        <div flex>
+            <md-input-container>
+                <label>Process End Date </label>
+                <input ng-model="processEndDate" md-placeholder="Enter Date" name="processStartDate" ng-focus="DyeingChange()">
+                <div ng-messages="processcabinetform.processStartDate.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+        </div>
+    </div>
+     <div layout="row" layout-padding style="height:50px;">
+        <div flex="0.5"></div>
+        <div flex="0.5"></div>
+        <div flex ng-show="processticket.id == undefined">
+        <!-- Updated By Ramesh -->
+        <!--md-button  class="md-raised md-primary" ng-click="$parent.addProcessTicket(processticket)">Save</md-button-->
+        <md-button  class="md-raised md-primary" ng-click="addProcessTicket(processticket)">Save</md-button>
+    </div>
+    <div ng-show="processticket.id !== undefined">
+    	<!-- Updated By Ramesh -->
+        <!--md-button  class="md-raised md-primary" ng-click="$scope.saveProcessTicket(processticket)">Save</md-button></div-->
+        <md-button  class="md-raised md-primary" ng-click="saveProcessTicket(processticket)">Save</md-button></div>
+    </div>
+</div>
+</div>

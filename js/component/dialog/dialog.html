@@ -1,0 +1,35 @@
+<!-- <div ng-controller="dailogController"> -->
+<md-dialog aria-label="List dialog" flex="100" ng-controller="dailogController">
+<md-dialog-content>
+<md-toolbar md-scroll-shrink>
+    <div class="md-toolbar-tools">
+        <h2>
+        <span>{{$ctrl.header}}</span>
+      </h2>
+      <span flex></span>
+    </div>
+  </md-toolbar>
+  <md-content layout-padding>
+   <!-- <div class="md-dialog-content" ng-hide="($ctrl.content == null)&&($ctrl.contentpara == null)"> -->
+   <div ng-hide="($ctrl.content == null)&&($ctrl.contentpara == null)">
+        <h2>{{$ctrl.content}}</h2>
+        <p>
+          {{$ctrl.contentpara}}
+        </p>
+    </div>
+  <div layout="row">
+  <div ng-hide="$ctrl.button1 == null">
+  <md-button class="md-primary md-raised" ng-click="$ctrl.button1click();">{{$ctrl.button1}}</md-button>
+  </div>
+  <div ng-hide="$ctrl.button2 == null">
+  <md-button class="md-primary md-raised" ng-click="$ctrl.button2click();">{{$ctrl.button2}}</md-button>
+  </div>
+  <div ng-hide="$ctrl.button3 == null">
+  <md-button class="md-primary md-raised" ng-click="button3click();">{{$ctrl.button3}}</md-button>
+</div>
+</div>
+  <md-divider></md-divider>
+</md-content>
+</md-dialog-content>
+</md-dialog>
+<!-- </div> -->

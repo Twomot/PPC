@@ -1,0 +1,186 @@
+<style type="text/css">
+  md-tooltip .md-content {
+    height: auto;
+}
+</style>
+
+
+<div layout="row">
+  <div flex>
+<md-button class="md-primary md-raised" ng-click="showTabDialog($event)">
+      Add Job Order
+</md-button>
+</div>
+<div flex="85" layout="row">
+  <md-input-container>
+          <label>Select</label>
+          <md-select ng-model="selectSearch">
+            <md-option value="dateRange">By Date Range</md-option>
+            <md-option value="number">By Number</md-option>
+            <md-option value="color">By Color</md-option>
+            <md-option value="missOut">Miss Out</md-option>
+          </md-select>
+</md-input-container>
+
+<md-input-container ng-show="selectSearch=='dateRange'">
+          <label>Select</label>
+          <md-select ng-model="selectType" ng-change="typeChange(selectType)">
+            <md-option value="month">Current Month</md-option>
+            <md-option value="week">Current Week</md-option>
+            <md-option value="date">Select Date</md-option>
+          </md-select>
+</md-input-container>
+
+<div ng-if="(selectType=='date') && (selectSearch=='dateRange')">
+    <md-input-container>
+          <md-datepicker ng-model="startDate" md-placeholder="Enter Date" ></md-datepicker>
+    </md-input-container>
+    <md-input-container>
+          <md-datepicker ng-model="endDate" md-placeholder="Enter Date" ></md-datepicker>
+    </md-input-container>
+</div>
+<md-input-container ng-if="(selectSearch=='number') || (selectSearch=='color')">
+        <label>{{selectSearch}}</label>
+        <input ng-model="searchData" type="text">
+</md-input-container>
+</div>
+</div>
+
+
+
+<!-- <div layout="row" ng-repeat="master in jsondata | limitTo:limit:begin" layout-wrap ng-attr-dir="{{direct}}"> -->
+<div layout="row" ng-repeat="master in jsondata" layout-wrap ng-attr-dir="{{direct}}"> 
+<div flex-xs flex-gt-xs="10" layout="column">
+  <!-- <md-card md-colors="::{background: 'pink-50'}" ng-click="clickFun(master)"> -->
+  <md-card md-colors="::{background: '{{master.colourcode}}'}" ng-click="clickFun(master)">
+
+        <md-tooltip md-direction="bottom">
+              Plant : {{master.plant}}<br>
+              SalesOrder  : {{master.salesorderNo}}<br>
+              Line Item No : {{master.lineItemNo}}<br>
+              Customer POorCOD : {{master.customerPOorCOD}}<br>
+              Design Name : {{master.designName}}<br>
+              Material Group1 : {{master.materialGroup1}}<br>
+              Material Group2 : {{master.materialGroup2}}<br>
+              Ex-Factory Date : {{master.exFactoryDate}}<br>
+              Current Process : {{master.currentProcess}}<br>
+              no Of Process To go : {{master.noOfProcessTogo}}<br>
+              Current Delay : {{master.currentDelay}}<br>
+              Quantity    : {{master.quantity}}<br>
+              Start Date  : {{master.actualstartdate}}<br>
+              End Date  : {{master.actualenddate}}
+        </md-tooltip>
+      
+
+      <md-card-content flex style="font-size:200%">
+        <p style="font-size:30%;margin-left:-10%;">{{master.salesorderNo}} <br> {{master.lineItemNo}} <br> {{master.customerPOorCOD}} <br> {{master.exFactoryDate.split('T')[0]}}
+          <!-- <md-icon>
+            <i class="material-icons"></i>
+          </md-icon> -->
+        </p>
+      </md-card-content>
+    </md-card>
+  </div>
+
+
+<div ng-repeat="process in master.processes" layout="column">
+
+  <md-card ng-click="clickFun(master)" ng-style="process.mystyle">
+
+        <md-tooltip md-direction="bottom">
+              {{process.processName}}<br>
+              SalesOrder  : {{process.salesorderNumber}}<br>
+              Line Item No: {{process.lineItemNo}}<br>
+              VendorName  : {{process.vendorname}}<br>
+              Quantity    : {{process.quantity}}<br>
+              Start Date  : {{process.actualstartdate}}<br>
+              End Date    : {{process.actualenddate}}
+
+        </md-tooltip>
+           <md-card-content flex style="font-size:200%" >
+                <p style="font-size:30%;margin-left:-10%;">{{process.salesorderNumber}} {{process.lineItemNo}} <br> {{process.processNameData}} {{process.vendorname}}<br>{{process.quantity}}<br>{{process.actualstartdate.split('T')[0]}} {{process.actualenddate.split('T')[0]}}
+                <md-icon ng-if="process.criticalpathstatus==true" layout-align="end end" layout="row">
+                <i class="material-icons">watch_later</i>
+              </md-icon>
+              <md-icon ng-if="process.criticalpathstatus==false">
+                <i class="material-icons"></i>
+              </md-icon>
+            </p>
+          </md-card-content>
+    </md-card>
+
+    <!-- <md-card md-colors="::{background: 'yellow'}" ng-click="clickFun(master)"> -->
+   <!--  <md-card md-colors="::{background: '{{color[$index]}}'}" ng-click="clickFun(master)"> -->
+    <!-- <md-card md-colors="::{background: 'white'}" ng-click="clickFun(master)"> -->
+
+    <!-- <md-card ng-click="clickFun(master)" ng-if="process.processType=='process'" style="width:150px">
+
+        <md-tooltip md-direction="bottom">
+              {{process.processName}}<br>
+              SalesOrder  : {{process.salesorderNumber}}<br>
+              Line Item No: {{process.lineItemNo}}<br>
+              VendorName  : {{process.vendorname}}<br>
+              Quantity    : {{process.quantity}}<br>
+              Start Date  :{{process.actualstartdate}}<br>
+              End Date  :{{process.actualenddate}}
+
+        </md-tooltip>
+           <md-card-content flex style="font-size:200%" >
+                <p style="font-size:30%;margin-left:-10%;">{{process.salesorderNumber}} {{process.lineItemNo}} <br> {{process.processName}} {{process.vendorname}}<br>{{process.quantity}}<br>{{process.actualstartdate.split('T')[0]}} {{process.actualenddate.split('T')[0]}}
+                <md-icon ng-if="process.criticalpathstatus==true" layout-align="end end" layout="row">
+                <i class="material-icons">watch_later</i>
+              </md-icon>
+              <md-icon ng-if="process.criticalpathstatus==false">
+                <i class="material-icons"></i>
+              </md-icon>
+            </p>
+          </md-card-content>
+    </md-card>
+      <md-card ng-click="clickFun(master)" ng-if="process.processType!='process'" style="width:113px">
+         <md-tooltip md-direction="bottom">
+                {{process.processName}}<br>
+                SalesOrder  : {{process.salesorderNumber}}<br>
+                Line Item No: {{process.lineItemNo}}<br>
+                VendorName  : {{process.vendorname}}<br>
+                Quantity    : {{process.quantity}}<br>
+                Start Date  :{{process.actualstartdate}}<br>
+                End Date  :{{process.actualenddate}}
+
+          </md-tooltip>
+            <md-card-content flex style="font-size:200%">
+              <p style="font-size:30%;margin-left:-10%;">{{process.salesorderNumber}} {{process.lineItemNo}}<br>{{process.processType}} {{process.vendorname}}<br>{{process.quantity}}<br>{{process.actualstartdate.split('T')[0]}} {{process.actualenddate.split('T')[0]}}
+                <md-icon ng-if="process.criticalpathstatus==true" layout-align="end end" layout="row">
+                  <i class="material-icons">watch_later</i>
+                </md-icon>
+                <md-icon ng-if="process.criticalpathstatus==false">
+                  <i class="material-icons"></i>
+                </md-icon>
+              </p>
+            </md-card-content>
+      </md-card> -->
+</div>
+
+<!-- dir="RTL" -->
+
+
+</div>
+
+ <cl-paging flex cl-pages="total" cl-steps="6" cl-page-changed="pageChangeFun(begin)" cl-align="end start" cl-current-page="current"></cl-paging>
+
+
+    <div layout="row" layout-sm="column" layout-align="space-around">
+      <md-progress-circular md-mode="indeterminate" ng-disabled="!activated" style="margin-top:100px"></md-progress-circular>
+    </div>
+
+
+        
+
+   <!--  <div data="events" dhx-scheduler style='width:100%; height:1000px;' ng-show="!jobOrderView">
+        <div class="dhx_cal_date"></div>
+                  
+
+        <div dhx-template="event_bar_text">
+            <strong>#{{event.id}}</strong>: {{event.text | uppercase}}
+        </div>
+  </div>
+ -->

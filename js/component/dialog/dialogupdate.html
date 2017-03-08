@@ -1,0 +1,49 @@
+<div ng-controller="dailogController"> 
+<!-- <md-dialog aria-label="List dialog" flex="100"> -->
+<md-dialog-content>
+<md-toolbar md-scroll-shrink>
+    <div class="md-toolbar-tools">
+        <h2>
+        <span>{{$ctrl.header}}</span>
+      </h2>
+      <span flex></span>
+    </div>
+  </md-toolbar>
+  <md-content layout-padding>
+  {{$ctrl.updatedata}}
+   <!-- <div class="md-dialog-content" ng-hide="($ctrl.content == null)&&($ctrl.contentpara == null)"> -->
+    <form name="projectForm" class="projectForm">
+      <!-- <div ng-repeat="inputdata in $ctrl.input">
+        <md-input-container class="md-block">
+          <label>{{inputdata.name}}</label>
+          <input required name="inputname" ng-model="inputdata1" id="nameId">
+          <div ng-messages="projectForm.inputname.$error">
+            <div ng-message="required">This is required.</div>
+          </div>
+        </md-input-container>
+      </div> -->
+
+      <md-input-container class="md-block">
+        <label>{{$ctrl.input.name}}</label>
+        <input required name="name" ng-model="$ctrl.modelname" ng-init = "$ctrl.modelname=$ctrl.updatedata.name">
+        <div ng-messages="projectForm.name.$error">
+          <div ng-message="required">This is required.</div>
+        </div>
+      </md-input-container>
+    
+      <div layout="row">
+        <div ng-hide="$ctrl.button1 == null">
+          <md-button class="md-primary md-raised" ng-click="$ctrl.button1click();" type="submit">{{$ctrl.button1}}</md-button>
+        </div>
+        <div ng-hide="$ctrl.button2 == null">
+          <md-button class="md-primary md-raised" ng-click="$ctrl.button2click();">{{$ctrl.button2}}</md-button>
+        </div>
+        <div ng-hide="$ctrl.button3 == null">
+          <md-button class="md-primary md-raised" ng-click="button3click();">{{$ctrl.button3}}</md-button>
+        </div>
+      </div>
+    </form>
+  <md-divider></md-divider>
+</md-content>
+</md-dialog-content>
+<!-- </md-dialog> -->

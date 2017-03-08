@@ -1,0 +1,130 @@
+<div name="storesForm" ng-controller="storesController">
+
+    <div layout="row" layout-padding style="height:50px;">
+        <div flex="10">
+            <label style="font-weight:bold">Yarn</label>
+        </div>
+        <div flex="10" >
+            <md-icon style="cursor:pointer" ng-click="AddMoreYarn()"><i class="material-icons">note_add</i></md-icon>
+        </div>
+    </div>
+
+    <div layout="row" layout-padding ng-repeat="yarn in processticket.Yarns" style="height:40px;" >
+
+            <md-input-container flex="60">
+                <input ng-model="yarn.yarn_Text_Val" required="">
+            </md-input-container>
+    
+
+            <md-input-container  flex="20">
+                <select ng-model="yarn.yarn_availability_Name" ng-options="option for option in Options"></select>
+            </md-input-container>
+      
+            <md-input-container flex="70">
+                <md-datepicker ng-model="yarn.yarn_ExpectedDate" md-placeholder="Enter Date"></md-datepicker>
+                <div ng-messages="processticketform.vendorname.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+           
+        
+    </div>
+    <div layout="row" layout-padding style="height:30px;">
+        <div flex="10">
+          
+        </div>
+    </div>
+    <div layout="row" layout-padding style="height:30px;">
+        <div flex="10">
+            <label style="font-weight:bold">Fabric</label>
+        </div>
+        <div flex="10">
+            <md-icon style="cursor:pointer" ng-click="AddMoreFabric()"><i class="material-icons">note_add</i></md-icon>
+        </div>
+    </div>
+    <div layout="row" layout-padding ng-repeat="fabric in processticket.Fabric" style="height:40px;">
+    
+            <md-input-container flex="60" >
+                <input ng-model="fabric.fabric_Text_Val" required="">
+            </md-input-container>
+  
+       
+            <md-input-container flex="20">
+                <select ng-model="fabric.fabric_availability_Name" ng-options="option for option in Options"></select>
+            </md-input-container>
+     
+   
+            <md-input-container flex="70">
+                <md-datepicker ng-model="fabric.fabric_ExpectedDate" md-placeholder="Enter Date"></md-datepicker>
+                <div ng-messages="processticketform.vendorname.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+        
+    </div>
+    <div layout="row" layout-padding style="height:20px;">
+       <!--  <div flex>
+            <md-input-container>
+                <label>Vendor</label>
+                <input ng-model="processticket.vendor" required="">
+            
+            </md-input-container>
+        </div> -->
+        <div flex>
+            <md-input-container>
+                <label>Embroidery thread</label>
+                <input ng-model="processticket.embroidery" required="">
+                <div ng-messages="processticketform.processStartDate.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+        </div>
+        <div flex>
+            <md-input-container>
+                <label>Accessories</label>
+                <input ng-model="processticket.accessories" required="">
+                <div ng-messages="processticketform.vendorname.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+        </div>
+        <div flex="30">
+            <md-input-container>
+                <label>Semi Finished Good</label>
+                <input ng-model="processticket.goods" required="">
+                
+               
+            </md-input-container>
+        </div>
+        <div flex="20">
+            <md-input-container>
+                <label>Others</label>
+                <input ng-model="processticket.others" required="">
+                <div ng-messages="processticketform.successorID.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+        </div>
+    </div>
+    <br>
+    <br>
+    <md-input-container>
+        <label>Process Start date </label>
+        <input ng-model="processtartDate" md-placeholder="Enter Date" name="processStartDate" ng-focus="DyeingChange()">
+        <div ng-messages="processcabinetform.processStartDate.$error">
+            <div ng-message="required">This is required.</div>
+        </div>
+    </md-input-container>
+    <md-input-container>
+        <label>Process End Date </label>
+        <input ng-model="processEndDate" md-placeholder="Enter Date" name="processStartDate" ng-focus="DyeingChange()">
+        <div ng-messages="processcabinetform.processStartDate.$error">
+            <div ng-message="required">This is required.</div>
+        </div>
+    </md-input-container>
+    <br>
+    <!-- Updated By Ramesh -->
+    <md-button ng-show="processticket.id == undefined" class="md-raised md-primary" ng-click="addProcessTicket(processticket)">Save New</md-button>
+    <md-button ng-show="processticket.id !== undefined" class="md-raised md-primary" ng-click="saveProcessTicket(processticket)">Save Exist</md-button>
+    
+</div>

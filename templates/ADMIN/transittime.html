@@ -1,0 +1,146 @@
+<table-component headings="headingArray" tabledatas="transittimeData" selectedlist="selecteddata" addtableevent="addPopup()" deletetableevent="massDelete($event)" deletetableclick2="deleteFunction($event)" tableclick2="updatePopup()" toggletable2="toggleFun()"></table-component>
+
+<div style="visibility: hidden">
+    <div class="md-dialog-container" id="addDialogtransittime">
+        <md-dialog flex="50">
+            <!-- <md-toolbar md-scroll-shrink> -->
+            <md-toolbar>
+                          <div class="md-toolbar-tools">
+                             <h2>
+                                <span>Add</span>
+                             </h2>
+                             <span flex></span>
+                          </div>
+             </md-toolbar>
+                      <!--  <md-content layout-padding>
+                         <form name="projectAddForm" class="projectAddForm">
+                              <md-input-container class="md-block">
+                                <label>From</label>
+                                <input required name="from" ng-model="transittime.from" id="fromId">
+                                <div ng-messages="projectAddForm.from.$error">
+                                  <div ng-message="required">This is required.</div>
+                                </div>
+                             </md-input-container> -->
+                              <form name="projectAddForm" class="projectAddForm">
+                                   <md-input-container>
+                                      <label>From</label>
+                                      <md-select ng-model="transittime.from" required>
+                                         <md-option ng-repeat="location in locations" ng-value="location.id">{{location.name}}</md-option>
+                                      </md-select>
+                                    </md-input-container>
+
+                              <md-input-container>
+                                <label>To</label>
+                                      <md-select ng-model="transittime.to" required>
+                                         <md-option ng-repeat="location in locations" ng-value="location.id">{{location.name}}</md-option>
+                                      </md-select>
+                                    </md-input-container>
+                            <!--  <md-datepicker ng-model="transittime.to" md-placeholder="Enter  to date"></md-datepicker> -->
+
+
+                             <md-input-container style="margin-right: 10px;">
+                                <label>Mode</label>
+                                <md-select ng-model="transittime.mode">
+                                  <md-option ng-repeat="mode in modes" value="{{mode}}" >{{mode}}</md-option>
+                                </md-select>
+                              </md-input-container>
+
+                              <md-input-container class="md-block">
+                                <label>Time(Days)</label>
+                                <input required name="time" ng-model="transittime.time" id="fromId">
+                                <div ng-messages="projectAddForm.time.$error">
+                                  <div ng-message="required">This is required.</div>
+                                </div>
+                             </md-input-container>
+
+                             
+                            <div>
+                              <md-button  type="submit" class="md-raised" ng-click="addtransittime(transittime,projectAddForm.$invalid)">add</md-button>
+                              <md-button class="md-raised" ng-click="cancel('add',transittime)">Cancel</md-button>
+                            </div>
+                        
+                          </form>
+                          
+                      </md-content>
+          </md-dialog>
+    </div>
+</div> 
+
+
+<div style="visibility: hidden">
+      <div class="md-dialog-container" id="editDialogtransittime">
+         <md-dialog flex="50">
+            <!-- <md-toolbar md-scroll-shrink> -->
+            <md-toolbar>
+                          <div class="md-toolbar-tools">
+                             <h2>
+                                <span>Edit</span>
+                             </h2>
+                             <span flex></span>
+                          </div>
+                       </md-toolbar>
+                       <md-content layout-padding>
+                         <form name="projectEditForm" class="projectEditForm">
+                              <!-- <md-input-container class="md-block">
+                                <label>From</label>
+                                <input required name="editfrom" ng-model="transittimeEdit.from"  ng-readonly=editRead>
+                                <div ng-messages="projectEditForm.editfrom.$error">
+                                  <div ng-message="required">This is required.</div>
+                                </div>
+                             </md-input-container> -->
+                             <md-input-container>
+                              <label>From</label>
+                              <md-select ng-model="transittimeEdit.from" required>
+                                 <md-option ng-repeat="location in locations" ng-value="location.id" ng-disabled="selectdisabled">{{location.name}}</md-option>
+                              </md-select>
+                            </md-input-container>
+                             
+                                     <md-input-container>
+                                    <label>To</label>
+                                      <md-select ng-model="transittimeEdit.to" required>
+                                         <md-option ng-repeat="location in locations" ng-value="location.id" ng-disabled="selectdisabled">{{location.name}}</md-option>
+                                      </md-select>
+                                    </md-input-container>
+                             <!--  <md-datepicker ng-model="transittimeEdit.to" md-placeholder="Enter  to date"  ng-disabled=dateDisable></md-datepicker> -->
+
+                             <!-- <md-input-container class="md-block">
+                                <label>Mode</label>
+                                <input required name="editmode" ng-model="transittimeEdit.mode"  ng-readonly=editRead>
+                                <div ng-messages="projectEditForm.editmode.$error">
+                                  <div ng-message="required">This is required.</div>
+                                </div>
+                             </md-input-container> -->
+                             <md-input-container style="margin-right: 10px;">
+                             <label>Mode</label>
+                                <md-select ng-model="transittimeEdit.mode">
+                                  <md-option ng-repeat="mode in modes" value="{{mode}}"  ng-disabled="selectdisabled">{{mode}}</md-option>
+                                </md-select>
+                             </md-input-container>
+
+
+                             <md-input-container class="md-block">
+                                <label>Time(Days)</label>
+                                <input required name="edittime" ng-model="transittimeEdit.time"  ng-readonly=editRead>
+                                <div ng-messages="projectEditForm.edittime.$error">
+                                  <div ng-message="required">This is required.</div>
+                                </div>
+                             </md-input-container>
+
+
+
+
+                             
+
+                            <div>
+                              <md-button class="md-raised" ng-click="updatetransittimeclick(transittimeEdit,projectEditForm.$invalid,buttonText)" type="submit">{{buttonText}}</md-button>
+                              <md-button class="md-raised" ng-click="cancel('edit')">Cancel</md-button>
+                            </div>
+
+                            
+                        
+                          </form>
+                          <!-- <md-divider></md-divider> -->
+                      </md-content>
+          </md-dialog>
+      </div>
+</div> 

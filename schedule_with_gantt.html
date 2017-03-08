@@ -1,0 +1,816 @@
+
+<!doctype html>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<title>Displaying a marker at the place of hidden scale units</title>
+
+	<script src='lib/scheduler/dhtmlxscheduler.js' type="text/javascript" charset="utf-8"></script>
+	<script src="lib/scheduler/dhtmlxscheduler_limit.js" type="text/javascript" charset="utf-8"></script>
+	<script src='lib/scheduler/dhtmlxscheduler_timeline.js' type="text/javascript" charset="utf-8"></script>
+	<script src='lib/scheduler/dhtmlxscheduler_tooltip.js' type="text/javascript" charset="utf-8"></script>
+	
+	<link rel='stylesheet' type='text/css' href='lib/scheduler/dhtmlxscheduler.css'>
+
+
+<!-- ganttttttt -->
+<link rel="stylesheet" href="../lib/gantt/dhtmlxgantt.css">
+
+	<script src="lib/angular/angular.min.js"></script>
+	<script src="lib/gantt/dhtmlxgantt.js"></script>
+	<script src="lib/gantt/dhtmlx_auto_schedule.js"></script>
+	<script src="lib/gantt/dhtmlxgantt_tooltip.js"></script>
+
+	<script src="lib/angular/appgantt.js"></script>
+	<script src="lib/angular/app.gantt.js"></script>
+<!-- ////////////////// -->
+
+	
+	<style type="text/css" media="screen">
+		html, body{
+			margin:0;
+			padding:0;
+			height:100%;
+			overflow:hidden;
+		}
+		.yellow_section {
+			background-color: #ffa749;
+			opacity: 0.25;
+		}
+
+		.highlighted_timespan {
+			background-color: #87cefa;
+			/*opacity:0.5;
+			filter:alpha(opacity=50);
+			cursor: pointer;
+			z-index: 0;*/
+		}
+		
+		/*.red_section {
+			background-color: red;
+			opacity: 0.25;
+			filter: alpha(opacity = 25);
+		}*/
+	</style>
+
+	<script type="text/javascript" charset="utf-8">
+	var mySample;
+	var scheduler2;
+	var markedArray=[];
+/*ganttt*/
+var  ganttId;
+app.controller('ganttController', function($scope,$http,$window) {  
+
+    gantt.config.auto_scheduling = true;
+
+    /*gantt.config.lightbox.sections=[
+      {name:"description", height:30, map_to:"text", type:"textarea" , focus:true},
+     {name:"vendor", height:30, type:"textarea" , focus:true, default_value:"1"},
+     {name:"vendor_details", height:30, type:"textarea" , focus:true,default_value:"2"},
+     {name:"order", height:30, type:"textarea" , focus:true,map_to:"order"},
+     {name:"sales_order", height:30, type:"textarea" , focus:true,default_value:"3"},
+     {name:"design", height:30, type:"textarea" , focus:true,default_value:"4"},
+     {name:"quantity", height:30, type:"textarea" , focus:true,default_value:"5"},
+     {name:"exFactoryDate", height:30, type:"textarea" , focus:true,default_value:"6"},
+
+     {name:"processor", height:30, type:"textarea" , focus:true,default_value:"7"},
+     {name:"processStartDate", height:30, type:"textarea" , focus:true,default_value:"1"},
+     {name:"processEndDate", height:30, type:"textarea" , focus:true,default_value:"1"},
+     {name:"noofJobsahead", height:30, type:"textarea" , focus:true,default_value:"1"},
+     {name:"noofDaysahead", height:30, type:"textarea" , focus:true,default_value:"1"},
+     {name:"currentDelay", height:30, type:"textarea" , focus:true,default_value:"1"},
+     {name:"estimatedEndDate", height:30, type:"textarea" , focus:true,default_value:"1"},
+     {name:"currentQuantity", height:30, type:"textarea" , focus:true,default_value:"1"},
+
+    {name:"time", height:72, type:"time", map_to:"auto"}
+];*/
+
+/*gantt.config.lightbox.sections=[
+      {name:"description", height:30, map_to:"text", type:"textarea" , focus:true},
+     {name:"quantity", height:30, type:"textarea" , focus:true,default_value:"5"}
+];*/
+
+
+gantt.config.tooltip_hide_timeout = 1;
+/*gantt.templates.tooltip_text = function(start,end,task){
+ 
+
+var myStyle="<b>Task:</b> "+task.text+"<br/><b>Type:</b> " + task.dataType+"<br/><b>Period:</b> " + task.start_date+"<br/><b>Order: 1</b><br/><b>Vendor: 2</b> <br/><b>Vendor Details: 1</b> <br/><b>Sales Order: 1</b> <br/><b>Design/Colour: 1</b> <br/><b>Quantity: 1</b><br/><b>Ex-Factory Date: 1</b><br/><b>Processor: 1</b><br/><b>Process Start Date: 1</b><br/><b>Process End Date: 1</b><br/><b>No of jobs ahead: 1</b><br/><b>No of days ahead: 1</b><br/><b>Current Delay : 1</b><br/><b>Estimated End Date: 1</b><br/><b>Current Quantity: 1</b><br/><b>workcenterID: 1</b>";
+var myStyle1="<b>Task:</b> "+task.text+"<br/><b>Type:</b> " + task.dataType+"<br/><b>Period:</b> " + task.start_date+"<br/><b>Order: 1</b><br/><b>Vendor: 2</b> <br/><b>Vendor Details: 1</b> <br/><b>Sales Order: 1</b> <br/><b>Design/Colour: 1</b> <br/><b>Quantity: 1</b><br/><b>Ex-Factory Date: 1</b><br/><b>Processor: 1</b><br/><b>Process Start Date: 1</b><br/><b>Process End Date: 1</b>";
+
+  return myStyle;
+  //return "<h1>aaaa</h1>"
+    //return "<b>Task:</b> "+task.text+"<br/><b>Type:</b> " + task.dataType+"<br/><b>Period:</b> " + task.start_date;
+};*/
+
+//////////////////////////show lightbox///////////////////////////////////////////////
+/*var taskId = null;
+ 
+gantt.showLightbox = function(id) {
+    taskId = id;
+    var task = gantt.getTask(id);
+ 
+    var form = getForm();
+    var input = form.querySelector("[name='description']");
+    input.focus();
+    input.value = task.text;
+ 
+    form.style.display = "block"; 
+ 
+    form.querySelector("[name='save']").onclick = save;
+    form.querySelector("[name='close']").onclick = cancel;
+    form.querySelector("[name='delete']").onclick = remove;
+};
+ 
+gantt.hideLightbox = function(){
+    getForm().style.display = "none"; 
+    taskId = null;
+}
+ 
+ 
+function getForm() { 
+    return document.getElementById("my-form"); 
+}; 
+ 
+function save() {
+    var task = gantt.getTask(taskId);
+ 
+    task.text = getForm().querySelector("[name='description']").value;
+ 
+    if(task.$new){
+        gantt.addTask(task,task.parent);
+    }else{
+        gantt.updateTask(task.id);
+    }
+ 
+    gantt.hideLightbox();
+}
+ 
+function cancel() {
+    var task = gantt.getTask(taskId);
+ 
+    if(task.$new)
+    gantt.deleteTask(task.id);
+    gantt.hideLightbox();
+}
+ 
+function remove() {
+    gantt.deleteTask(taskId);
+    gantt.hideLightbox();
+}*/
+////////////////////////////////////////////////////////////////////////
+
+/*gantt.attachEvent("onTaskSelected", function(id,item){
+	console.log('onTaskSelected');
+    //any custom logic here
+});*/
+
+gantt.attachEvent("onTaskClick", function(id,e){
+	console.log(id);
+	$scope.ganttid=id;
+	ganttId=id;
+	console.log(gantt.getTask(id));
+	var eventText=gantt.getTask(id).text;
+	console.log(eventText);
+	var mySample1=[
+				{ start_date: "2016-12-20 09:00", end_date: "2016-12-22 15:00", text:"45637 "+eventText, section_id:1,color:"#7f345a"},
+
+				{ start_date: "2016-12-23 09:00", end_date: "2016-12-24 15:00", text:"1234", section_id:1,color:"#D4AC0D"},
+				{ start_date: "2016-12-22 09:00", end_date: "2016-12-24 15:00", text:"45637", section_id:2,color:"#ff69b4"},
+
+				/*{ start_date: "2016-12-20 09:00", end_date: "2016-12-21 13:00", text:"9876", section_id:2,color:"#D4AC0D"},
+				{ start_date: "2016-12-25 09:00", end_date: "2016-12-26 15:00", text:"45637", section_id:2,color:"#7f345a"},
+
+				{ start_date: "2016-12-20 09:00", end_date: "2016-12-22 15:00", text:"45637", section_id:4,color:"#ff69b4"},
+				{ start_date: "2016-12-23 09:00", end_date: "2016-12-24 15:00", text:"4356", section_id:4,color:"#7f345a"}*/
+			];
+			//scheduler2.parse(mySample1,"json");
+			scheduler2.clearAll();
+			scheduler2.parse(mySample1,"json");
+			//console.log(gantt.getTask(id));
+			/*var link = gantt.getLink(3);
+			console.log(link);
+			link.lag = 2 */
+
+});
+gantt.config.details_on_dblclick = false;
+gantt.attachEvent("onTaskDblClick", function(id,e){
+	gantt.hideLightbox(1);
+    //any custom logic here
+    console.log('taskkk');
+    console.log(id);
+    console.log(e);
+    console.log(gantt.getTask(id));
+	$scope.ganttid=id;
+    //gantt.showLightbox(id);
+    //gantt.showLightbox(3);
+
+var modal = document.getElementById('myModal');
+	modal.style.display = "block";
+
+	var span = document.getElementsByClassName("close")[0];
+	span.onclick = function() {
+    modal.style.display = "none";
+	}
+    
+   /* var taskId = gantt.addTask({
+	    id:3.1,
+	    text:"new task",
+	    start_date:"23-12-2016",
+	    duration:2,
+	    parent:1
+	});*/
+
+
+/*var taskId = gantt.addTask({
+    id:3.1,
+    text:"new Task1",
+    start_date:"23-12-2016",
+    duration:2
+}, 1, 2);
+
+var taskId = gantt.addTask({
+    id:3.2,
+    text:"new Task2",
+    start_date:"23-12-2016",
+    duration:2
+}, 1, 3);
+
+var linkId = gantt.addLink({
+    id:3.1,
+    source:2,
+    target:3.1,
+    type:gantt.config.links.finish_to_start
+});*/
+    return true;
+});
+
+
+//gantt.config.work_time = true;
+gantt.config.auto_scheduling_strict = true;
+gantt.attachEvent("onBeforeAutoSchedule", function(task){
+		/*console.log('onBeforeAutoSchedule');
+		console.log(task);*/
+		gantt.message("Recalculating project schedule...");
+		return true;
+	});
+	gantt.attachEvent("onAfterTaskAutoSchedule", function(task, new_date, constraint, predecessor){
+		gantt.message({
+			text: "<b>"+task.text+"</b> has been rescheduled to " + gantt.templates.task_date(new_date) + " due to <b>"+predecessor.text+"</b> constraint",
+			expire:4000
+		});
+	});
+
+    $scope.tasks=null;
+
+                  var myData=[
+                    {id:1, text:"SO#45637", start_date:"20-12-2016", duration:24, order:10, progress:0.4, open: true,type:gantt.config.types.project,planned_end_date:"01-03-2017"},
+                    {id:2, text:"Stores", start_date:"20-12-2016", duration:"3", parent:"1", progress: 1, open: true,ticket:"SO#45637",ticketno:"45637"},
+                    {id:3, text:"Dyeing", start_date:"23-12-2016", duration:"2", parent:"1", progress: 0.8, open: true,ticket:"SO#45637",ticketno:"45637"},
+                    {id:4, text:"Weaving", start_date:"25-12-2016", duration:"3", parent:"1", progress: 0.2, open: true,ticket:"SO#45637",ticketno:"45637",color:"red"},
+                    {id:5, text:"Printing", start_date:"28-12-2016", duration:"3", parent:"1", progress: 0.1, open: true,ticket:"SO#45637",ticketno:"45637"},
+                    {id:6, text:"Stiching", start_date:"31-12-2016", duration:"2", parent:"1", progress: 0.2, open: true,ticket:"SO#45637",ticketno:"45637"},
+                    {id:7, text:"Invoice", start_date:"02-01-2017", duration:"2", parent:"1", progress: 0.3, open: true,ticket:"SO#45637",ticketno:"45637"}
+                  ];
+                  console.log(myData);
+            $scope.tasks = {
+                  data:myData,
+                  links:[
+                    { id:1, source:1, target:2, type:"1"},
+                    { id:1, source:2, target:3, type:"0"},
+                    { id:2, source:3, target:4, type:"0"},
+                    { id:3, source:4, target:5, type:"0"},
+                    { id:4, source:5, target:6, type:"0"},
+                    { id:5, source:6, target:7, type:"0"},
+                    { id:6, source:7, target:8, type:"0"}
+                  ]};
+                  
+$scope.splitFun=function(splitObj)
+{
+	/*var link = gantt.getLink(5);
+			console.log(link);
+			link.lag = 4;*/
+
+
+	var taskArray=[];
+	console.log('split');
+	console.log(splitObj);
+	console.log($scope.totalinput);
+	//console.log($scope.ganttid);
+	 console.log(gantt.getTask($scope.ganttid));
+	/*console.log($scope.split);
+	console.log($scope.taskText);*/
+	var gantData=gantt.getTask($scope.ganttid);
+	console.log(gantData.$source);
+	for(var i=1;i<=$scope.totalinput;i++)
+	{
+		console.log(document.getElementById('taskId'+i).value);
+		taskArray.push({task:document.getElementById('taskId'+i).value,quantity:document.getElementById('quantity'+i).value,startDate:document.getElementById('startDate'+i).value,duration:document.getElementById('duration'+i).value});
+
+		if(i==1)
+		{
+			console.log('iff');
+			console.log(i);
+			console.log(gantData);
+			console.log(document.getElementById('taskId'+i).value);
+		
+		}
+		else
+		{
+			console.log('else');
+			console.log(i);
+			console.log(gantData);
+			console.log(document.getElementById('startDate'+i).value);
+			/*var taskId = gantt.addTask({
+			    id:gantData.id+'.'+i,
+			    text:document.getElementById('taskId'+i).value,
+			    start_date:gantData.start_date,
+			    duration:2
+			},gantData.parent,($scope.ganttid)-1);*/
+			var taskId = gantt.addTask({
+			    id:gantData.id+'.'+i,
+			    text:document.getElementById('taskId'+i).value,
+			    start_date:new Date(document.getElementById('startDate'+i).value),
+			    duration:document.getElementById('duration'+i).value
+			},gantData.parent,($scope.ganttid)-1);
+
+			var linkId = gantt.addLink({
+			    id:gantData.id+'.'+i,
+			    source:gantData.$source[0],
+			    target:gantData.id+'.'+i,
+			    type:gantt.config.links.finish_to_start
+			});
+			var linkIdS = gantt.addLink({
+			    id:gantData.id+'.'+i+'.1',
+			    source:gantData.id+'.'+i,
+			    target:gantData.id+1,
+			    type:gantt.config.links.finish_to_start
+			});
+			
+
+
+			
+
+		}
+
+		/*else
+		{
+		   gantt.getTask($scope.ganttid).text =document.getElementById('taskId1').value;
+		}*/
+setTimeout(function(){  
+	gantt.getTask($scope.ganttid).text =document.getElementById('taskId'+1).value;
+	console.log(document.getElementById('startDate'+1).value);
+	console.log(gantt.getTask($scope.ganttid).duration);
+	/*gantt.getTask($scope.ganttid).start_date =new Date(document.getElementById('startDate'+1).value);*/
+	/*gantt.getTask($scope.ganttid).duration ="1";
+        gantt.updateTask($scope.ganttid);
+        console.log(gantt.getTask($scope.ganttid));
+        gantt.refreshData() */
+
+        gantt.updateTask($scope.ganttid);
+
+		},100);
+		
+
+	}
+
+
+	/*setTimeout(function(){
+			var link = gantt.getLink(2);
+			console.log(link);
+			link.lag = 4;
+	},100);*/
+	// gantt.getTask($scope.ganttid).text =document.getElementById('taskId1').value;
+ //    gantt.updateTask($scope.ganttid);
+
+	console.log(taskArray);
+
+	document.getElementById('myModal').style.display = "none";	
+}
+$scope.splitChange=function(number)
+{
+	$scope.totalinput=number;
+	console.log(number);
+	// var myEl = angular.element( document.querySelector( '#myDiv' ) );
+	// myEl.append('<table id="tableid1"><tr id="trid"><th>aaa</th><th>bbb</th></tr><tr id="tdtrid">'); 
+	var myEl = angular.element( document.querySelector( '#myDiv' ) );
+	myEl.append('<label>Task Name</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <label>Quantity</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <label>Start Date</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <label>Duration</label <br><br>');
+
+	for(var i=0;i<number;i++)
+	{
+		
+		/*var myEl = angular.element( document.querySelector( '#myDiv' ) );
+		myEl.append('<label>Task Name'+(i+1)+'<label><input type="text" id="taskId'+(i+1)+'"><label>Quantity'+(i+1)+'<label><input id="quantity'+(i+1)+'"><br><br>'); */
+
+		
+		myEl.append('<input type="text" id="taskId'+(i+1)+'">&nbsp;<input id="quantity'+(i+1)+'">&nbsp;<input id="startDate'+(i+1)+'" onClick=startDateClick(this);><input id="duration'+(i+1)+'"><br><br>'); 
+
+		// var myElTr = angular.element( document.querySelector( '#tdtrid' ) );
+		// myElTr.append('<td>dddddd</td><td>ffff</td></tr>'); 
+	}
+	
+}
+
+ startDateClick=function(data)
+{
+	console.log('startDateClick');
+	console.log(data);
+	console.log(data.id);
+	//$('#click-this').siblings('input').val();
+
+	console.log(markedArray);
+	markedArray.sort(function(a,b){
+	  return new Date(a) - new Date(b);
+	});
+	console.log(markedArray);
+	document.getElementById(data.id).value=markedArray[0];
+	/*console.log(Math.round((second-first)/(1000*60*60*24)));*/
+	var days=Math.round((markedArray[(markedArray.length-1)]-markedArray[0])/(1000*60*60*24));
+	console.log(document.getElementById(data.id).nextSibling.id);
+	var durationId=document.getElementById(data.id).nextSibling.id;
+	document.getElementById(durationId).value=days+1;
+
+
+}
+
+$scope.selectTypeChange=function()
+{
+	console.log('selectTypeChange');
+}
+
+});
+
+/*gantt endss*/
+
+function init()
+{
+		
+			scheduler2  = Scheduler.getSchedulerInstance();
+
+			scheduler2.locale.labels.timeline_tab = "Timeline";
+			scheduler2.locale.labels.section_custom="Section";
+			scheduler2.config.details_on_create=true;
+			scheduler2.config.details_on_dblclick=true;
+			scheduler2.config.xml_date="%Y-%m-%d %H:%i";
+			scheduler2.config.limit_time_select = true;
+			scheduler2.addMarkedTimespan({ start_date: new Date(2014,5,30,17,30), end_date: new Date(2014,06,1,10,30), css: "yellow_section" });
+
+			//===============
+			//Configuration
+			//===============
+			var sections=[
+				{key:1, label:"M-1"},
+				{key:2, label:"M-2"},
+				{key:3, label:"M-3"},
+				{key:4, label:"M-4"},
+				{key:5, label:"M-5"},
+				{key:6, label:"M-6"},
+				{key:7, label:"M-7"},
+				{key:8, label:"M-8"},
+				{key:9, label:"M-9"}/*,
+				{key:10, label:"M-6"},
+				{key:11, label:"M-5"},
+				{key:12, label:"M-6"}*/
+			];
+
+			scheduler2.createTimelineView({
+				name:	"timeline",
+				x_unit:	"day",
+				x_date:	"%d",
+				x_step:	1,
+				x_size: 10,
+				y_unit:	sections,
+				y_property:	"section_id",
+				render:"bar",
+				first_hour:10,
+				last_hour:18
+			});
+
+			//===============
+			//Data loading
+			//===============
+			scheduler2.config.lightbox.sections=[
+				{name:"description", height:130, map_to:"text", type:"textarea" , focus:true},
+				{name:"custom", height:23, type:"select", options:sections, map_to:"section_id" },
+				{name:"time", height:72, type:"time", map_to:"auto"}
+			];
+			/*scheduler.xy.scale_width = 0;
+			scheduler.init('scheduler_here',new Date(),"week");*/
+			
+			scheduler2.init('scheduler_here',new Date(2016,11,20),"timeline");
+
+			var mySample=[
+
+				{ start_date: "2016-12-20 09:00", end_date: "2016-12-22 15:00", text:"45637", section_id:1,color:"#7f345a"},
+
+				{ start_date: "2016-12-23 09:00", end_date: "2016-12-24 15:00", text:"1234", section_id:1,color:"#D4AC0D"},
+				{ start_date: "2016-12-22 09:00", end_date: "2016-12-24 15:00", text:"45637", section_id:2,color:"#ff69b4"},
+
+				{ start_date: "2016-12-20 09:00", end_date: "2016-12-21 13:00", text:"9876", section_id:2,color:"#D4AC0D"},
+				{ start_date: "2016-12-25 09:00", end_date: "2016-12-26 15:00", text:"45637", section_id:2,color:"#7f345a"},
+
+				{ start_date: "2016-12-20 09:00", end_date: "2016-12-22 15:00", text:"45637", section_id:4,color:"#ff69b4"},
+				{ start_date: "2016-12-23 09:00", end_date: "2016-12-24 15:00", text:"4356", section_id:4,color:"#7f345a"}
+			];
+			scheduler2.parse(mySample,"json");
+
+
+			
+			/*scheduler2.attachEvent("onEmptyClick", function(date , event){
+			   console.log(event);
+			    scheduler2.unmarkTimespan(marked);
+				var today = new Date(date);
+                      var dd = today.getDate();
+                      var mm = today.getMonth(); //January is 0!
+
+                      var yyyy = today.getFullYear();
+                      if(dd<10){
+                          dd='0'+dd;
+                      } 
+                      if(mm<10){
+                          mm='0'+mm;
+                      } 
+                      var today = yyyy+','+mm+','+dd;
+                      console.log(today);
+					marked = scheduler2.markTimespan({
+						start_date: new Date(yyyy,mm,dd),
+						end_date:new Date(yyyy,mm,dd+1) ,
+						css: "highlighted_timespan",
+						sections: {
+					         timeline: 7
+					    }
+					});
+			    
+
+			});*/
+var marked = null;
+markedArray=[];
+var arrayCheck=[];
+
+		scheduler2.attachEvent("onCellClick", function (x_ind, y_ind, x_val, y_val, e){
+			console.log('onCellClick');
+			console.log(e);
+			console.log(x_ind);
+			console.log(y_ind);
+
+			var date=x_val;
+		    var sectionKey=scheduler2.matrix[scheduler2._mode].y_unit[y_ind].key; 
+		    var sectionLabel=scheduler2.matrix[scheduler2._mode].y_unit[y_ind].label;
+			      var item=x_val;
+			//scheduler2.unmarkTimespan(marked);
+			//var item={x_index:x_ind,y_index:y_ind,date:x_val};
+			//markedArray.push({x_index:x_ind,y_index:y_ind,date:x_val});
+			/*console.log(marked);
+						////////////////////////////
+						var today = new Date(date);
+						                      var dd = today.getDate();
+						                      var mm = today.getMonth(); //January is 0!
+
+						                      var yyyy = today.getFullYear();
+						                      if(dd<10){
+						                          dd='0'+dd;
+						                      } 
+						                      if(mm<10){
+						                          mm='0'+mm;
+						                      } 
+						                      var today = yyyy+','+mm+','+dd;
+						                      console.log(today);
+						//////////////////////////
+
+								marked = scheduler2.markTimespan({
+									start_date: new Date(yyyy,mm,dd),
+									end_date:new Date(yyyy,mm,dd+1) ,
+									css: "highlighted_timespan",
+									sections: {
+								         timeline: sectionKey
+								    }
+								});*/
+								console.log(markedArray);
+
+
+								var idx = markedArray.indexOf(item);
+								console.log(idx);
+						          if (idx > -1) {
+						            markedArray.splice(idx, 1);
+
+									console.log(marked);
+									console.log(arrayCheck);
+									for(var i=0;i<arrayCheck.length;i++)
+									{
+										if(arrayCheck[i].item==x_val)
+										{
+											scheduler2.unmarkTimespan(arrayCheck[i].marked)
+										}
+									}
+									
+
+						          }
+						          else {
+						            markedArray.push(item);
+
+
+						            ////////////////////////////
+										var today = new Date(date);
+						                      var dd = today.getDate();
+						                      var mm = today.getMonth(); //January is 0!
+
+						                      var yyyy = today.getFullYear();
+						                      if(dd<10){
+						                          dd='0'+dd;
+						                      } 
+						                      if(mm<10){
+						                          mm='0'+mm;
+						                      } 
+						                      var today = yyyy+','+mm+','+dd;
+						                      console.log(today);
+									//////////////////////////
+
+									marked = scheduler2.markTimespan({
+										start_date: new Date(yyyy,mm,dd),
+										end_date:new Date(yyyy,mm,dd+1) ,
+										css: "highlighted_timespan",
+										sections: {
+									         timeline: sectionKey
+									    }
+									});//markTimespan
+
+									 arrayCheck.push({item:item,marked:marked});
+
+						          }//else end idx
+						          console.log(markedArray);
+						          console.log(arrayCheck);
+			});
+		/*scheduler.attachEvent("onCellDblClick", function (x_ind, y_ind, x_val, y_val, e){
+			console.log('onCellDblClick');
+		    //any custom logic here
+		});*/
+	
+			scheduler2.attachEvent("onBeforeEventChanged", function(ev, e, is_new, original){
+
+			    //any custom logic here
+			    console.log("onBeforeEventChanged");
+			    
+     			var dateArray=[];
+     			for(var i=0;i<scheduler2.getEvents().length;i++)
+     			{
+     				dateArray.push(new Date(scheduler2.getEvents()[i].end_date));
+     			}
+     			 var maxDate = Math.max.apply(Math, dateArray);
+     			 console.log(new Date(maxDate));
+
+     			 	gantt.getTask(ganttId).end_date =new Date(maxDate);
+     				gantt.updateTask(ganttId);
+     				gantt.autoSchedule(ganttId);
+     				console.log('full gantt');
+     				console.log(gantt.getTaskByTime());
+     				var fullGantt=gantt.getTaskByTime();
+
+     				
+     				console.log(new Date(fullGantt[0].planned_end_date));
+     				console.log(fullGantt[0].end_date);
+     				var projectPlannedEndDate=new Date(fullGantt[0].planned_end_date).setHours(0, 0, 0, 0);
+     				//var endDate=new Date("Wed Mar 01 2017 00:00:00 GMT+0530 (IST)");
+     				var endDate=fullGantt[0].end_date.setHours(0, 0, 0, 0);
+     				/*console.log(projectPlannedEndDate.getTime() === endDate.getTime());
+     				var dateCompare=(projectPlannedEndDate.getTime() > endDate.getTime());
+     				console.log(dateCompare);
+     				var dateCompare1=(projectPlannedEndDate.getTime() < endDate.getTime());
+     				console.log(dateCompare1);*/
+     				if(projectPlannedEndDate === endDate)
+     				{
+     					gantt.getTask(1).color ="green";
+     					gantt.updateTask(1);
+     				}
+     				else if(projectPlannedEndDate > endDate)
+     				{
+     					console.log('in date fi');
+     					gantt.getTask(1).color ="green";
+     					gantt.updateTask(1);
+     				} 
+     				else
+     				{
+     					console.log('project out Dated');
+     					gantt.message("project out Dated...");
+     					gantt.getTask(1).color ="red";
+     					gantt.updateTask(1);
+
+     				}
+
+
+     				//scheduler1.getEvent(schedulerEventID).end_date = new Date(maxDate); //changes event's data
+					//scheduler1.updateEvent(schedulerEventID); // renders the updated event
+
+			    return true;
+			});
+
+
+			dhtmlx.message({
+				text:"Each day shows only time from 08:00 to 18:00<br>Event length preserved during DND",
+				expire:-1
+			})
+}
+
+
+
+	</script>
+	<style type="text/css">
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    /*left: 0;
+    top: 0;*/
+    left:0;
+    top: 50%;
+    width:100%;
+    height:50%;
+    /*width: 100%*/; /* Full width */
+    /*height: 100%;*/ /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    /*background-color: rgb(0,0,0);*/ /* Fallback color */
+    /*background-color: rgba(0,0,0,0.4);*/ /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+</style>
+</head>
+<body  ng-app="ganttApp" ng-controller="ganttController" onload="init();">
+
+	<div id="scheduler_here" class="dhx_cal_container" style='width:100%; height:50%;'>
+		<div class="dhx_cal_navline">
+			<div class="dhx_cal_prev_button">&nbsp;</div>
+			<div class="dhx_cal_next_button">&nbsp;</div>
+			<div class="dhx_cal_today_button"></div>
+			<div class="dhx_cal_date"></div>
+			<div class="dhx_cal_tab" name="day_tab" style="right:204px;"></div>
+			<div class="dhx_cal_tab" name="week_tab" style="right:140px;"></div>
+			<div class="dhx_cal_tab" name="timeline_tab" style="right:280px;"></div>
+			<div class="dhx_cal_tab" name="month_tab" style="right:76px;"></div>
+		</div>
+		<div class="dhx_cal_header">
+		</div>
+		<div class="dhx_cal_data">
+		</div>	
+
+	</div>
+	<br><br><br><br>
+
+	<!-- gantttt -->
+	<div ng-if="tasks!=null" id="ganttView">
+		<!-- <div data="tasks" dhx-gantt style="height:300px; width:100%;"> -->
+		<div data="tasks" dhx-gantt style="height:380px; width:1250px;">
+			<!-- <div gantt-template="task_text">
+				<strong>#{{task.id}}</strong>: {{task.text | uppercase}}
+			</div> -->
+			<div gantt-template="task_text">
+				<strong>{{task.text}}</strong>
+			</div>
+		</div>	
+	</div>
+	<!-- The Modal -->
+	<div id="myModal" class="modal">
+
+	  <!-- Modal content -->
+	  	<div class="modal-content">
+		    <span class="close">&times;</span>
+		    <!-- <p>Some text in the Modal..</p> -->
+		    <!-- <select ng-change="selectTypeChange()">
+		    	<option value="0">Select</option>
+		    	<option value="split">Split</option>
+		    	<option value="create">Create</option>
+		    </select> -->	
+		    <br><br>
+		    <!-- <div id="splitDiv" style="display:none;"> -->
+			    <label>Split</label>
+			    <input type="text" ng-model="split.no" ng-change="splitChange(split.no)">
+			    <br><br>
+			    <div id="myDiv">
+			    </div>
+			    <button type="submit" ng-click="splitFun(split)">Split</button>
+		    <!-- </div> -->
+		</div>
+	</div>
+
+</body>

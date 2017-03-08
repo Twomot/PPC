@@ -1,0 +1,332 @@
+<html lang="en" >
+   <head>
+     
+      <style type="text/css">
+     /* html, body{
+          margin:0px;
+          padding:0px;
+          height:100%;
+          overflow:hidden;
+        }
+
+        .dhx_cal_event_clear {
+          height:40px;
+          white-space: normal;
+        }
+        .dhx_cal_event_line {
+          height:36px;
+        }*/
+
+        /*html, body{
+          margin:0px;
+          padding:0px;
+          height:100%;
+          overflow:hidden;
+        }*/
+
+       /* .twomot_month_event {
+          height:100px;
+        }*/
+
+
+        .dhx_cal_event_clear {
+          height:40px;/*170*/
+          white-space: normal;
+          background-color:#1796b0;
+              color: #fff;
+                font-family: Tahoma;
+                font-size: 8pt;
+               /*font-style: italic;*/
+        }
+        .dhx_cal_event_line {
+          height:26px;/*36*/
+        }
+
+        /*.dhx_scale_hour{
+          display: none;
+
+        }*/
+
+        .dhx_title{
+          display: none;
+
+        }
+
+        .dhx_footer{display:none;}
+
+        /*.dhx_scale_holder {display:none;}*/
+
+        .dhx_scale_holder {
+          /* background-image: url(imgs_dhx_terrace/databg.png); */
+          border-right: 1px solid #CECECE;
+      }
+
+
+        /*html, body{
+          margin:0px;
+          padding:0px;
+          height:100%;
+          overflow:hidden;
+        }
+
+        .dhx_cal_event_clear {
+          height:120px;
+          white-space: normal;
+          background-color:blue;
+        }
+        .dhx_cal_event_line {
+          height:36px;
+        }
+
+        .dhx_scale_hour{
+          display: none;
+
+        }
+
+        .dhx_title{
+          display: none;
+
+        }
+
+        .dhx_footer{display:none;}
+
+        .dhx_scale_holder {
+          border-right: 1px solid #CECECE;
+      }*/
+      </style>    
+   </head>
+   <body>  
+       
+	  
+<!-- <md-button class="md-primary md-raised" ng-click="showTabDialog($event)">
+      Add Job Order
+</md-button>	    -->
+<div ng-cloak class="tabsdemoDynamicHeight">
+ 
+ <div ng-if="roleName!='fieldofficer'">
+<div layout="row" >
+  
+ <div layout="column" style="width:50%;height:50%;padding-right:10px;background-color: #f2f2f2;border:solid 1px;"> 
+    <h4>LIFe</h4>
+<div layout="row"> 
+  <div flex></div>
+  <div flex>FTM</div>
+  <div flex>QTD</div>
+  <div flex>YTD</div>
+</div>
+
+<div layout="row"> 
+ <div flex>Kannur</div>
+  <div flex>%</div>
+  <div flex>%</div>
+  <div flex>%</div>
+</div>
+
+<div layout="row"> 
+ <div flex>Noida</div>
+  <div flex>%</div>
+  <div flex>%</div>
+  <div flex>%</div>
+</div>
+
+<div layout="row"> 
+ <div flex>Mysore</div>
+ <div flex>%</div>
+  <div flex>%</div>
+  <div flex>%</div>
+</div>
+
+ </div>
+
+ 
+    <div layout="column" style="width:50%;height:50%;padding-left:10px;background-color: #f2f2f2;border:solid 1px;"> 
+      <h4>OTD</h4>
+   <div layout="row"> 
+  <div flex></div>
+  <div flex>FTM</div>
+  <div flex>QTD</div>
+  <div flex>YTD</div>
+</div>
+
+<div layout="row"> 
+ <div flex>Kannur</div>
+  <div flex>%</div>
+  <div flex>%</div>
+  <div flex>%</div>
+</div>
+
+<div layout="row"> 
+ <div flex>Noida</div>
+  <div flex>%</div>
+  <div flex>%</div>
+  <div flex>%</div>
+</div>
+
+<div layout="row"> 
+ <div flex>Mysore</div>
+ <div flex>%</div>
+  <div flex>%</div>
+  <div flex>%</div>
+</div>
+
+    </div>
+
+
+   </div>
+   
+</div> 
+
+<!-- <md-button class="md-primary md-raised" ng-click="showTabDialog($event)">
+      Add Job Order
+</md-button> -->
+
+<div layout="row" align="center" style="height:50%;background-color:#cccccc;" >
+  <!-- <h1 style="text-align:center;width:100%;margin-top:20%;"><b>Calender view</b></h1> -->
+
+  <div data="events2" dhx-scheduler style='width:100%; height:400px;'>
+                  <div class="dhx_cal_prev_button" ng-click="prevClick()">&nbsp;</div>
+                  <div class="dhx_cal_next_button" ng-click="nextClick()">&nbsp;</div>
+
+                  <!-- <div class="dhx_cal_prev_button" ng-click="prevClick()" ng-if="roleName!='fieldofficer'">&nbsp;</div>
+                  <div class="dhx_cal_next_button" ng-click="nextClick()" ng-if="roleName!='fieldofficer'">&nbsp;</div> -->
+
+                  <div class="dhx_cal_date"></div>
+                  <div class="dhx_cal_tab" name="day_tab" style="right:204px;"></div>
+                  <div class="dhx_cal_tab" name="week_tab" style="right:140px;"></div>
+                  <div class="dhx_cal_tab" name="month_tab" style="right:76px;"></div>    
+                 
+
+  <div style="left:250px;">
+                  
+                  <label>Plant</label>
+  <select ng-init="selPlant = all" ng-model="selPlant" ng-change="FilterMasterTickets(selPlant)" >
+                     <option ng-value="All">All</option>
+                     <option ng-value="AX01">AX01</option>
+                     <option ng-value="AX03">AX03</option>
+                     <option ng-value="AX04">AX04</option>
+                  </select>
+
+                  </div> 
+                  <div style="left:350px;">
+                   
+                    <button  ng-click="showSearch()">Search</button> 
+                    <input ng-model="srchCalendar" ng-change="searchMasterTickets(srchCalendar)" /> 
+                  </div>
+
+                  <!-- <strong>#{{event.id}}</strong>: {{event.text | uppercase}} -->
+                  <!-- <div dhx-template="event_bar_text">
+                   
+                    <strong>{{event.text}}<br>{{event.start_date.toLocaleDateString()}}<br>{{event.end_date.toLocaleDateString()}}</strong>
+                  </div> -->
+    </div>
+
+
+</div> 
+
+</div>
+	   
+	   <div style="visibility: hidden">
+      <div class="md-dialog-container" id="statusUpdate">
+         <md-dialog flex="50">
+            <!-- <md-toolbar md-scroll-shrink> -->
+            <md-toolbar>
+                          <div class="md-toolbar-tools">
+                             <h2>
+                                <span>Update</span>
+                             </h2>
+                             <span flex></span>
+                          </div>
+                       </md-toolbar>
+                         <md-content layout-padding ng-if="!predcompleted">
+
+                  <label>Process Name </label>  <label> : </label> <label> {{machinecalendarData.processticketRelation.processName}}</label> </br> </br>
+                  <label>Sales Order No </label>  <label> : </label> <label> {{machinecalendarData.processticketRelation.salesorderNumber}}</label></br> </br>         
+                  <label>line Item No  </label> <label> : </label> <label> {{machinecalendarData.processticketRelation.lineItemNo}}</label></br> </br>
+                  <label>CustomerPOorCOD</label> <label> : </label> <label> {{machinecalendarData.processticketRelation.customerPOorCOD}}</label></br> </br>
+                  <label>Design Name </label> <label> : </label> <label> {{machinecalendarData.processticketRelation.designname}}</label></br> </br>
+                  <label>Vendor Name </label> <label> : </label> <label> {{machinecalendarData.processticketRelation.vendorname}}</label></br> </br>
+                  <label>Process Start Date </label> <label> : </label> <label> {{machinecalendarData.processticketRelation.actualstartdate}}</label></br> </br>
+                  <label>Process End Date</label> <label> : </label> <label> {{machinecalendarData.processticketRelation.actualenddate}}</label></br> </br>
+                   <label >PREVIOUS PROCESS'S LASTEST UPDATE DETAILS</label> 
+                 <label >  __________________________________________</label> </br></br>
+
+                    <table>
+                        <th>Process Name</th>
+                        <th>Last StatusUpdate Done On</th>
+                        <th>Current Status</th>
+                      <tr ng-repeat="process in predecessorProcesses">
+                          
+                         <td>{{process.processName}}</td>
+                        <td>{{process.lastStatusUpdateOn }}</td>
+                        <td>{{ process.currentStatus }}</td>
+                      </tr>
+                    </table>
+
+                </md-content>
+               <md-content layout-padding ng-if="predcompleted">
+                <form name="projectAddForm" class="projectAddForm">
+                    <label>Process Name </label>  <label> : </label> <label> {{machinecalendarData.processticketRelation.processName}}</label> </br> </br>
+                    <label>Sales Order No </label>  <label> : </label> <label> {{machinecalendarData.processticketRelation.salesorderNumber}}</label></br> </br>        
+                    <label>line Item No  </label> <label> : </label> <label> {{machinecalendarData.processticketRelation.lineItemNo}}</label></br> </br>
+                    <label>CustomerPOorCOD</label> <label> : </label> <label> {{machinecalendarData.processticketRelation.customerPOorCOD}}</label></br> </br>
+                    <label>Design Name </label> <label> : </label> <label> {{machinecalendarData.processticketRelation.designname}}</label></br> </br>
+                    <label>Vendor Name </label> <label> : </label> <label> {{machinecalendarData.processticketRelation.vendorname}}</label></br> </br>
+                    <label>Process Start Date </label> <label> : </label> <label> {{gmtStartDate}}</label></br> </br>
+                    <label>Process End Date</label> <label> : </label> <label> {{gmtEndDate}}</label></br> </br>
+
+                  
+
+                             <md-input-container >
+                        <label>Status</label>
+                       <!-- <md-select ng-model="todayUpdate.status" required>
+                            <md-option value="completed">Complete</md-option>
+                             <md-option value="incomplete">InComplete</md-option>
+                              <md-option value="partial">Partial</md-option>
+                        </md-select> -->
+                        <md-select ng-model="todayUpdate.status" required>
+                            <md-option ng-repeat="status in statuses" ng-value="status.name">{{status.name}}</md-option>
+                        </md-select>
+                    </md-input-container>
+
+                    <md-input-container class="md-block">
+                                <label>% of completion</label>
+                                <input required name="remark" ng-model="todayUpdate.percentageofcompletion">
+                                <div ng-messages="projectAddForm.remark.$error">
+                                  <div ng-message="required">This is required.</div>
+                                </div>
+                             </md-input-container>
+
+                             <md-input-container class="md-block">
+                                <label>Remark</label>
+                                <input required name="remark" ng-model="todayUpdate.statusUpdates">
+                                <div ng-messages="projectAddForm.remark.$error">
+                                  <div ng-message="required">This is required.</div>
+                                </div>
+                             </md-input-container>
+                            <!--  <md-input-container class="md-block">
+                                <label>% of Completion</label>
+                                <input required name="percentageofcompletion" ng-model="todayUpdate.percentageofcompletion">
+                                <div ng-messages="projectAddForm.percentageofcompletion.$error">
+                                  <div ng-message="required">This is required.</div>
+                                </div>
+                             </md-input-container> -->
+                            <div>
+                              <md-button  type="submit" class="md-raised" ng-click="addStatus(todayUpdate,projectAddForm.$invalid)">Update Status</md-button>
+                               <!--  <md-button  type="submit" class="md-raised"  ng-click="setProcessCompleted()" >Mark Process as Complete</md-button> -->
+                              <md-button class="md-raised" ng-click="cancel()">Cancel</md-button>
+                            </div>
+                        
+                          </form>
+                          <!-- <md-divider></md-divider> -->
+                      </md-content>
+          </md-dialog>
+      </div>
+</div> 
+	   
+	   
+    </body>
+   
+
+
+
+</html>

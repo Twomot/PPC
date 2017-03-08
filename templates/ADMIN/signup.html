@@ -1,0 +1,75 @@
+<form name="projectAddForm" class="projectAddForm">
+          		
+
+              	<md-input-container class="md-block">
+                   <label>Email</label>
+                    <input required type="email" name="useremail" ng-model="appuser.email" minlength="10" maxlength="100" ng-pattern="/^.+@.+\..+$/">
+                    <div ng-messages="projectAddForm.useremail.$error" role="alert">
+                        <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">Please enter valid email id.</div>
+                    </div>
+                </md-input-container>
+
+                <md-input-container class="md-block">
+                    <label>Password</label>
+                    <input required type="password" name="password" ng-model="appuser.password" minlength="8">
+                     	<div ng-messages="projectAddForm.password.$error" role="alert">
+                        <div ng-message-exp="['required','minlength']">Passwords must contain at least eight characters.</div>
+                    </div>
+                </md-input-container>
+
+                <md-input-container>
+                  <label>Type</label>
+                  <md-select ng-model="appuser.type" required>
+                     
+                   	<md-option value="internal">
+                    	Internal
+                    </md-option>
+                    <md-option value="external">
+                        External
+                    </md-option>
+                  </md-select>
+                </md-input-container><br>
+
+                <md-input-container class="md-block">
+                  <label>User Name</label>
+                  <input required name="name" ng-model="appuser.name" id="nameId">
+              		 <div ng-messages="projectAddForm.name.$error">
+                     	 <div ng-message="required">This is required.</div>
+                     </div>
+                </md-input-container>
+
+
+
+                <md-input-container class="md-block">
+                  <label>User Superior</label>
+                  <!-- <input required name="superiorID" ng-model="appuser.superiorID" id="superiorID">
+              		 <div ng-messages="projectAddForm.superiorID.$error">
+                     	 <div ng-message="required">This is required.</div>
+                     </div> -->
+                     <md-select ng-model="appuser.superiorID" required>  
+                       <md-option ng-repeat="user in users" ng-value="user.id">
+                          {{user.name}}
+                        </md-option>   
+                    </md-select>
+                </md-input-container>
+
+                
+
+                <md-input-container>
+                   <label>Role</label>
+                    <md-select ng-model="appuser.role" required>  
+                       <md-option ng-repeat="role in roles" ng-value="role">
+                          {{role.name}}
+                        </md-option>   
+                    </md-select>
+                </md-input-container><br>
+
+                <div>
+                            
+                  <md-button  type="submit" class="md-raised" ng-click="addsample(appuser)">add</md-button>
+                   <md-button class="md-raised" ng-click="cancel()">Cancel</md-button>
+                </div>
+
+
+                    
+              </form>
