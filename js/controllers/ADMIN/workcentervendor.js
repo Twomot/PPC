@@ -1,6 +1,6 @@
 angular.module('app')
-  .controller('workcentervendorController', ['$location','$filter','$scope', '$state','$stateParams','$mdDialog','dialogFactory','JWTTOKEN','myService','Workcentervendor', function($location,$filter,$scope,
-      $state,$stateParams,$mdDialog,dialogFactory,JWTTOKEN,myService, Workcentervendor) {
+  .controller('workcentervendorController', ['$location','$filter','$scope', '$state','$stateParams','$mdDialog','dialogFactory','JWTTOKEN','myService','Workcentervendor', 'commonFactory', function($location,$filter,$scope,
+      $state,$stateParams,$mdDialog,dialogFactory,JWTTOKEN,myService, Workcentervendor,commonFactory) {
     console.log('userList');
     $scope.selecteddata=[];
      $scope.original = {};
@@ -13,7 +13,7 @@ locationObj.Locations.then(function(promiseData){
   $scope.locations = promiseData.data; 
 })
 
-
+	$scope.editEnabled = commonFactory.isEditAllowed();
       ////////////////////headingList/////////////////////////
     $scope.headingArray=[
                           {"title":"Work Center","modelname":"workcentervendor"},
@@ -57,7 +57,6 @@ JWTTOKEN.requestFunction('GET','appusers').then(function(userResult){
 
 	//>>>>>> Added by Ramesh
 	$scope.addMore = function(userType) {
-		$scope.workcentervendorEdit = undefined;
 		if (userType === "fieldofficer") {
 			if ($scope.workcentervendorEdit) {
 				$scope.workcentervendorEdit.fieldofficerID.push({
@@ -87,7 +86,7 @@ JWTTOKEN.requestFunction('GET','appusers').then(function(userResult){
 	//<<<<<< 
 	
 	$scope.$watch('workcentervendor.type', function(value) {
-		if (value === 'Internal') {
+		if (value.toLowerCase() === 'internal') {
 			$scope.workcentervendor.fieldofficerID = [];
 			$scope.workcentervendor.schedulerID = [];
 		}	else {
@@ -108,7 +107,9 @@ JWTTOKEN.requestFunction('GET','appusers').then(function(userResult){
     // /*pop dialog on click*/
       $scope.addPopup=function()
       {
-    	  $scope.editRead=true;
+    	$scope.workcentervendorEdit = undefined;
+		
+    	$scope.editRead=true;
         console.log('addPopup click');
         //>>>>>> Added by Ramesh
         $scope.workcentervendor = {};
@@ -216,7 +217,7 @@ JWTTOKEN.requestFunction('GET','appusers').then(function(userResult){
         $scope.selecteddata=[];
         getWCName();
         //>>>>>> Added by Ramesh
-        if ($scope.workcentervendorEdit.type === 'Internal') {
+        if ($scope.workcentervendorEdit.type.toLowerCase() === 'internal') {
         var fieldOfficerArray = [];
         $scope.workcentervendorEdit.fieldofficerID.forEach(function(fieldOfficer) {
        	 var fieldOfficerID = fieldOfficer.fieldofficerID ;
@@ -402,7 +403,7 @@ JWTTOKEN.requestFunction('GET','appusers').then(function(userResult){
           workcentervendor.displayName=displayName;
 
           //>>>>>> Added by Ramesh
-          if (workcentervendor.type === 'Internal') {
+          if (workcentervendor.type.toLowerCase() === 'internal') {
  	         var fieldOfficerArray = [];
  	         workcentervendor.fieldofficerID.forEach(function(fieldOfficer) {
  	        	 var fieldOfficerObj = {fieldofficerID: fieldOfficer};
@@ -456,7 +457,7 @@ JWTTOKEN.requestFunction('GET','appusers').then(function(userResult){
 
       function updateWorkCenterVendor(data,invalid,button) {
     	//>>>>>> Added by Ramesh
-          if (data.type === 'Internal') {
+          if (data.type.toLowerCase() === 'internal') {
  	         var fieldOfficerArray = [];
  	        data.fieldofficerID.forEach(function(fieldOfficer) {
  	        	 var fieldOfficerObj = {fieldofficerID: fieldOfficer};

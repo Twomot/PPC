@@ -297,7 +297,13 @@ userFetchFunction=function()
       }
       
       $scope.isUserRole = function(role) {
-    	  console.log(role);
+      	console.log(role);
+      	if (sessionStorage.role == role) {
+      		return true;
+      	}	else {
+      		return false;
+      	}
+    	
       };
 
    

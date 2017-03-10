@@ -3,4 +3,7 @@ angular.module('app')
       $state,$mdDialog) {
 
                 $scope.selected = [];
+                
+     	$scope.deletionAllowed = (sessionStorage.role == 'root');
+
   }]);

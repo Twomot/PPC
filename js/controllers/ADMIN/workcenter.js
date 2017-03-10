@@ -1,12 +1,12 @@
 angular.module('app')
-  .controller('workcenterController', ['$location','$filter','$scope', '$state','$stateParams','$mdDialog','dialogFactory','JWTTOKEN', function($location,$filter,$scope,
-      $state,$stateParams,$mdDialog,dialogFactory,JWTTOKEN) {
+  .controller('workcenterController', ['$location','$filter','$scope', '$state','$stateParams','$mdDialog','dialogFactory','JWTTOKEN', 'commonFactory', function($location,$filter,$scope,
+      $state,$stateParams,$mdDialog,dialogFactory,JWTTOKEN, commonFactory) {
     console.log('userList');
     $scope.selecteddata=[];
      $scope.original = {};
      var massDelete;
 
-
+	$scope.editEnabled = commonFactory.isEditAllowed();
 
       ////////////////////headingList/////////////////////////
     $scope.headingArray=[

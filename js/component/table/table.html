@@ -1,6 +1,6 @@
 <div ng-controller="tableController">
   <md-button class="md-fab" ng-click="$ctrl.addtableevent();" ng-if="$ctrl.headings[0].model!='blackout'">Add</md-button>
-  <md-button class="md-primary md-raised" ng-click="$ctrl.deletetableevent()" ng-if="$ctrl.headings[0].model!='blackout'">Delete</md-button>
+  <md-button class="md-primary md-raised" ng-click="$ctrl.deletetableevent()" ng-if="$ctrl.headings[0].model!='blackout' && deletionAllowed">Delete</md-button>
 
    <md-button class="md-primary md-raised" ng-click="$ctrl.harthaltableevent()" ng-if="$ctrl.headings[0].model=='holiday'">Set Harthal Day</md-button>
 
@@ -18,8 +18,13 @@
          <tr md-row ng-repeat="tabledata in $ctrl.tabledatas">
           
 
-<td md-cell ng-if="$ctrl.headings[0].model=='holiday'" >{{tabledata.holidayname}}</td>
+<td md-cell ng-if="$ctrl.headings[0].model=='holiday'" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">{{tabledata.holidayname}}</td>
 <td md-cell ng-if="$ctrl.headings[0].model=='blackout' || ($ctrl.headings[0].model=='holiday')" >{{tabledata.from}}</td>
+
+<td md-cell ng-if="$ctrl.headings[0].model=='TransitTime'" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">{{tabledata.from}}</td>
+<td md-cell ng-if="$ctrl.headings[0].model=='TransitTime'">{{tabledata.to}}</td>
+<td md-cell ng-if="$ctrl.headings[0].model=='TransitTime'">{{tabledata.mode}}</td>
+<td md-cell ng-if="$ctrl.headings[0].model=='TransitTime'">{{tabledata.time}}</td>
 
 <td md-cell ng-if="$ctrl.headings[0].model=='blackout' || $ctrl.headings[0].model=='holiday'" >{{tabledata.to}}</td>
 <td md-cell ng-if="$ctrl.headings[0].model=='holiday'" >{{tabledata.recursiveDays[0].name}}</td>
@@ -48,8 +53,9 @@
           <!-- <td md-cell ng-if="$ctrl.headings[0].modelname=='vendor'" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">
           <span ng-repeat="locationName in tabledata.locationID track by $index">{{locationName.name}} &nbsp;</span></td> -->
           
-          <td md-cell layout="row" layout-align="end start">
+          <td md-cell layout="row" layout-align="end start" ng-if="deletionAllowed">
             <div>
+            	
               <md-button class="md-secondary">
                   <md-tooltip md-direction="left">
                           Delete

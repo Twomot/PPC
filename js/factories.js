@@ -1319,6 +1319,16 @@ function setDuration($scope) {
                 var newdate=splitdateonly[2]+"-"+splitdateonly[1]+"-"+splitdateonly[0];
                 return newdate;
           },
+          // Format ISO date to GMT string and stip time. Example output is Fri Mar 31 2017 GMT+0530
+          getGMTString : function(date) {
+			var dateStr = new Date(date).toString();
+			var gmtDateStr = dateStr.substring(0, dateStr.indexOf('('))
+								.replace('00:00:00','').trim();
+			return gmtDateStr;
+		  },
+		  isEditAllowed: function() {
+		  	return sessionStorage.role === 'root';
+		  },
           GetSortOrder:function(prop) {  
             return function(a, b) {  
                 if (a[prop] > b[prop]) {  
@@ -1333,3 +1343,4 @@ function setDuration($scope) {
         };
 
 }])
+

@@ -1,11 +1,13 @@
 angular.module('app')
-  .controller('plantController', ['$location','$filter','$scope', '$state','$stateParams','$mdDialog','dialogFactory','JWTTOKEN', function($location,$filter,$scope,
-      $state,$stateParams,$mdDialog,dialogFactory,JWTTOKEN) {
+  .controller('plantController', ['$location','$filter','$scope', '$state','$stateParams','$mdDialog','dialogFactory','JWTTOKEN', 'commonFactory', function($location,$filter,$scope,
+      $state,$stateParams,$mdDialog,dialogFactory,JWTTOKEN, commonFactory) {
     console.log('userList');
     $scope.selecteddata=[];
      $scope.original = {};
      var massDelete;
 
+	$scope.editEnabled = commonFactory.isEditAllowed();
+	
      JWTTOKEN.requestFunction('GET','appusers?filter[where][roleID][regexp]=/^planner/i').then(function(userResult){
 	      console.log(userResult);
 	    	$scope.planners=userResult.data;

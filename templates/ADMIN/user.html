@@ -1,3 +1,12 @@
+<div layout="row" style="height:60px;position: fixed; z-index: 100; width: 100%">
+	<md-toolbar class="md-primary">
+        <div class="md-toolbar-tools">
+          <h3 >EMPLOYEE</h3>
+          </div>
+         </md-toolbar>
+</div>
+<div layout="row" layout-padding style="height:60px;"></div>
+
 <table-component headings="headingArray" tabledatas="appuserdata" selectedlist="selecteddata" addtableevent="addPopup()" deletetableevent="massDelete($event)" deletetableclick2="deleteFunction($event)" tableclick2="updatePopup()" toggletable2="toggleFun()"></table-component>
 
 
@@ -149,8 +158,11 @@
                                   <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">Please enter valid email id.</div>
                                 </div>
                              </md-input-container>
-
-                               
+								
+							<md-input-container class="md-block" ng-if="isUserRole('admin')">
+								<label>DIsabled</label>
+							    <input type="checkbox" ng-model="appuserEdit.disabled" ng-true-value="'YES'" ng-false-value="'NO'" ng-disabled="selectdisabled">
+							</md-input-container>
 
                              <!-- <md-input-container class="md-block"> 
                               

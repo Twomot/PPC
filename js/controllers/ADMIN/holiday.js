@@ -1,13 +1,14 @@
 angular.module('app')
   /*.controller('holidayController', ['$location','$filter','$scope', '$state','$stateParams','$mdDialog','dialogFactory','JWTTOKEN', function($location,$filter,$scope,
       $state,$stateParams,$mdDialog,dialogFactory,JWTTOKEN) {*/
-	.controller('holidayController', ['$location','$filter','$scope', '$state','$stateParams','$mdDialog','dialogFactory','JWTTOKEN','Holiday', 'Location', 'Machinecalendar', 
-	                                  function($location,$filter,$scope, $state,$stateParams,$mdDialog, dialogFactory, JWTTOKEN, Holiday, Location, MachineCalendar) {
+	.controller('holidayController', ['$location','$filter','$scope', '$state','$stateParams','$mdDialog','dialogFactory','JWTTOKEN','Holiday', 'Location', 'Machinecalendar', 'commonFactory',
+	                                  function($location,$filter,$scope, $state,$stateParams,$mdDialog, dialogFactory, JWTTOKEN, Holiday, Location, MachineCalendar, commonFactory) {
     console.log('userList');
     $scope.selecteddata = [];
     $scope.original = {};
     var massDelete;
 
+	$scope.editEnabled = commonFactory.isEditAllowed();
     localStorage.removeItem('machineCaledarAll');
     localStorage.removeItem('machineCaledarOnDate');
 
@@ -25,12 +26,11 @@ angular.module('app')
        for (var key in holidayResult.data) {
         if (holidayResult.data[key].type=="RECURSIVE"){
            holidayResult.data[key].from="NA";
-        holidayResult.data[key].to="NA";
-
-        }else{
-        holidayResult.data[key].from=new Date(holidayResult.data[key].from).toDateString();
-        holidayResult.data[key].to=new Date(holidayResult.data[key].to).toDateString();
-        holidayResult.data[key].recursiveDays=[{name:"NA"}];
+        	holidayResult.data[key].to="NA";
+        } else {
+	        holidayResult.data[key].from = commonFactory.getGMTString(holidayResult.data[key].from);
+	        holidayResult.data[key].to = commonFactory.getGMTString(holidayResult.data[key].to);
+	        holidayResult.data[key].recursiveDays=[{name:"NA"}];
         }
       }
       $scope.holidayData=holidayResult.data;
@@ -145,7 +145,10 @@ angular.module('app')
 
                var newItemID=res.data.id;
                JWTTOKEN.requestFunction('GET','holidays?filter[where][id]='+newItemID+'&filter[include]=locationRelation').then(function(holidayResult){
-
+				
+				holidayResult.data[0].from = commonFactory.getGMTString(holidayResult.data[0].from);
+                holidayResult.data[0].to = commonFactory.getGMTString(holidayResult.data[0].to);
+                
                 ListArray.push(holidayResult.data[0]);
 	            $scope.holiday={};
 	              alert('Holidays added !!!!')
@@ -304,8 +307,8 @@ angular.module('app')
         $scope.buttonText='Edit';
         $scope.selecteddata=[];
         
-        $scope.holidayEdit.from = new Date($scope.holidayEdit.from);
-        $scope.holidayEdit.to = new Date($scope.holidayEdit.to);
+        $scope.holidayEdit.tempFrom = new Date($scope.holidayEdit.from);
+        $scope.holidayEdit.tempTo = new Date($scope.holidayEdit.to);
         
         $mdDialog.show({
                 parent: angular.element(document.body),
@@ -338,17 +341,26 @@ angular.module('app')
         	  	if (data.type === 'RECURSIVE') {
         	  		data.recursiveDays = $filter('filter')($scope.weekdays, { selected: true });
         	  		data.year = {'year' : data.year};
-        	  		Holiday.machinecalendar.destroyAll({id: data.id});
+        	  		if (Holiday.machinecalendar) {
+        	  			Holiday.machinecalendar.destroyAll({id: data.id});
+        	  		}
         	  	}	else {
         	  		if (!$scope.validateDate(data.from, data.to)) {
         	  			return false;
         	  		}
         	  	}
-        	  	
+        	  	data.from = data.tempFrom;
+                  data.to = data.tempTo;
+                  data.tempFrom = undefined;
+                  data.tempTo = undefined;
+                  
                  JWTTOKEN.requestFunction('PUT','holidays/'+data.id,data).then(function(res){
                   
-                  data.from = $filter('date')(Date.parse(data.from), 'yyyy-MM-dd');
-                  data.to = $filter('date')(Date.parse(data.to), 'yyyy-MM-dd');
+                  // data.from = $filter('date')(Date.parse(data.tempFrom), 'yyyy-MM-dd');
+                  // data.to = $filter('date')(Date.parse(data.tempTo), 'yyyy-MM-dd');
+                  data.from = commonFactory.getGMTString(data.from);
+                  data.to = commonFactory.getGMTString(data.to);
+                  
                 $mdDialog.hide();
               },function(err){
                 console.log(err);  
@@ -818,7 +830,12 @@ function GetSortOrder(prop) {
       //***************************************END OF SET HARTHAL DAY FOR MULTIPLE LOCATIONS*******************//
       ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
+	$scope.getGMTString = function(date) {
+		var dateStr = new Date(date).toString();
+		var gmtDateStr = dateStr.substring(0, dateStr.indexOf('('))
+							.replace('00:00:00','').trim();
+		return gmtDateStr;
+	};
       
 
 }]);

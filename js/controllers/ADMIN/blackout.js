@@ -1,8 +1,8 @@
 angular.module('app')
   /*.controller('holidayController', ['$location','$filter','$scope', '$state','$stateParams','$mdDialog','dialogFactory','JWTTOKEN', function($location,$filter,$scope,
       $state,$stateParams,$mdDialog,dialogFactory,JWTTOKEN) {*/
-	.controller('blackoutController', ['$location','$filter','$scope', '$state','$stateParams','$mdDialog','dialogFactory','JWTTOKEN','Holiday', 'Location', 'Machinecalendar','Machine',
-	                                  function($location,$filter,$scope, $state,$stateParams,$mdDialog, dialogFactory, JWTTOKEN, Holiday, Location, MachineCalendar,Machine) {
+	.controller('blackoutController', ['$location','$filter','$scope', '$state','$stateParams','$mdDialog','dialogFactory','JWTTOKEN','Holiday', 'Location', 'Machinecalendar','Machine', 'commonFactory',
+	                                  function($location,$filter,$scope, $state,$stateParams,$mdDialog, dialogFactory, JWTTOKEN, Holiday, Location, MachineCalendar,Machine, commonFactory) {
     console.log('userList');
     $scope.selecteddata = [];
     $scope.original = {};
@@ -26,9 +26,11 @@ angular.module('app')
       blackoutResult.data.to=new Date(blackoutResult.data.to);*/
       console.log(blackoutResult.data);
       for (var key in blackoutResult.data) {
-        blackoutResult.data[key].from=new Date(blackoutResult.data[key].from).toDateString();
-        blackoutResult.data[key].to=new Date(blackoutResult.data[key].to).toDateString();
-        
+        // blackoutResult.data[key].from=new Date(blackoutResult.data[key].from).toDateString();
+        // blackoutResult.data[key].to=new Date(blackoutResult.data[key].to).toDateString();
+        blackoutResult.data[key].from = commonFactory.getGMTString(blackoutResult.data[key].from);
+        blackoutResult.data[key].to = commonFactory.getGMTString(blackoutResult.data[key].to);
+	        
       }
       console.log(blackoutResult);
       $scope.blackoutData=blackoutResult.data;

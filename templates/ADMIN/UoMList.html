@@ -1,3 +1,12 @@
+<div layout="row" style="height:60px;position: fixed; z-index: 100; width: 100%">
+	<md-toolbar class="md-primary">
+        <div class="md-toolbar-tools">
+          <h3 >UOM</h3>
+          </div>
+         </md-toolbar>
+</div>
+<div layout="row" layout-padding style="height:60px;"></div>
+
 <table-component headings="headingArray" tabledatas="UoMdata" selectedlist="selecteddata" addtableevent="addPopup()" deletetableevent="massDelete($event)" deletetableclick2="deleteFunction($event)" tableclick2="updatePopup()" toggletable2="toggleFun()"></table-component>
 
 
@@ -25,7 +34,7 @@
                              </md-input-container>
                             <div>
                               <!-- <md-button  type="submit" class="md-raised" ng-click="addUoM(UoM,projectAddForm.$invalid)">add</md-button> -->
-                              <md-button class="md-raised" ng-click="addUoM(UoM,projectAddForm.$invalid,buttonText)" type="submit">{{buttonText}}</md-button>
+                              <md-button class="md-raised" ng-if="editEnabled || buttonText==='Add'" ng-click="addUoM(UoM,projectAddForm.$invalid,buttonText)" type="submit">{{buttonText}}</md-button>
                               <md-button class="md-raised" ng-click="cancel(buttonText,UoM)">Cancel</md-button>
                             </div>
                         
