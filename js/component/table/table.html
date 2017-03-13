@@ -19,14 +19,15 @@
           
 
 <td md-cell ng-if="$ctrl.headings[0].model=='holiday'" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">{{tabledata.holidayname}}</td>
-<td md-cell ng-if="$ctrl.headings[0].model=='blackout' || ($ctrl.headings[0].model=='holiday')" >{{tabledata.from}}</td>
+<td md-cell ng-if="($ctrl.headings[0].model=='holiday')" >{{tabledata.from?tabledata.from:'NA'}}</td>
+<td md-cell ng-if="$ctrl.headings[0].model=='blackout'" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">{{tabledata.from?tabledata.from:'NA'}}</td>
 
 <td md-cell ng-if="$ctrl.headings[0].model=='TransitTime'" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">{{tabledata.from}}</td>
 <td md-cell ng-if="$ctrl.headings[0].model=='TransitTime'">{{tabledata.to}}</td>
 <td md-cell ng-if="$ctrl.headings[0].model=='TransitTime'">{{tabledata.mode}}</td>
 <td md-cell ng-if="$ctrl.headings[0].model=='TransitTime'">{{tabledata.time}}</td>
 
-<td md-cell ng-if="$ctrl.headings[0].model=='blackout' || $ctrl.headings[0].model=='holiday'" >{{tabledata.to}}</td>
+<td md-cell ng-if="$ctrl.headings[0].model=='blackout' || $ctrl.headings[0].model=='holiday'" >{{tabledata.to?tabledata.to:'NA'}}</td>
 <td md-cell ng-if="$ctrl.headings[0].model=='holiday'" >{{tabledata.recursiveDays[0].name}}</td>
 
           <td md-cell ng-if="tabledata.name!=null" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">{{tabledata.name}}</td>
@@ -36,10 +37,11 @@
           <td md-cell ng-if="tabledata.workCenterRelation.name!=null" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">{{tabledata.workCenterRelation.name}}</td>
            <td md-cell ng-if="tabledata.vendorRelation.name!=null" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">{{tabledata.vendorRelation.name}}</td>
             <td md-cell ng-if="tabledata.locationRelation.name!=null" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">{{tabledata.locationRelation.name}}</td>
-             <td md-cell ng-if="(tabledata.type!=null) && ($ctrl.headings[0].modelname!='machine')" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">{{tabledata.type}}</td>
+             <td md-cell ng-if="($ctrl.headings[0].model=='holiday' || $ctrl.headings[0].modelname=='workcentervendor')" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">{{tabledata.type?tabledata.type:'NA'}}</td>
 
               <td md-cell ng-if="(tabledata.workcenterrelation.name!=null)" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">{{tabledata.workcenterrelation.name}}</td>
-              <td md-cell ng-if="(tabledata.capacity!=null)" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">{{tabledata.capacity}}</td>
+              <td md-cell ng-if="($ctrl.headings[0].model=='machine')" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">{{tabledata.capacity?tabledata.capacity:'NA'}}</td>
+              <td md-cell ng-if="($ctrl.headings[0].model=='machine')" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">{{tabledata.LocationName}}</td>
               <td md-cell ng-if="(tabledata.plantrelation.name!=null)" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">{{tabledata.plantrelation.name}}</td>
 
 
@@ -49,6 +51,8 @@
         
           <!-- for plant -->
           <td md-cell ng-if="tabledata.UserPlant.name!=null" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">{{tabledata.UserPlant.name}}</td>
+          
+          <td md-cell ng-if="$ctrl.headings[0].model=='plant'" >{{tabledata.planner?tabledata.planner:'NA'}}</td>
           
           <!-- <td md-cell ng-if="$ctrl.headings[0].modelname=='vendor'" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">
           <span ng-repeat="locationName in tabledata.locationID track by $index">{{locationName.name}} &nbsp;</span></td> -->

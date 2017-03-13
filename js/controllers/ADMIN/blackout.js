@@ -278,6 +278,12 @@ angular.module('app')
         return $scope.machines ;
     }
 getMachines();
+		
+		$scope.updateBlackout = function(ev) {
+			dialogFactory.alert(ev,"Update not Allowed!",
+			"You cannot update a Blackout. If you want, you can delete this and create new.");
+		};
+		
         $scope.updatePopup=function()
       {
         console.log($scope.selecteddata[0]);

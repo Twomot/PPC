@@ -277,7 +277,7 @@ JWTTOKEN.requestFunction('GET','appusers').then(function(userResult){
 					  					locationID: data.locationID,
 					  					vendorID: data.vendorID};
 	  	  	  hasDuplicate(compositeUniqueKey).then(function(isDuplicate){
-	  	  		  if (isDuplicate === data.id) {
+	  	  		  if (!isDuplicate || isDuplicate === data.id) {
 	  	  			updateWorkCenterVendor(data,invalid,button);
 	  	  		  }	else {
 	  	  			  alert("Already record exists");

@@ -349,22 +349,41 @@ angular.module('app')
         	  			return false;
         	  		}
         	  	}
+        	  	
+        	  	JWTTOKEN.requestFunction('DELETE','holidays/'+data.id+'/machinecalendar').then(function(response){
         	  	data.from = data.tempFrom;
                   data.to = data.tempTo;
                   data.tempFrom = undefined;
                   data.tempTo = undefined;
-                  
-                 JWTTOKEN.requestFunction('PUT','holidays/'+data.id,data).then(function(res){
-                  
-                  // data.from = $filter('date')(Date.parse(data.tempFrom), 'yyyy-MM-dd');
-                  // data.to = $filter('date')(Date.parse(data.tempTo), 'yyyy-MM-dd');
-                  data.from = commonFactory.getGMTString(data.from);
-                  data.to = commonFactory.getGMTString(data.to);
-                  
-                $mdDialog.hide();
-              },function(err){
-                console.log(err);  
-              });
+                  JWTTOKEN.requestFunction('DELETE','holidays/'+data.id).then(function(deleteResp){
+            		
+            		JWTTOKEN.requestFunction('POST','holidays',data).then(function(res){
+	                 	if (data.type.toLowerCase() === 'recursive') {
+	                 		$scope.setWeekends(data.year.year, data.recursiveDays);
+	                 		var obj = {dates : $scope.weekends,locationID: data.locationID, holidayID: data.id};
+	                 		JWTTOKEN.requestFunction('POST','machinecalendars/addRecurringHolidays',obj).then(function(holidayMachCalResult){
+			                  // data.from = $filter('date')(Date.parse(data.tempFrom), 'yyyy-MM-dd');
+			                  // data.to = $filter('date')(Date.parse(data.tempTo), 'yyyy-MM-dd');
+			                  data.from = commonFactory.getGMTString(data.from);
+			                  data.to = commonFactory.getGMTString(data.to);
+			                  
+				                $mdDialog.hide();
+				                
+				              },function(err){
+				                console.log(err);  
+				              });
+			              }	else {
+			              	data.from = commonFactory.getGMTString(data.from);
+		                  	data.to = commonFactory.getGMTString(data.to);
+			                  
+			                $mdDialog.hide();
+			              }
+			            var ListArray=$scope.holidayData;
+	                  	var index = ListArray.indexOf($scope.selecteddata[0]);
+	                    ListArray[index] = data;
+          			});
+              	});
+          	});
         	  
           }
         }       
@@ -838,4 +857,21 @@ function GetSortOrder(prop) {
 	};
       
 
+	$scope.setWeekends = function(year, selectdDays) {
+		$scope.start=new Date(year,0,1);
+        $scope.end= new Date(year,11,31);
+        $scope.weekends = [];
+        var day = angular.copy($scope.start);
+        while(day <= $scope.end){        
+          var d = day.getDay(); 
+           for (i=0;i< selectdDays.length;i++){
+            if(d === selectdDays[i].id){
+                $scope.weekends.push(new Date(day));
+             }
+           }
+           
+           day.setDate(day.getDate()+1);
+      	}	
+	};
+	
 }]);

@@ -15,7 +15,7 @@ angular.module('app')
 
       ////////////////////headingList/////////////////////////
     $scope.headingArray=[
-                          {"title":"Name"},
+                          {"title":"Name", "model": "plant"},
                           {"title":"Planner"}
                         ];
     ///////////////////////////////////////////////////////
@@ -23,6 +23,10 @@ angular.module('app')
        JWTTOKEN.requestFunction('GET','plants?filter[include]=UserPlant').then(function(plantResult){
       console.log(plantResult);
     	$scope.plantData=plantResult.data;
+    	plantResult.data.forEach(function(data) {
+    		data.planner = getPlanner(data);
+    	});
+    	
     });
 
     /*////////////////////Function ///////////////////////*/
@@ -64,6 +68,7 @@ angular.module('app')
           //   .addplant(plantdata)
           //   .then(function(res){
             JWTTOKEN.requestFunction('POST','plants',plantdata).then(function(res){
+            	res.data.planner = getPlanner(res.data);
                 ListArray.push(res.data);
                 //$(".projectAddForm")[0].reset();
                 $scope.plant={};
@@ -154,6 +159,7 @@ angular.module('app')
 	             	 plannerArray.push({plannerID: plannerID});
 	              });
 	              data.plannerID = plannerArray;
+	              data.planner = undefined;
         	  }
         	  //<<<<<<
               
@@ -162,6 +168,7 @@ angular.module('app')
             // .then(function(response){
                JWTTOKEN.requestFunction('PUT','plants/'+data.id,data).then(function(res){
                 //$(".projectEditForm")[0].reset();
+                data.planner = getPlanner(res.data);
                 $mdDialog.hide();
               },function(err){
                 console.log(err);  
@@ -258,7 +265,13 @@ angular.module('app')
 
       
      
-     
+     function getPlanner(data) {
+     	var plannerString = '';
+		data.plannerID.forEach(function(plannerID) {
+			plannerString += (plannerString.length > 0?',':'') + plannerID.plannerID ; 
+		});
+		return plannerString.length > 0? plannerString:undefined;
+     }
       
 
       
