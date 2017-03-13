@@ -1344,3 +1344,19 @@ function setDuration($scope) {
 
 }])
 
+.factory('authFactory', ['$q', 'JWTTOKEN', function($q, JWTTOKEN) {
+    'use strict';
+    return {
+    	
+    	// This function checks if the user has any of the roles defined in the roleArray
+    	// Returns the promise with a boolean value
+      isRoleEnabled: function(userId, roleArray){
+      		return JWTTOKEN.requestFunction('GET','appusers?filter[where][id]='+userId)
+			.then(function(userResult){
+				var userRoleArray = userResult.data[0].roleID.split(',');
+				var matchingArray = roleArray.filter(function(obj) { return userRoleArray.indexOf(obj) >-1; });
+				return matchingArray.length > 0;
+		   });
+      }
+    };
+}])
