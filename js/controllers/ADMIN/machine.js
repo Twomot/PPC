@@ -11,10 +11,11 @@ angular.module('app')
       ////////////////////headingList/////////////////////////
     $scope.headingArray=[
                           {"title":"Name","model":"machine"},
-                          {"title":"workCenterID"},
-                          {"title":"Capacity"},
-                          {"title":"LocationName"}
-                          // {"title":"workcenterVendorID"}
+                          {"title":"Work Center"},
+                          {"title":"Vendor"},
+                          {"title":"Location"},
+                          {"title":"Capacity"}
+                          
                           // {"title":"UoM"},
                           
                         
@@ -36,11 +37,14 @@ angular.module('app')
       $scope.UoMs=UoMResult.data;
     });
 
-     JWTTOKEN.requestFunction('GET','machines/getmachinewith2levelrelation').then(function(machines){
-       $scope.machinesTosetblackout=machines.data;
-       $scope.machinesTosetblackout_copy=machines.data;
-
-    });
+	loadMachinesToBlackout();
+	function loadMachinesToBlackout() {
+	     JWTTOKEN.requestFunction('GET','machines/getmachinewith2levelrelation').then(function(machines){
+	       $scope.machinesTosetblackout=machines.data;
+	       $scope.machinesTosetblackout_copy=machines.data;
+	
+	    });
+   	}
      $scope.searchByOptions=["By Vendor" ,"By Workcenter", "All"];
 
 
@@ -195,7 +199,10 @@ machinedata.workCenterID = machinedata.workCenterVendor.workcenterID;
 machinedata.workcenterVendorID = machinedata.workCenterVendor.id;
 console.log("VENDOR LOCTION ID ");
 console.log($filter('filter')($scope.workcentervendors, {"id": machinedata.workCenterVendor.id})[0].locationID);
-machinedata.LocationID = $filter('filter')($scope.workcentervendors, {"id": machinedata.workCenterVendor.id})[0].locationID;
+var selectedWCV = $filter('filter')($scope.workcentervendors, {"id": machinedata.workCenterVendor.id})[0];
+machinedata.LocationID = selectedWCV.locationID;
+machinedata.LocationName = selectedWCV.location.name?selectedWCV.location.name:selectedWCV.location;
+machinedata.vendor = selectedWCV.vendor.name?selectedWCV.vendor.name:selectedWCV.vendor;
 delete machinedata.workCenterVendor;
 
 
@@ -214,7 +221,7 @@ delete machinedata.workCenterVendor;
                 $scope.machine={};
                 $scope.projectAddForm.$setPristine();
                 $mdDialog.hide();
-
+				loadMachinesToBlackout();
               });
             },function(err){
              
@@ -375,12 +382,14 @@ delete machinedata.workCenterVendor;
               // machineFactory
               //       .removemachine($scope.selecteddata[0])
               //       .then(function(response){
+              	// JWTTOKEN.requestFunction('DELETE','machines/'+data.id+'/machinecalendar').then(function(response){
                 JWTTOKEN.requestFunction('DELETE','machines/'+$scope.selecteddata[0].id).then(function(res){
                       var ListArray=$scope.machinedata;
                                 var index = ListArray.indexOf($scope.selecteddata[0]);
                                 ListArray.splice(index, 1);
 
-                    })
+                   });
+                // });
             }
             else{
               console.log('Canceled');

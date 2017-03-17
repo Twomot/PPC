@@ -10,7 +10,7 @@ angular.module('app')
 
       ////////////////////headingList for table content/////////////////////////
     $scope.headingArray=[
-                          {"title":"Name"}
+                          {"title":"Unit"}
                         ];
     ///////////////////////////////////////////////////////
     // UoMFactory.getallUoM().then(function(UoMResult){

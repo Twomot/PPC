@@ -19,7 +19,7 @@ locationObj.Locations.then(function(promiseData){
                           {"title":"Work Center","modelname":"workcentervendor"},
                           
                           
-                          {"title":"vendorID"},
+                          {"title":"Vendor"},
                           {"title":"Location"},
                           {"title":"Type"}
                           
@@ -133,9 +133,9 @@ JWTTOKEN.requestFunction('GET','appusers').then(function(userResult){
       /*dialog add click*/
       $scope.addworkcentervendor=function(workcentervendor,invalid)
       {
-    	  var compositeUniqueKey = {workcenterID: workcentervendor.workcenterID.id, 
-					locationID: workcentervendor.locationID.id,
-					vendorID: workcentervendor.vendorID.id};
+    	  var compositeUniqueKey = {workcenterID: workcentervendor.workcenter.id, 
+					locationID: workcentervendor.location.id,
+					vendorID: workcentervendor.vendor.id};
     	  hasDuplicate(compositeUniqueKey).then(function(isDuplicate){
     		  if (isDuplicate) {
 				alert("Already record exists!");
@@ -197,7 +197,7 @@ JWTTOKEN.requestFunction('GET','appusers').then(function(userResult){
 
         function getWCName() {
         	var filteredWC = $filter('filter')($scope.workcenters, { id: $scope.workcentervendorEdit.workcenterID })[0];
-        	$scope.editWCName = filteredWC.name;
+        	$scope.editWCName = filteredWC?filteredWC.name:undefined;
         }
         
     //   /*update pop up*/
@@ -391,13 +391,13 @@ JWTTOKEN.requestFunction('GET','appusers').then(function(userResult){
     	  console.log(workcentervendor);
           var ListArray=$scope.workcentervendorData;
           //workcentervendor.vendorID=workcentervendor.vendorID.id;
-         var vendorName =workcentervendor.vendorID.name;
-           var locationName =workcentervendor.locationID.name;
-           var workcenterName =workcentervendor.workcenterID.name;
+         var vendorName =workcentervendor.vendor.name;
+           var locationName =workcentervendor.location.name;
+           var workcenterName =workcentervendor.workcenter.name;
 
-          workcentervendor.vendorID=workcentervendor.vendorID.id;
-          workcentervendor.locationID=workcentervendor.locationID.id;
-          workcentervendor.workcenterID=workcentervendor.workcenterID.id;
+          workcentervendor.vendorID=workcentervendor.vendor.id;
+          workcentervendor.locationID=workcentervendor.location.id;
+          workcentervendor.workcenterID=workcentervendor.workcenter.id;
 
          var displayName=vendorName+"_"+locationName+"_"+workcenterName;
           workcentervendor.displayName=displayName;

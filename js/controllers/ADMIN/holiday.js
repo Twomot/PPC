@@ -1,8 +1,8 @@
 angular.module('app')
   /*.controller('holidayController', ['$location','$filter','$scope', '$state','$stateParams','$mdDialog','dialogFactory','JWTTOKEN', function($location,$filter,$scope,
       $state,$stateParams,$mdDialog,dialogFactory,JWTTOKEN) {*/
-	.controller('holidayController', ['$location','$filter','$scope', '$state','$stateParams','$mdDialog','dialogFactory','JWTTOKEN','Holiday', 'Location', 'Machinecalendar', 'commonFactory',
-	                                  function($location,$filter,$scope, $state,$stateParams,$mdDialog, dialogFactory, JWTTOKEN, Holiday, Location, MachineCalendar, commonFactory) {
+	.controller('holidayController', ['$location','$filter','$scope', '$state','$stateParams','$mdDialog','dialogFactory','JWTTOKEN','Holiday', 'Location', 'Machinecalendar', 'commonFactory', 'authFactory',
+	                                  function($location,$filter,$scope, $state,$stateParams,$mdDialog, dialogFactory, JWTTOKEN, Holiday, Location, MachineCalendar, commonFactory, authFactory) {
     console.log('userList');
     $scope.selecteddata = [];
     $scope.original = {};
@@ -34,6 +34,9 @@ angular.module('app')
         }
       }
       $scope.holidayData=holidayResult.data;
+      authFactory.isRoleEnabled(sessionStorage.userId,['admin']).then(function(enabled) {
+      	console.log(enabled);
+      });
     });
     
     // Gets the list of all holidays
@@ -70,7 +73,9 @@ angular.module('app')
     $scope.validateDate = function(startDate,endDate) {
         $scope.errMessage = '';
         var curDate = new Date();
-
+		if (!startDate || !endDate) {
+			return false;
+		}
         if(new Date(startDate) > new Date(endDate)){
           $scope.errMessage = 'To Date should be greater than From date';
           alert($scope.errMessage);
@@ -111,6 +116,7 @@ angular.module('app')
     }
     
     $scope.addPopup=function() {
+    	$scope.holiday = undefined;
         $scope.recurring=false;
         $scope.selYear="";
         $scope.recurringHoliday={};
@@ -130,11 +136,9 @@ angular.module('app')
      
       $scope.addholiday=function(holidaydata,invalid)
       {
-      
-
-        if(!$scope.recurring)
+      	if(!$scope.recurring)
         {
-        	if (!$scope.validateDate(holidaydata.from, holidaydata.to)) {
+        	if (!holidaydata.locationID || !$scope.validateDate(holidaydata.from, holidaydata.to)) {
         		return false;
         	}
         	console.log(holidaydata);
@@ -181,7 +185,7 @@ angular.module('app')
 //          $scope.holiday.holidayname="name";
         //  var recurringHoliday=$scope.recurringHoliday;
            var selectdDays=$filter('filter')($scope.weekdays, { selected: true });
-           holidaydata.year = {'year' : holidaydata.year};
+           holidaydata.year = {'year' : $scope.tempYear};
            console.log(holidaydata.year);
            console.log($scope.SelYear);
     
@@ -234,6 +238,7 @@ angular.module('app')
 		            $scope.holiday={};
 		              alert('Holidays added !!!!');
 		              $mdDialog.hide();
+		              $scope.tempYear = null;
 		          });
               });
 	        },function(err){
@@ -246,6 +251,7 @@ angular.module('app')
         			$mdDialog.hide();
         		});*/
         }
+      
       }
       
      /*cancel function*/
@@ -351,21 +357,24 @@ angular.module('app')
         	  	}
         	  	
         	  	JWTTOKEN.requestFunction('DELETE','holidays/'+data.id+'/machinecalendar').then(function(response){
-        	  	data.from = data.tempFrom;
-                  data.to = data.tempTo;
-                  data.tempFrom = undefined;
-                  data.tempTo = undefined;
+        	  		var dataCopy = {}
+        	  		angular.copy(data, dataCopy);
+        	  	dataCopy.from = data.tempFrom;
+                  dataCopy.to = data.tempTo;
+                  dataCopy.tempFrom = undefined;
+                  dataCopy.tempTo = undefined;
+                  data.from = commonFactory.getGMTString(dataCopy.from);
+                  data.to = commonFactory.getGMTString(dataCopy.to);
                   JWTTOKEN.requestFunction('DELETE','holidays/'+data.id).then(function(deleteResp){
             		
-            		JWTTOKEN.requestFunction('POST','holidays',data).then(function(res){
+            		JWTTOKEN.requestFunction('POST','holidays',dataCopy).then(function(res){
 	                 	if (data.type.toLowerCase() === 'recursive') {
 	                 		$scope.setWeekends(data.year.year, data.recursiveDays);
 	                 		var obj = {dates : $scope.weekends,locationID: data.locationID, holidayID: data.id};
 	                 		JWTTOKEN.requestFunction('POST','machinecalendars/addRecurringHolidays',obj).then(function(holidayMachCalResult){
 			                  // data.from = $filter('date')(Date.parse(data.tempFrom), 'yyyy-MM-dd');
 			                  // data.to = $filter('date')(Date.parse(data.tempTo), 'yyyy-MM-dd');
-			                  data.from = commonFactory.getGMTString(data.from);
-			                  data.to = commonFactory.getGMTString(data.to);
+			                  
 			                  
 				                $mdDialog.hide();
 				                

@@ -28,20 +28,21 @@
 <td md-cell ng-if="$ctrl.headings[0].model=='TransitTime'">{{tabledata.time}}</td>
 
 <td md-cell ng-if="$ctrl.headings[0].model=='blackout' || $ctrl.headings[0].model=='holiday'" >{{tabledata.to?tabledata.to:'NA'}}</td>
-<td md-cell ng-if="$ctrl.headings[0].model=='holiday'" >{{tabledata.recursiveDays[0].name}}</td>
+<td md-cell ng-if="$ctrl.headings[0].model=='holiday'" >{{tabledata.recursiveDays[0].name?tabledata.recursiveDays[0].name:'NA'}}</td>
 
           <td md-cell ng-if="tabledata.name!=null" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">{{tabledata.name}}</td>
-          <td md-cell ng-if="tabledata.email!=null" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">{{tabledata.email}}</td>
-          <td md-cell ng-if="tabledata.role!=null" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">{{tabledata.role}}</td>
+          <td md-cell ng-if="$ctrl.headings[0].model=='employee'" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">{{tabledata.email?tabledata.email:'NA'}}</td>
+          <td md-cell ng-if="$ctrl.headings[0].model=='employee'" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">{{tabledata.role? tabledata.role:'NA'}}</td>
 
-          <td md-cell ng-if="tabledata.workCenterRelation.name!=null" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">{{tabledata.workCenterRelation.name}}</td>
-           <td md-cell ng-if="tabledata.vendorRelation.name!=null" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">{{tabledata.vendorRelation.name}}</td>
-            <td md-cell ng-if="tabledata.locationRelation.name!=null" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">{{tabledata.locationRelation.name}}</td>
-             <td md-cell ng-if="($ctrl.headings[0].model=='holiday' || $ctrl.headings[0].modelname=='workcentervendor')" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">{{tabledata.type?tabledata.type:'NA'}}</td>
+          <td md-cell ng-if="$ctrl.headings[0].modelname=='workcentervendor'" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">{{tabledata.workCenterRelation.name?tabledata.workCenterRelation.name:'NA'}}</td>
+           <td md-cell ng-if="$ctrl.headings[0].modelname=='workcentervendor'" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">{{tabledata.vendorRelation?tabledata.vendorRelation.name:'NA'}}</td>
+            <td md-cell ng-if="$ctrl.headings[0].model=='holiday' || $ctrl.headings[0].modelname=='workcentervendor'" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">{{tabledata.locationRelation.name?tabledata.locationRelation.name:'NA'}}</td>
+             <td md-cell ng-if="($ctrl.headings[0].model=='holiday' || $ctrl.headings[0].modelname=='workcentervendor' || $ctrl.headings[0].model=='blackout')" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">{{tabledata.type?tabledata.type:'NA'}}</td>
 
-              <td md-cell ng-if="(tabledata.workcenterrelation.name!=null)" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">{{tabledata.workcenterrelation.name}}</td>
-              <td md-cell ng-if="($ctrl.headings[0].model=='machine')" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">{{tabledata.capacity?tabledata.capacity:'NA'}}</td>
-              <td md-cell ng-if="($ctrl.headings[0].model=='machine')" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">{{tabledata.LocationName}}</td>
+              <td md-cell ng-if="($ctrl.headings[0].model=='machine')" >{{tabledata.workcenterrelation.name?tabledata.workcenterrelation.name:'NA'}}</td>
+              <td md-cell ng-if="($ctrl.headings[0].model=='machine')" >{{tabledata.vendor?tabledata.vendor:'NA'}}</td>
+              <td md-cell ng-if="($ctrl.headings[0].model=='machine')" >{{tabledata.LocationName}}</td>
+              <td md-cell ng-if="($ctrl.headings[0].model=='machine')" >{{tabledata.capacity?tabledata.capacity:'NA'}}</td>
               <td md-cell ng-if="(tabledata.plantrelation.name!=null)" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">{{tabledata.plantrelation.name}}</td>
 
 

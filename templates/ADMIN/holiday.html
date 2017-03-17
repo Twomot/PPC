@@ -38,7 +38,7 @@
                         </br>
                         <md-input-container ng-show="recurring">
                             <label>Year</label>
-                            <md-select ng-model="holiday.year" required>
+                            <md-select ng-model="tempYear" required>
                                 <md-option ng-repeat="year in range" ng-value="year.year">{{year.year}}</md-option>
                             </md-select>
                         </md-input-container>
@@ -73,11 +73,11 @@
                             </md-input-container>
                             </br>
                             <md-input-container>
-                                <md-datepicker ng-model="holiday.from" md-placeholder="Enter  from date"></md-datepicker>
+                                <md-datepicker ng-model="holiday.from" md-placeholder="Enter  from date" required></md-datepicker>
                             </md-input-container>
                             </br>
                             <md-input-container>
-                                <md-datepicker ng-model="holiday.to" md-placeholder="Enter  to date"></md-datepicker>
+                                <md-datepicker ng-model="holiday.to" md-placeholder="Enter  to date" required></md-datepicker>
                                 </br>
                             </md-input-container>
                             </br>

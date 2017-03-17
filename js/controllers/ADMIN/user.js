@@ -10,7 +10,7 @@ angular.module('app')
 
       ////////////////////headingList/////////////////////////
     $scope.headingArray=[
-                          {"title":"Name"},
+                          {"title":"Name", "model": "employee"},
                           {"title":"Email "},
                           {"title":"Role"}
                         ];
@@ -73,12 +73,12 @@ userFetchFunction=function()
         var roleNameArray=[];
         if(invalid==false)
         {
-        	console.log(appuserdata.role);
-          for(var i=0;i<appuserdata.role.length;i++)
+        	console.log($scope.tempRole);
+          for(var i=0;i<$scope.tempRole.length;i++)
           {
-            console.log(appuserdata.role[i]);
-            roleIDArray.push(appuserdata.role[i].id);
-            roleNameArray.push(appuserdata.role[i].name);
+            console.log($scope.tempRole[i]);
+            roleIDArray.push($scope.tempRole[i].id);
+            roleNameArray.push($scope.tempRole[i].name);
           }
           console.log(roleIDArray);
           console.log(roleIDArray.toString());
@@ -93,6 +93,7 @@ userFetchFunction=function()
                  ListArray.push(res.data);
              
                 $scope.appuser={};
+                $scope.tempRole = undefined;
                
                 $mdDialog.hide();
             },function(err){

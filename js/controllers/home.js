@@ -269,6 +269,7 @@ angular.module('app')
                   var splitteddata=resultrole.data.role.split(',');
                   if(splitteddata.length>1)
                   {
+                  	$rootScope.availableRoles = splitteddata;
                      var confirm = $mdDialog.confirm()
                           .title('Please Choose your Role?')
                           .textContent('Here we found that, you are alloted to more than 1 roles.Please choose your role to continue!!!.')
@@ -291,6 +292,7 @@ angular.module('app')
                   }
                   else
                   {
+                  	$rootScope.availableRoles = [resultrole.data.role];
                     if(resultrole.data.role=="root")
                     {
                          sessionStorage.setItem("role",resultrole.data.role);

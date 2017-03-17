@@ -27,7 +27,7 @@
 
                             <md-input-container>
                                 <label>Work Center</label>
-                                <md-select ng-model="workcentervendor.workcenterID" required>
+                                <md-select ng-model="workcentervendor.workcenter" required>
                                 <!--  <md-option ng-repeat="workcenter in workcenters" ng-value="workcenter.id" >{{workcenter.name}}</md-option> -->
                                 <md-option ng-repeat="workcenter in workcenters" ng-value="workcenter" >{{workcenter.name}}</md-option>
 
@@ -36,14 +36,14 @@
                              
                             <md-input-container>
                                 <label>Vendor</label>
-                                <md-select ng-model="workcentervendor.vendorID" required ng-change="vendorChange(workcentervendor.vendorID)">
+                                <md-select ng-model="workcentervendor.vendor" required ng-change="vendorChange(workcentervendor.vendorID)">
                                 <md-option ng-repeat="vendor in vendors" ng-value="vendor">{{vendor.name}}</md-option>
                                 </md-select>
                             </md-input-container> <br>
 
                               <md-input-container>
                                 <label>Location</label>
-                                <md-select ng-model="workcentervendor.locationID" >
+                                <md-select ng-model="workcentervendor.location" >
                                 <!-- <md-option ng-repeat="location in locations" ng-value="location.id">{{location.name}}</md-option> -->
                                 <md-option ng-repeat="location in locations" ng-value="location">{{location.name}}</md-option>
                                 </md-select>
