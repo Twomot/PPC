@@ -16,9 +16,8 @@ locationObj.Locations.then(function(promiseData){
 	$scope.editEnabled = commonFactory.isEditAllowed();
       ////////////////////headingList/////////////////////////
     $scope.headingArray=[
-                          {"title":"Work Center","modelname":"workcentervendor"},
-                          
-                          
+                          {"title":"Work Center Vendor","modelname":"workcentervendor"},
+                          {"title":"Work Center"},
                           {"title":"Vendor"},
                           {"title":"Location"},
                           {"title":"Type"}

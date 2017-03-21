@@ -34,8 +34,9 @@
           <td md-cell ng-if="$ctrl.headings[0].model=='employee'" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">{{tabledata.email?tabledata.email:'NA'}}</td>
           <td md-cell ng-if="$ctrl.headings[0].model=='employee'" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">{{tabledata.role? tabledata.role:'NA'}}</td>
 
-          <td md-cell ng-if="$ctrl.headings[0].modelname=='workcentervendor'" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">{{tabledata.workCenterRelation.name?tabledata.workCenterRelation.name:'NA'}}</td>
-           <td md-cell ng-if="$ctrl.headings[0].modelname=='workcentervendor'" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">{{tabledata.vendorRelation?tabledata.vendorRelation.name:'NA'}}</td>
+          <td md-cell ng-if="$ctrl.headings[0].modelname=='workcentervendor'" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">{{tabledata.displayName?tabledata.displayName:'NA'}}</td>
+          <td md-cell ng-if="$ctrl.headings[0].modelname=='workcentervendor'" >{{tabledata.workCenterRelation.name?tabledata.workCenterRelation.name:'NA'}}</td>
+           <td md-cell ng-if="$ctrl.headings[0].modelname=='workcentervendor'">{{tabledata.vendorRelation?tabledata.vendorRelation.name:'NA'}}</td>
             <td md-cell ng-if="$ctrl.headings[0].model=='holiday' || $ctrl.headings[0].modelname=='workcentervendor'" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">{{tabledata.locationRelation.name?tabledata.locationRelation.name:'NA'}}</td>
              <td md-cell ng-if="($ctrl.headings[0].model=='holiday' || $ctrl.headings[0].modelname=='workcentervendor' || $ctrl.headings[0].model=='blackout')" ng-click="$ctrl.tableclick(tabledata,$ctrl.selectedlist)">{{tabledata.type?tabledata.type:'NA'}}</td>
 

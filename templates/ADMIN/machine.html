@@ -210,8 +210,8 @@
                             </md-input-container-->
                             
                             <md-input-container class="md-block">
-                                <label>Vendor</label>
-                                <md-select ng-model="machineEdit.workcenterVendorID" required ng-change="vendorChange(machine.workcenterID,machine.workcenterVendorID)">
+                                <label>Work Center-Vendor</label>
+                                <md-select ng-model="machineEdit.workcenterVendorID" required ng-change="vendorChange(machine.workcenterID,machine.workcenterVendorID)" ng-disabled="true">
                                  <md-option ng-repeat="vendor in workcentervendors" ng-value="vendor.id" ng-disabled="selectdisabled">{{vendor.displayName}}</md-option>
                                 </md-select>
                              </md-input-container>

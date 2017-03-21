@@ -136,9 +136,12 @@ angular.module('app')
      
       $scope.addholiday=function(holidaydata,invalid)
       {
+      	if (!holidaydata.locationID){
+      		return false;
+      	}
       	if(!$scope.recurring)
         {
-        	if (!holidaydata.locationID || !$scope.validateDate(holidaydata.from, holidaydata.to)) {
+        	if (!$scope.validateDate(holidaydata.from, holidaydata.to)) {
         		return false;
         	}
         	console.log(holidaydata);
@@ -182,6 +185,7 @@ angular.module('app')
         }
         else
         {
+        	
 //          $scope.holiday.holidayname="name";
         //  var recurringHoliday=$scope.recurringHoliday;
            var selectdDays=$filter('filter')($scope.weekdays, { selected: true });

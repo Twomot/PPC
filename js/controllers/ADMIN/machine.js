@@ -382,14 +382,14 @@ delete machinedata.workCenterVendor;
               // machineFactory
               //       .removemachine($scope.selecteddata[0])
               //       .then(function(response){
-              	// JWTTOKEN.requestFunction('DELETE','machines/'+data.id+'/machinecalendar').then(function(response){
+              	JWTTOKEN.requestFunction('DELETE','machines/'+$scope.selecteddata[0].id+'/machinecalendar').then(function(response){
                 JWTTOKEN.requestFunction('DELETE','machines/'+$scope.selecteddata[0].id).then(function(res){
                       var ListArray=$scope.machinedata;
                                 var index = ListArray.indexOf($scope.selecteddata[0]);
                                 ListArray.splice(index, 1);
 
                    });
-                // });
+                });
             }
             else{
               console.log('Canceled');
